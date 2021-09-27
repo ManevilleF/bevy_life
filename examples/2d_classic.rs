@@ -1,10 +1,10 @@
 use bevy::prelude::*;
-use bevy_game_of_life::{Cell2d, ClassicCellState, GameOfLifePlugin};
+use bevy_game_of_life::{Cell2d, ClassicCellState, ClassicGameOfLifePlugin};
 
 fn main() {
     App::build()
         .add_plugins(DefaultPlugins)
-        .add_plugin(GameOfLifePlugin::<Cell2d, ClassicCellState>::new(0.2))
+        .add_plugin(ClassicGameOfLifePlugin::new(0.2))
         .insert_resource(WindowDescriptor {
             width: 500.,
             height: 500.,

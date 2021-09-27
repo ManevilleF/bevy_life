@@ -65,7 +65,7 @@ lazy_static::lazy_static! {
     ];
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Cell3d {
     pub coords: IVec3,
 }

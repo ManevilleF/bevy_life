@@ -23,7 +23,7 @@ lazy_static::lazy_static! {
     ];
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Cell2d {
     pub coords: IVec2,
 }

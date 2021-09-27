@@ -10,7 +10,7 @@ mod classic_2d_cell;
 #[cfg(feature = "3D")]
 mod classic_3d_cell;
 
-pub trait Cell: Debug {
+pub trait Cell: Debug + Clone {
     type Coordinates: Clone + Debug + Send + Sync + Eq + Hash;
 
     fn coords(&self) -> &Self::Coordinates;

@@ -32,4 +32,8 @@ impl<C: Cell> CellMap<C> {
             .copied()
             .collect()
     }
+
+    pub fn insert_cell(&mut self, coordinates: C::Coordinates, entity: Entity) {
+        self.cells.insert(coordinates, entity);
+    }
 }

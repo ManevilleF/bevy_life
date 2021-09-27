@@ -12,6 +12,13 @@ mod systems;
 use std::fmt::Debug;
 pub use {components::*, resources::*};
 
+#[cfg(feature = "2D")]
+pub type ClassicGameOfLifePlugin = GameOfLifePlugin<components::cell::Cell2d, ClassicCellState>;
+
+#[cfg(feature = "2D")]
+pub type WireWorldGameOfLifePlugin =
+    GameOfLifePlugin<components::cell::Cell2d, components::WorldWireCellState>;
+
 pub struct GameOfLifePlugin<C, S> {
     tick_time_step: Option<f64>,
     phantom_c: PhantomData<C>,
@@ -22,8 +29,18 @@ impl<C: Cell + Component + Debug, S: CellState + Component + Debug> Plugin
     for GameOfLifePlugin<C, S>
 {
     fn build(&self, app: &mut AppBuilder) {
-        let system_set =
-            SystemSet::new().with_system(systems::cells::handle_cells::<C, S>.system());
+        let system_set = SystemSet::new()
+            .with_system(systems::cells::handle_cells::<C, S>.system().label("cells"))
+            .with_system(
+                systems::cells::handle_new_cells::<C>
+                    .system()
+                    .after("cells"),
+            )
+            .with_system(
+                systems::cells::handle_new_states::<S>
+                    .system()
+                    .after("cells"),
+            );
         let system_set = if let Some(time_step) = self.tick_time_step {
             system_set.with_run_criteria(FixedTimestep::step(time_step))
         } else {

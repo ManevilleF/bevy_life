@@ -1,18 +1,17 @@
 use crate::components::cell::Cell;
 use crate::components::CellState;
 use crate::resources::CellMap;
-use crate::NewState;
+use crate::{NewCell, NewState};
 use bevy::ecs::component::Component;
 use bevy::prelude::*;
-use std::fmt::Debug;
 
 pub fn handle_cells<C, S>(
     mut commands: Commands,
     query: Query<(Entity, &C, &S)>,
     map: Res<CellMap<C>>,
 ) where
-    C: Cell + Component + Debug,
-    S: CellState + Component + Debug,
+    C: Cell + Component,
+    S: CellState + Component,
 {
     for (entity, cell, state) in query.iter() {
         let neighbor_coords = cell.neighbor_coordinates();
@@ -24,5 +23,31 @@ pub fn handle_cells<C, S>(
         let new_state = state.new_cell_state(&neighbor_states);
         let mut entity_cmd = commands.entity(entity);
         entity_cmd.insert(NewState(new_state));
+    }
+}
+
+pub fn handle_new_cells<C>(
+    mut commands: Commands,
+    query: Query<(Entity, &NewCell<C>)>,
+    mut map: ResMut<CellMap<C>>,
+) where
+    C: Cell + Component,
+{
+    for (entity, new_cell) in query.iter() {
+        let mut entity_cmd = commands.entity(entity);
+        entity_cmd.insert(new_cell.0.clone());
+        entity_cmd.remove::<NewCell<C>>();
+        map.insert_cell(new_cell.0.coords().clone(), entity);
+    }
+}
+
+pub fn handle_new_states<S>(mut commands: Commands, query: Query<(Entity, &NewState<S>)>)
+where
+    S: CellState + Component,
+{
+    for (entity, new_state) in query.iter() {
+        let mut entity_cmd = commands.entity(entity);
+        entity_cmd.insert(new_state.0.clone());
+        entity_cmd.remove::<NewState<S>>();
     }
 }
