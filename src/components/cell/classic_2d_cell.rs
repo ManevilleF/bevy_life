@@ -2,6 +2,27 @@ use crate::components::cell::Cell;
 use bevy::prelude::IVec2;
 use std::ops::Deref;
 
+lazy_static::lazy_static! {
+    static ref NEIGHBOR_COORDINATES: [IVec2; 8] = [
+        // Bottom left
+        IVec2::new(-1, 0),
+        // Top Left
+        IVec2::new(-1, 1),
+        // Top
+        IVec2::new(0, 1),
+        // Top Right
+        IVec2::new(1, 1),
+        // Right
+        IVec2::new(1, 0),
+        // Bottom Right
+        IVec2::new(1, -1),
+        // Bottom
+        IVec2::new(0, -1),
+        // Bottom Left
+        IVec2::new(-1, -1),
+    ];
+}
+
 #[derive(Debug)]
 pub struct Cell2d {
     pub coords: IVec2,
@@ -22,24 +43,10 @@ impl Cell for Cell2d {
         &self.coords
     }
 
-    fn neighbor_coordinates(cell_coordinates: Self::Coordinates) -> Vec<Self::Coordinates> {
-        vec![
-            // Bottom left
-            cell_coordinates + IVec2::new(-1, 0),
-            // Top Left
-            cell_coordinates + IVec2::new(-1, 1),
-            // Top
-            cell_coordinates + IVec2::new(0, 1),
-            // Top Right
-            cell_coordinates + IVec2::new(1, 1),
-            // Right
-            cell_coordinates + IVec2::new(1, 0),
-            // Bottom Right
-            cell_coordinates + IVec2::new(1, -1),
-            // Bottom
-            cell_coordinates + IVec2::new(0, -1),
-            // Bottom Left
-            cell_coordinates + IVec2::new(-1, -1),
-        ]
+    fn neighbor_coordinates(&self) -> Vec<Self::Coordinates> {
+        NEIGHBOR_COORDINATES
+            .iter()
+            .map(|c| *c + *self.coords())
+            .collect()
     }
 }

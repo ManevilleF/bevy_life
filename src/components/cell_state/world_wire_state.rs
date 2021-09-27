@@ -5,6 +5,7 @@ use crate::components::CellState;
 /// -Electron heads (`ElectronHead`) become electron tails in the succeeding generation.
 /// -Electron tails (`ElectronTail`) become conductors.
 /// -Conductors (`Conductor`) become electron heads if exactly one or two neighboring cells are electron heads. Otherwise, they remain as conductors.
+#[derive(Clone, Debug)]
 pub enum WorldWireCellState {
     Conductor,
     ElectronHead,
@@ -12,7 +13,7 @@ pub enum WorldWireCellState {
 }
 
 impl CellState for WorldWireCellState {
-    fn new_cell_state(&self, neighbor_cells: &Vec<Self>) -> Self {
+    fn new_cell_state(&self, neighbor_cells: &[&Self]) -> Self {
         match self {
             Self::Conductor => {
                 let electron_head_count = neighbor_cells

@@ -10,6 +10,7 @@ license-file = "./LICENSE"
 [dependencies]
 rand = "0.8"
 rand_seeder = "0.2"
+lazy_static = "1.4"
 
 [dependencies.bevy]
 version = "0.5"
