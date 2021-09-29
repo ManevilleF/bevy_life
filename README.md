@@ -12,14 +12,14 @@ See:
 
 ## Examples
 
-### Classic 2D
+For every example pressing space reloads the board
 
-Run `cargo run --example 2d_classic --features auto-coloring --release` (the release feature flag enables optimizations)
+1. Classic 2D
 
-Press space to reload the board
+    Run `cargo run --example 2d_classic --features auto-coloring --release`
+    ![Alt](./docs/2d_classic_demo.gif "cyclic demo gif")
 
-### Cyclic 2D
+2. Cyclic 2D
 
-Run `cargo run --example 2d_cyclic --features auto-coloring --release` (the release feature flag enables optimizations)
-
-Press space to reload the board
+    Run `cargo run --example 2d_cyclic --features auto-coloring --release`
+   ![Alt](./docs/2d_cyclic_demo.gif "cyclic demo gif")
