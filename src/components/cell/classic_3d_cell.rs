@@ -1,4 +1,4 @@
-use crate::components::cell::Cell;
+use crate::components::Cell;
 use bevy::prelude::IVec3;
 use std::ops::Deref;
 
@@ -65,6 +65,7 @@ lazy_static::lazy_static! {
     ];
 }
 
+/// Classic cube 3D cell, it has 26 neighbors and uses `IVec3` coordinates
 #[derive(Debug, Clone)]
 pub struct Cell3d {
     pub coords: IVec3,
@@ -90,5 +91,11 @@ impl Cell for Cell3d {
             .iter()
             .map(|c| *c + *self.coords())
             .collect()
+    }
+}
+
+impl Cell3d {
+    pub fn new(coords: IVec3) -> Self {
+        Self { coords }
     }
 }

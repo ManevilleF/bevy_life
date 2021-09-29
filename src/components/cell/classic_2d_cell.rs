@@ -1,4 +1,4 @@
-use crate::components::cell::Cell;
+use crate::components::Cell;
 use bevy::prelude::IVec2;
 use std::ops::Deref;
 
@@ -23,8 +23,10 @@ lazy_static::lazy_static! {
     ];
 }
 
+/// Classic 2D square cell. It has 8 neighbors and uses `IVec2` coordinates.
 #[derive(Debug, Clone)]
 pub struct Cell2d {
+    /// The 2D cell coordinates
     pub coords: IVec2,
 }
 
@@ -48,6 +50,12 @@ impl Cell for Cell2d {
             .iter()
             .map(|c| *c + *self.coords())
             .collect()
+    }
+}
+
+impl Cell2d {
+    pub fn new(coords: IVec2) -> Self {
+        Self { coords }
     }
 }
 

@@ -1,15 +1,12 @@
 use bevy::prelude::*;
-use bevy_life::cell::Cell2d;
-use bevy_life::{
-    NewCell2d, NewWireWorldCellState, WireWorldCellState, WireWorldGameOfLife2dPlugin,
-};
+use bevy_life::{Cell2d, CellMap, WireWorldCellState, WireWorldGameOfLife2dPlugin};
 
 struct MapEntity(pub Entity);
 
 fn main() {
     App::build()
         .add_plugins(DefaultPlugins)
-        .add_plugin(WireWorldGameOfLife2dPlugin::default())
+        .add_plugin(WireWorldGameOfLife2dPlugin::new(0.1))
         .insert_resource(WindowDescriptor {
             title: "Game Of Life".to_string(),
             width: 1000.,
@@ -87,7 +84,7 @@ fn handle_mouse_input(
                     ),
                     ..Default::default()
                 })
-                .insert(NewCell2d::new(position))
+                .insert(Cell2d::new(position))
                 .insert(WireWorldCellState::Conductor);
         });
     }
@@ -98,10 +95,12 @@ fn handle_reset(
     keys: Res<Input<KeyCode>>,
     map: Res<MapEntity>,
     mut assets: ResMut<Assets<ColorMaterial>>,
+    mut cell_map: ResMut<CellMap<Cell2d>>,
 ) {
     if keys.just_released(KeyCode::Space) {
         commands.entity(map.0).despawn_recursive();
         commands.remove_resource::<MapEntity>();
+        cell_map.clear();
         println!("regenerating map");
         spawn_map(&mut commands, &mut assets);
     }
@@ -124,13 +123,13 @@ fn spawn_map(commands: &mut Commands, assets: &mut Assets<ColorMaterial>) {
                     {
                         continue;
                     }
-                    let state = NewWireWorldCellState::new(if x == 0 && y == -map_size {
+                    let state = if x == 0 && y == -map_size {
                         WireWorldCellState::ElectronTail
                     } else if x == 1 && y == -map_size {
                         WireWorldCellState::ElectronHead
                     } else {
                         WireWorldCellState::Conductor
-                    });
+                    };
                     builder
                         .spawn_bundle(SpriteBundle {
                             sprite: Sprite::new(Vec2::splat(sprite_size - 1.)),
@@ -142,7 +141,7 @@ fn spawn_map(commands: &mut Commands, assets: &mut Assets<ColorMaterial>) {
                             material: material.clone(),
                             ..Default::default()
                         })
-                        .insert(NewCell2d::new(IVec2::new(x, y)))
+                        .insert(Cell2d::new(IVec2::new(x, y)))
                         .insert(state);
                 }
             }

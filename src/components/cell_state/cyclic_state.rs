@@ -15,6 +15,14 @@ const CYCLIC_COLORS: [Color; 9] = [
     Color::PURPLE,
 ];
 
+/// Basic cyclic cellular automaton state and rules. The rules are the following:
+///
+/// > As with any cellular automaton, the cyclic cellular automaton consists of a regular grid of cells in one or more dimensions.
+/// > The cells can take on any of `n` states, ranging from `0`to `n − 1`. The first generation starts out with random states in each of the cells.
+/// > In each subsequent generation, if a cell has a neighboring cell whose value is the successor of the cell's value, the cell is *consumed* and takes on the succeeding value.
+/// > (Note that `0` is the successor of `n − 1`.
+///
+/// For this type we use `9` for `n` and arbitrary colors.
 #[derive(Debug, Clone, PartialEq)]
 pub struct CyclicCellState(pub Color);
 

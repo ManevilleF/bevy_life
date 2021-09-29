@@ -1,8 +1,8 @@
-use crate::components::cell::Cell;
+use crate::components::Cell;
 #[cfg(feature = "2D")]
-use crate::components::cell::Cell2d;
+use crate::components::Cell2d;
 #[cfg(feature = "3D")]
-use crate::components::cell::Cell3d;
+use crate::components::Cell3d;
 use bevy::prelude::Entity;
 use std::collections::HashMap;
 
@@ -36,5 +36,9 @@ impl<C: Cell> CellMap<C> {
 
     pub fn insert_cell(&mut self, coordinates: C::Coordinates, entity: Entity) {
         self.cells.insert(coordinates, entity);
+    }
+
+    pub fn clear(&mut self) {
+        self.cells.clear();
     }
 }
