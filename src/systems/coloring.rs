@@ -4,6 +4,7 @@ use bevy::ecs::component::Component;
 use bevy::log;
 use bevy::prelude::*;
 
+#[allow(clippy::type_complexity)]
 pub fn color_states<S>(
     mut commands: Commands,
     query: Query<(Entity, &S), (With<Handle<ColorMaterial>>, Changed<S>)>,
@@ -11,7 +12,6 @@ pub fn color_states<S>(
 ) where
     S: CellState + Component,
 {
-    println!("Handling coloring");
     for (entity, state) in query.iter() {
         let mat_index = state.material_index();
         let handle = materials.materials.get(mat_index).cloned();

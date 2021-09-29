@@ -23,14 +23,14 @@ impl Default for WorldWireCellState {
 }
 
 impl CellState for WorldWireCellState {
-    fn new_cell_state(&self, neighbor_cells: &[&Self]) -> Self {
+    fn new_cell_state(&self, neighbor_cells: &[Self]) -> Self {
         match self {
             Self::Conductor => {
                 let electron_head_count = neighbor_cells
                     .iter()
-                    .filter(|c| matches!(c, Self::ElectronHead))
+                    .filter(|&c| matches!(c, Self::ElectronHead))
                     .count();
-                if electron_head_count == 1 || electron_head_count == 2 {
+                if (1..=2).contains(&electron_head_count) {
                     Self::ElectronHead
                 } else {
                     Self::Conductor

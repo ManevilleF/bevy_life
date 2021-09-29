@@ -75,7 +75,6 @@ impl<C: Cell + Component + Debug, S: CellState + Component + Debug> GameOfLifePl
     #[cfg(feature = "auto-coloring")]
     fn setup_materials(mut commands: Commands, mut assets: ResMut<Assets<ColorMaterial>>) {
         let color_assets = S::setup_materials(&mut assets);
-        println!("materials set: {:#?}", color_assets);
         commands.insert_resource(color_assets);
     }
 }
