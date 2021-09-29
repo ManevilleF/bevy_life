@@ -1,9 +1,10 @@
 #[cfg(feature = "auto-coloring")]
 use bevy::prelude::Assets;
 use std::fmt::Debug;
-pub use {classic_state::*, world_wire_state::*};
+pub use {classic_state::*, cyclic_state::*, world_wire_state::*};
 
 mod classic_state;
+mod cyclic_state;
 mod world_wire_state;
 
 pub trait CellState: Debug + Default + Sized + Clone {

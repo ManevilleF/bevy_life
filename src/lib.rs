@@ -26,6 +26,12 @@ pub type WireWorldGameOfLife2dPlugin =
 pub type WireWorldGameOfLife3dPlugin =
     GameOfLifePlugin<components::cell::Cell3d, components::WorldWireCellState>;
 
+#[cfg(feature = "2D")]
+pub type CyclicGameOfLife2dPlugin = GameOfLifePlugin<components::cell::Cell2d, CyclicCellState>;
+
+#[cfg(feature = "3D")]
+pub type CyclicGameOfLife3dPlugin = GameOfLifePlugin<components::cell::Cell3d, CyclicCellState>;
+
 pub struct GameOfLifePlugin<C, S> {
     tick_time_step: Option<f64>,
     phantom_c: PhantomData<C>,

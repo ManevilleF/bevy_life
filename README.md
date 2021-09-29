@@ -17,3 +17,9 @@ See:
 Run `cargo run --example 2d_classic --features auto-coloring --release` (the release feature flag enables optimizations)
 
 Press space to reload the board
+
+### Cyclic 2D
+
+Run `cargo run --example 2d_cyclic --features auto-coloring --release` (the release feature flag enables optimizations)
+
+Press space to reload the board
