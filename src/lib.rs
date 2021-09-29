@@ -13,11 +13,18 @@ use std::fmt::Debug;
 pub use {components::*, resources::*};
 
 #[cfg(feature = "2D")]
-pub type ClassicGameOfLifePlugin = GameOfLifePlugin<components::cell::Cell2d, ClassicCellState>;
+pub type ClassicGameOfLife2dPlugin = GameOfLifePlugin<components::cell::Cell2d, ClassicCellState>;
 
 #[cfg(feature = "2D")]
-pub type WireWorldGameOfLifePlugin =
+pub type ClassicGameOfLife3dPlugin = GameOfLifePlugin<components::cell::Cell3d, ClassicCellState>;
+
+#[cfg(feature = "2D")]
+pub type WireWorldGameOfLife2dPlugin =
     GameOfLifePlugin<components::cell::Cell2d, components::WorldWireCellState>;
+
+#[cfg(feature = "2D")]
+pub type WireWorldGameOfLife3dPlugin =
+    GameOfLifePlugin<components::cell::Cell3d, components::WorldWireCellState>;
 
 pub struct GameOfLifePlugin<C, S> {
     tick_time_step: Option<f64>,
@@ -48,15 +55,28 @@ impl<C: Cell + Component + Debug, S: CellState + Component + Debug> Plugin
         };
         app.add_system_set(system_set);
         app.insert_resource(CellMap::<C>::default());
+
+        #[cfg(feature = "auto-coloring")]
+        {
+            app.add_startup_system(Self::setup_materials.system());
+            app.add_system(systems::coloring::color_states::<S>.system());
+        }
     }
 }
 
-impl<C, S> GameOfLifePlugin<C, S> {
+impl<C: Cell + Component + Debug, S: CellState + Component + Debug> GameOfLifePlugin<C, S> {
     pub fn new(tick_time_step: f64) -> Self {
         Self {
             tick_time_step: Some(tick_time_step),
             ..Default::default()
         }
+    }
+
+    #[cfg(feature = "auto-coloring")]
+    fn setup_materials(mut commands: Commands, mut assets: ResMut<Assets<ColorMaterial>>) {
+        let color_assets = S::setup_materials(&mut assets);
+        println!("materials set: {:#?}", color_assets);
+        commands.insert_resource(color_assets);
     }
 }
 

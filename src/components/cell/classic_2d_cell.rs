@@ -50,3 +50,95 @@ impl Cell for Cell2d {
             .collect()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn correct_coordinates() {
+        let cell = Cell2d {
+            coords: IVec2::new(10, 10),
+        };
+        let neighbors = cell.neighbor_coordinates();
+        assert_eq!(
+            neighbors,
+            vec![
+                // Bottom left
+                IVec2::new(9, 10),
+                // Top Left
+                IVec2::new(9, 11),
+                // Top
+                IVec2::new(10, 11),
+                // Top Right
+                IVec2::new(11, 11),
+                // Right
+                IVec2::new(11, 10),
+                // Bottom Right
+                IVec2::new(11, 9),
+                // Bottom
+                IVec2::new(10, 9),
+                // Bottom Left
+                IVec2::new(9, 9),
+            ]
+        )
+    }
+
+    #[test]
+    fn correct_coordinates_negative() {
+        let cell = Cell2d {
+            coords: IVec2::new(-10, 10),
+        };
+        let neighbors = cell.neighbor_coordinates();
+        assert_eq!(
+            neighbors,
+            vec![
+                // Bottom left
+                IVec2::new(-11, 10),
+                // Top Left
+                IVec2::new(-11, 11),
+                // Top
+                IVec2::new(-10, 11),
+                // Top Right
+                IVec2::new(-9, 11),
+                // Right
+                IVec2::new(-9, 10),
+                // Bottom Right
+                IVec2::new(-9, 9),
+                // Bottom
+                IVec2::new(-10, 9),
+                // Bottom Left
+                IVec2::new(-11, 9),
+            ]
+        )
+    }
+
+    #[test]
+    fn correct_coordinates_origin() {
+        let cell = Cell2d {
+            coords: IVec2::new(0, 0),
+        };
+        let neighbors = cell.neighbor_coordinates();
+        assert_eq!(
+            neighbors,
+            vec![
+                // Bottom left
+                IVec2::new(-1, 0),
+                // Top Left
+                IVec2::new(-1, 1),
+                // Top
+                IVec2::new(0, 1),
+                // Top Right
+                IVec2::new(1, 1),
+                // Right
+                IVec2::new(1, 0),
+                // Bottom Right
+                IVec2::new(1, -1),
+                // Bottom
+                IVec2::new(0, -1),
+                // Bottom Left
+                IVec2::new(-1, -1),
+            ]
+        )
+    }
+}

@@ -11,7 +11,7 @@ mod classic_2d_cell;
 mod classic_3d_cell;
 
 pub trait Cell: Debug + Clone {
-    type Coordinates: Clone + Debug + Send + Sync + Eq + Hash;
+    type Coordinates: Clone + Debug + Default + Send + Sync + Eq + Hash;
 
     fn coords(&self) -> &Self::Coordinates;
 

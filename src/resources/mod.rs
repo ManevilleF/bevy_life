@@ -1,4 +1,5 @@
-pub use {map::*, map_builder::*};
+pub use map::*;
 
 mod map;
-mod map_builder;
+#[cfg(feature = "auto-coloring")]
+pub mod materials;

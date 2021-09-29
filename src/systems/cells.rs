@@ -13,6 +13,7 @@ pub fn handle_cells<C, S>(
     C: Cell + Component,
     S: CellState + Component,
 {
+    println!("handle_cells");
     for (entity, cell, state) in query.iter() {
         let neighbor_coords = cell.neighbor_coordinates();
         let neighbor_cells = map.get_cell_entities(&neighbor_coords);
@@ -33,6 +34,7 @@ pub fn handle_new_cells<C>(
 ) where
     C: Cell + Component,
 {
+    println!("handle_new_cells");
     for (entity, new_cell) in query.iter() {
         let mut entity_cmd = commands.entity(entity);
         entity_cmd.insert(new_cell.0.clone());
@@ -45,6 +47,7 @@ pub fn handle_new_states<S>(mut commands: Commands, query: Query<(Entity, &NewSt
 where
     S: CellState + Component,
 {
+    println!("handle_new_states");
     for (entity, new_state) in query.iter() {
         let mut entity_cmd = commands.entity(entity);
         entity_cmd.insert(new_state.0.clone());

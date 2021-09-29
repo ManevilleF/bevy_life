@@ -1,0 +1,56 @@
+name: Rust
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: build
+        run: cargo build --verbose
+
+  build_features:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: no default features
+        run: cargo build --verbose --no-default-features
+      - name: 2D
+        run: cargo build --verbose --no-default-features --features 2D
+      - name: 3D
+        run: cargo build --verbose --no-default-features --features 3D
+      - name: auto coloring 2D
+        run: cargo build --verbose --no-default-features --features auto-coloring 2D
+      - name: auto coloring 3D
+        run: cargo build --verbose --no-default-features --features auto-coloring 3D
+
+  build_examples:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: build
+        run: cargo build --verbose --examples
+
+  fmt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Check Formatting
+        run: cargo fmt --all -- --check
+
+  clippy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cargo clippy installation
+        run: rustup component add clippy
+      - name: Cargo clippy check
+        run: cargo clippy --all-targets -- -D warnings

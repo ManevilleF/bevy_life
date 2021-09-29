@@ -1,4 +1,8 @@
 use crate::components::CellState;
+#[cfg(feature = "auto-coloring")]
+use crate::resources::materials::CellStateMaterials;
+#[cfg(feature = "auto-coloring")]
+use bevy::prelude::{Assets, Color, ColorMaterial};
 
 /// Wireworld is a cellular automaton that simulates electronic devices and logic gates by having cells represent electrons traveling across conductors.
 /// Wireworld uses three possible cell states and has the following rules:
@@ -10,6 +14,12 @@ pub enum WorldWireCellState {
     Conductor,
     ElectronHead,
     ElectronTail,
+}
+
+impl Default for WorldWireCellState {
+    fn default() -> Self {
+        Self::Conductor
+    }
 }
 
 impl CellState for WorldWireCellState {
@@ -28,6 +38,26 @@ impl CellState for WorldWireCellState {
             }
             Self::ElectronHead => Self::ElectronTail,
             Self::ElectronTail => Self::Conductor,
+        }
+    }
+
+    #[cfg(feature = "auto-coloring")]
+    fn material_index(&self) -> usize {
+        match self {
+            WorldWireCellState::Conductor => 0,
+            WorldWireCellState::ElectronHead => 1,
+            WorldWireCellState::ElectronTail => 2,
+        }
+    }
+
+    #[cfg(feature = "auto-coloring")]
+    fn setup_materials(materials: &mut Assets<ColorMaterial>) -> CellStateMaterials {
+        CellStateMaterials {
+            materials: vec![
+                materials.add(Color::GOLD.into()),
+                materials.add(Color::CYAN.into()),
+                materials.add(Color::WHITE.into()),
+            ],
         }
     }
 }

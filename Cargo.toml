@@ -8,8 +8,6 @@ license-file = "./LICENSE"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rand = "0.8"
-rand_seeder = "0.2"
 lazy_static = "1.4"
 
 [dependencies.bevy]
@@ -20,8 +18,10 @@ default-features = false
 default = ["2D", "3D"]
 2D = []
 3D = []
+auto-coloring = []
 
 [dev-dependencies]
+rand = "0.8"
 
 [dev-dependencies.bevy]
 version = "0.5"

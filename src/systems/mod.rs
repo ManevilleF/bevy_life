@@ -1,2 +1,3 @@
 pub mod cells;
-pub mod setup;
+#[cfg(feature = "auto-coloring")]
+pub mod coloring;
