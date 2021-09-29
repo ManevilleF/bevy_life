@@ -15,14 +15,14 @@ pub use {components::*, resources::*};
 #[cfg(feature = "2D")]
 pub type ClassicGameOfLife2dPlugin = GameOfLifePlugin<components::cell::Cell2d, ClassicCellState>;
 
-#[cfg(feature = "2D")]
+#[cfg(feature = "3D")]
 pub type ClassicGameOfLife3dPlugin = GameOfLifePlugin<components::cell::Cell3d, ClassicCellState>;
 
 #[cfg(feature = "2D")]
 pub type WireWorldGameOfLife2dPlugin =
     GameOfLifePlugin<components::cell::Cell2d, components::WorldWireCellState>;
 
-#[cfg(feature = "2D")]
+#[cfg(feature = "3D")]
 pub type WireWorldGameOfLife3dPlugin =
     GameOfLifePlugin<components::cell::Cell3d, components::WorldWireCellState>;
 
@@ -58,8 +58,16 @@ impl<C: Cell + Component + Debug, S: CellState + Component + Debug> Plugin
 
         #[cfg(feature = "auto-coloring")]
         {
-            app.add_startup_system(Self::setup_materials.system());
-            app.add_system(systems::coloring::color_states::<S>.system());
+            #[cfg(feature = "2D")]
+            {
+                app.add_startup_system(Self::setup_materials_2d.system());
+                app.add_system(systems::coloring::color_states_2d::<S>.system());
+            }
+            #[cfg(feature = "3D")]
+            {
+                app.add_startup_system(Self::setup_materials_3d.system());
+                app.add_system(systems::coloring::color_states_3d::<S>.system());
+            }
         }
     }
 }
@@ -72,9 +80,21 @@ impl<C: Cell + Component + Debug, S: CellState + Component + Debug> GameOfLifePl
         }
     }
 
-    #[cfg(feature = "auto-coloring")]
-    fn setup_materials(mut commands: Commands, mut assets: ResMut<Assets<ColorMaterial>>) {
-        let color_assets = S::setup_materials(&mut assets);
+    #[cfg(all(feature = "auto-coloring", feature = "2D"))]
+    fn setup_materials_2d(
+        mut commands: Commands,
+        mut assets: ResMut<Assets<bevy::prelude::ColorMaterial>>,
+    ) {
+        let color_assets = S::setup_materials_2d(&mut assets);
+        commands.insert_resource(color_assets);
+    }
+
+    #[cfg(all(feature = "auto-coloring", feature = "3D"))]
+    fn setup_materials_3d(
+        mut commands: Commands,
+        mut assets: ResMut<Assets<bevy::prelude::StandardMaterial>>,
+    ) {
+        let color_assets = S::setup_materials_3d(&mut assets);
         commands.insert_resource(color_assets);
     }
 }

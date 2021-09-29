@@ -2,7 +2,7 @@
 
 [![workflow](https://github.com/ManevilleF/bevy_life/actions/workflows/rust.yml/badge.svg)](https://github.com/ManevilleF/bevy_life/actions/workflows/rust.yml)
 
-`bevy_game_of_life` is a generic plugin for any Conway's game of life implementation and rules.
+`bevy_life` is a generic plugin for any Conway's game of life implementation and rules.
 From the classic 2D to [WireWorld] and 3D rules, the plugin is completely generic and dynamic.
 
 ## Examples

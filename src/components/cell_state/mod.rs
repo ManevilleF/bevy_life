@@ -1,7 +1,5 @@
 #[cfg(feature = "auto-coloring")]
-use crate::resources::materials::CellStateMaterials;
-#[cfg(feature = "auto-coloring")]
-use bevy::prelude::{Assets, ColorMaterial};
+use bevy::prelude::Assets;
 use std::fmt::Debug;
 pub use {classic_state::*, world_wire_state::*};
 
@@ -18,6 +16,13 @@ pub trait CellState: Debug + Default + Sized + Clone {
     #[cfg(feature = "auto-coloring")]
     fn material_index(&self) -> usize;
 
-    #[cfg(feature = "auto-coloring")]
-    fn setup_materials(materials: &mut Assets<ColorMaterial>) -> CellStateMaterials;
+    #[cfg(all(feature = "auto-coloring", feature = "2D"))]
+    fn setup_materials_2d(
+        materials: &mut Assets<bevy::prelude::ColorMaterial>,
+    ) -> crate::resources::materials::CellStateMaterials2d;
+
+    #[cfg(all(feature = "auto-coloring", feature = "3D"))]
+    fn setup_materials_3d(
+        materials: &mut Assets<bevy::prelude::StandardMaterial>,
+    ) -> crate::resources::materials::CellStateMaterials3d;
 }

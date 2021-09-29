@@ -1,9 +1,13 @@
 [package]
-name = "bevy_game_of_life"
+name = "bevy_life"
 version = "0.1.0"
 edition = "2018"
 authors = ["Felix de Maneville <felix.maneville@gmail.com>"]
 license-file = "./LICENSE"
+repository = "https://github.com/ManevilleF/bevy_life"
+readme = "README.md"
+description = "Generic and dynamic game of life implementation for bevy"
+keywords = ["bevy", "conway", "game", "life", "wireworld"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

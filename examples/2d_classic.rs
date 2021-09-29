@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use bevy_game_of_life::{ClassicGameOfLife2dPlugin, NewCell2d, NewClassicCellState};
+use bevy_life::{ClassicGameOfLife2dPlugin, NewCell2d, NewClassicCellState};
 use rand::Rng;
 
 struct MapEntity(pub Entity);
