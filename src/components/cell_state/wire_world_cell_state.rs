@@ -7,20 +7,20 @@ use bevy::prelude::{Assets, Color};
 /// -Electron heads (`ElectronHead`) become electron tails in the succeeding generation.
 /// -Electron tails (`ElectronTail`) become conductors.
 /// -Conductors (`Conductor`) become electron heads if exactly one or two neighboring cells are electron heads. Otherwise, they remain as conductors.
-#[derive(Clone, Debug)]
-pub enum WorldWireCellState {
+#[derive(Clone, Debug, PartialEq)]
+pub enum WireWorldCellState {
     Conductor,
     ElectronHead,
     ElectronTail,
 }
 
-impl Default for WorldWireCellState {
+impl Default for WireWorldCellState {
     fn default() -> Self {
         Self::Conductor
     }
 }
 
-impl CellState for WorldWireCellState {
+impl CellState for WireWorldCellState {
     fn new_cell_state(&self, neighbor_cells: &[Self]) -> Self {
         match self {
             Self::Conductor => {
@@ -42,9 +42,9 @@ impl CellState for WorldWireCellState {
     #[cfg(feature = "auto-coloring")]
     fn material_index(&self) -> usize {
         match self {
-            WorldWireCellState::Conductor => 0,
-            WorldWireCellState::ElectronHead => 1,
-            WorldWireCellState::ElectronTail => 2,
+            WireWorldCellState::Conductor => 0,
+            WireWorldCellState::ElectronHead => 1,
+            WireWorldCellState::ElectronTail => 2,
         }
     }
 

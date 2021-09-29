@@ -11,6 +11,7 @@ pub type Map2d = CellMap<Cell2d>;
 #[cfg(feature = "3D")]
 pub type Map3d = CellMap<Cell3d>;
 
+/// Button action type
 #[derive(Clone)]
 pub struct CellMap<C: Cell> {
     cells: HashMap<C::Coordinates, Entity>,

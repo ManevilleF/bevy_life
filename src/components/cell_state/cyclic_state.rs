@@ -15,7 +15,7 @@ const CYCLIC_COLORS: [Color; 9] = [
     Color::PURPLE,
 ];
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct CyclicCellState(pub Color);
 
 impl CellState for CyclicCellState {
@@ -45,7 +45,7 @@ impl CellState for CyclicCellState {
     ) -> crate::materials::CellStateMaterials2d {
         let materials = CYCLIC_COLORS
             .iter()
-            .map(|c| materials.add(c.clone().into()))
+            .map(|c| materials.add((*c).into()))
             .collect();
         crate::materials::CellStateMaterials2d { materials }
     }
@@ -56,7 +56,7 @@ impl CellState for CyclicCellState {
     ) -> crate::materials::CellStateMaterials3d {
         let materials = CYCLIC_COLORS
             .iter()
-            .map(|c| materials.add(c.clone().into()))
+            .map(|c| materials.add((*c).into()))
             .collect();
         crate::materials::CellStateMaterials3d { materials }
     }
@@ -74,6 +74,6 @@ impl CyclicCellState {
 
 impl Default for CyclicCellState {
     fn default() -> Self {
-        Self(CYCLIC_COLORS[0].clone())
+        Self(CYCLIC_COLORS[0])
     }
 }

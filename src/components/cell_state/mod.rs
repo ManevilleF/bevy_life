@@ -1,13 +1,13 @@
 #[cfg(feature = "auto-coloring")]
 use bevy::prelude::Assets;
 use std::fmt::Debug;
-pub use {classic_state::*, cyclic_state::*, world_wire_state::*};
+pub use {classic_state::*, cyclic_state::*, wire_world_cell_state::*};
 
 mod classic_state;
 mod cyclic_state;
-mod world_wire_state;
+mod wire_world_cell_state;
 
-pub trait CellState: Debug + Default + Sized + Clone {
+pub trait CellState: Debug + Default + Sized + Clone + PartialEq {
     fn new_cell_state(&self, neighbor_cells: &[Self]) -> Self;
 
     fn apply_new_cell_state(&mut self, neighbor_cells: &[Self]) {

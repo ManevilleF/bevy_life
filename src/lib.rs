@@ -20,11 +20,11 @@ pub type ClassicGameOfLife3dPlugin = GameOfLifePlugin<components::cell::Cell3d, 
 
 #[cfg(feature = "2D")]
 pub type WireWorldGameOfLife2dPlugin =
-    GameOfLifePlugin<components::cell::Cell2d, components::WorldWireCellState>;
+    GameOfLifePlugin<components::cell::Cell2d, components::WireWorldCellState>;
 
 #[cfg(feature = "3D")]
 pub type WireWorldGameOfLife3dPlugin =
-    GameOfLifePlugin<components::cell::Cell3d, components::WorldWireCellState>;
+    GameOfLifePlugin<components::cell::Cell3d, components::WireWorldCellState>;
 
 #[cfg(feature = "2D")]
 pub type CyclicGameOfLife2dPlugin = GameOfLifePlugin<components::cell::Cell2d, CyclicCellState>;

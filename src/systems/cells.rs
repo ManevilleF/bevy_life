@@ -21,8 +21,10 @@ pub fn handle_cells<C, S>(
             .map(|e| query.get(e).unwrap().2.clone())
             .collect();
         let new_state = state.new_cell_state(&neighbor_states);
-        let mut entity_cmd = commands.entity(entity);
-        entity_cmd.insert(NewState(new_state));
+        if &new_state != state {
+            let mut entity_cmd = commands.entity(entity);
+            entity_cmd.insert(NewState(new_state));
+        }
     }
 }
 

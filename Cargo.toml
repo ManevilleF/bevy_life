@@ -11,18 +11,18 @@ keywords = ["bevy", "conway", "game", "life", "wireworld"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[features]
+default = ["2D", "3D"]
+2D = []
+3D = []
+auto-coloring = []
+
 [dependencies]
 lazy_static = "1.4"
 
 [dependencies.bevy]
 version = "0.5"
 default-features = false
-
-[features]
-default = ["2D", "3D"]
-2D = []
-3D = []
-auto-coloring = []
 
 [dev-dependencies]
 rand = "0.8"
@@ -31,3 +31,11 @@ rand = "0.8"
 version = "0.5"
 features = ["render", "bevy_winit", "png", "x11", "bevy_wgpu"]
 default-features = false
+
+# Enable optimizations for dependencies (incl. Bevy), but not for our code:
+[profile.dev.package."*"]
+opt-level = 3
+
+# Maybe also enable only a small amount of optimization for our code:
+[profile.dev]
+opt-level = 1
