@@ -30,9 +30,9 @@ jobs:
       - name: 3D
         run: cargo build --verbose --no-default-features --features 3D
       - name: auto coloring 2D
-        run: cargo build --verbose --no-default-features --features auto-coloring 2D
+        run: cargo build --verbose --no-default-features --features "auto-coloring 2D"
       - name: auto coloring 3D
-        run: cargo build --verbose --no-default-features --features auto-coloring 3D
+        run: cargo build --verbose --no-default-features --features "auto-coloring 3D"
 
   build_examples:
     runs-on: ubuntu-latest
