@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use bevy_life::{Cell2d, ClassicCellState, ClassicGameOfLife2dPlugin};
+use bevy_life::{Cell2d, ClassicCellState, GameOfLife2dPlugin};
 use rand::Rng;
 
 struct MapEntity(pub Entity);
@@ -7,7 +7,7 @@ struct MapEntity(pub Entity);
 fn main() {
     App::build()
         .add_plugins(DefaultPlugins)
-        .add_plugin(ClassicGameOfLife2dPlugin::default())
+        .add_plugin(GameOfLife2dPlugin::default())
         .insert_resource(WindowDescriptor {
             title: "Game Of Life".to_string(),
             width: 1000.,

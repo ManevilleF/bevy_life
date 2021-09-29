@@ -11,7 +11,9 @@ pub type Map2d = CellMap<Cell2d>;
 #[cfg(feature = "3D")]
 pub type Map3d = CellMap<Cell3d>;
 
-/// Button action type
+/// Global Cell container resource , uses a `Hashmap`to allow non-continuous cells.
+///
+/// The resource is automatically added and refreshed, it may be used for clearing (see examples).
 #[derive(Clone)]
 pub struct CellMap<C: Cell> {
     cells: HashMap<C::Coordinates, Entity>,

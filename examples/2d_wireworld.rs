@@ -1,12 +1,12 @@
 use bevy::prelude::*;
-use bevy_life::{Cell2d, CellMap, WireWorldCellState, WireWorldGameOfLife2dPlugin};
+use bevy_life::{Cell2d, CellMap, WireWorld2dPlugin, WireWorldCellState};
 
 struct MapEntity(pub Entity);
 
 fn main() {
     App::build()
         .add_plugins(DefaultPlugins)
-        .add_plugin(WireWorldGameOfLife2dPlugin::new(0.1))
+        .add_plugin(WireWorld2dPlugin::new(0.1))
         .insert_resource(WindowDescriptor {
             title: "Game Of Life".to_string(),
             width: 1000.,

@@ -13,33 +13,34 @@ use std::fmt::Debug;
 pub use {components::*, resources::*};
 
 #[cfg(feature = "2D")]
-pub type ClassicGameOfLife2dPlugin = GameOfLifePlugin<components::Cell2d, ClassicCellState>;
+pub type GameOfLife2dPlugin = CellularAutomatonPlugin<components::Cell2d, ClassicCellState>;
 
 #[cfg(feature = "3D")]
-pub type ClassicGameOfLife3dPlugin = GameOfLifePlugin<components::Cell3d, ClassicCellState>;
+pub type GameOfLife3dPlugin = CellularAutomatonPlugin<components::Cell3d, ClassicCellState>;
 
 #[cfg(feature = "2D")]
-pub type WireWorldGameOfLife2dPlugin =
-    GameOfLifePlugin<components::Cell2d, components::WireWorldCellState>;
+pub type WireWorld2dPlugin =
+    CellularAutomatonPlugin<components::Cell2d, components::WireWorldCellState>;
 
 #[cfg(feature = "3D")]
-pub type WireWorldGameOfLife3dPlugin =
-    GameOfLifePlugin<components::Cell3d, components::WireWorldCellState>;
+pub type WireWorld3dPlugin =
+    CellularAutomatonPlugin<components::Cell3d, components::WireWorldCellState>;
 
 #[cfg(feature = "2D")]
-pub type CyclicGameOfLife2dPlugin = GameOfLifePlugin<components::Cell2d, CyclicCellState>;
+pub type CyclicAutomaton2dPlugin = CellularAutomatonPlugin<components::Cell2d, CyclicCellState>;
 
 #[cfg(feature = "3D")]
-pub type CyclicGameOfLife3dPlugin = GameOfLifePlugin<components::Cell3d, CyclicCellState>;
+pub type CyclicAutomaton3dPlugin = CellularAutomatonPlugin<components::Cell3d, CyclicCellState>;
 
-pub struct GameOfLifePlugin<C, S> {
+pub struct CellularAutomatonPlugin<C, S> {
+    /// Custom time step constraint value for the systems. If not set, the systems will run every frame.
     pub tick_time_step: Option<f64>,
     pub phantom_c: PhantomData<C>,
     pub phantom_s: PhantomData<S>,
 }
 
 impl<C: Cell + Component + Debug, S: CellState + Component + Debug> Plugin
-    for GameOfLifePlugin<C, S>
+    for CellularAutomatonPlugin<C, S>
 {
     fn build(&self, app: &mut AppBuilder) {
         let system_set = SystemSet::new()
@@ -73,7 +74,7 @@ impl<C: Cell + Component + Debug, S: CellState + Component + Debug> Plugin
     }
 }
 
-impl<C: Cell + Component + Debug, S: CellState + Component + Debug> GameOfLifePlugin<C, S> {
+impl<C: Cell + Component + Debug, S: CellState + Component + Debug> CellularAutomatonPlugin<C, S> {
     pub fn new(tick_time_step: f64) -> Self {
         Self {
             tick_time_step: Some(tick_time_step),
@@ -100,7 +101,7 @@ impl<C: Cell + Component + Debug, S: CellState + Component + Debug> GameOfLifePl
     }
 }
 
-impl<C, S> Default for GameOfLifePlugin<C, S> {
+impl<C, S> Default for CellularAutomatonPlugin<C, S> {
     fn default() -> Self {
         Self {
             tick_time_step: None,
