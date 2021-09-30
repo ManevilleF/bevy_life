@@ -7,7 +7,7 @@ license-file = "./LICENSE"
 repository = "https://github.com/ManevilleF/bevy_life"
 readme = "README.md"
 description = "Generic and dynamic cellular automaton lib for bevy"
-keywords = ["bevy", "conway", "game", "life", "wireworld", "cellular", "automata", "automaton"]
+keywords = ["conway", "game of life", "wireworld", "cellular", "automaton"]
 exclude = ["examples", "docs", ".github", ".gitignore"]
 documentation = "http://docs.rs/bevy_life"
 
