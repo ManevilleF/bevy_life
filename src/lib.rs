@@ -2,6 +2,11 @@
 //!
 //! [![workflow](https://github.com/ManevilleF/bevy_life/actions/workflows/rust.yml/badge.svg)](https://github.com/ManevilleF/bevy_life/actions/workflows/rust.yml)
 //!
+//! [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+//! [![Crates.io](https://img.shields.io/crates/v/bevy_life.svg)](https://crates.io/crates/bevy_life)
+//! [![aragog](https://docs.rs/bevy_life/badge.svg)](https://docs.rs/bevy_life)
+//! [![dependency status](https://deps.rs/crate/bevy_life/0.1.0/status.svg)](https://deps.rs/crate/bevy_life)
+//!
 //! `bevy_life` is a generic plugin for [cellular automaton](https://en.wikipedia.org/wiki/Cellular_automaton).
 //! From the classic 2D [Conway's game of life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) to [WireWorld](https://en.wikipedia.org/wiki/Wireworld) and 3D rules, the plugin is completely generic and dynamic.
 //!
@@ -133,8 +138,6 @@ impl<C: Cell + Component + Debug, S: CellState + Component + Debug> Plugin
                 app.add_system(systems::coloring::color_states_3d::<S>.system());
             }
         }
-        #[cfg(feature = "debug")]
-        {}
     }
 }
 
