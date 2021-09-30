@@ -68,6 +68,7 @@ lazy_static::lazy_static! {
 /// Classic cube 3D cell, it has 26 neighbors and uses `IVec3` coordinates
 #[derive(Debug, Clone)]
 pub struct Cell3d {
+    /// The 3D cell coordinates
     pub coords: IVec3,
 }
 
@@ -95,6 +96,7 @@ impl Cell for Cell3d {
 }
 
 impl Cell3d {
+    /// Instantiates a new `Cell3D` with `coords` values
     pub fn new(coords: IVec3) -> Self {
         Self { coords }
     }

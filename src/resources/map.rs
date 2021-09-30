@@ -7,8 +7,10 @@ use bevy::prelude::Entity;
 use std::collections::HashMap;
 
 #[cfg(feature = "2D")]
+/// A `CellMap` implementation for `Cell2d`
 pub type Map2d = CellMap<Cell2d>;
 #[cfg(feature = "3D")]
+/// A `CellMap` implementation for `Cell23d`
 pub type Map3d = CellMap<Cell3d>;
 
 /// Global Cell container resource , uses a `Hashmap`to allow non-continuous cells.
@@ -28,6 +30,8 @@ impl<C: Cell> Default for CellMap<C> {
 }
 
 impl<C: Cell> CellMap<C> {
+    /// Retrieves every cell entity matching `coords`.
+    /// If some coordinates are not stored in the cell map they will be ignored.
     pub fn get_cell_entities(&self, coords: &[C::Coordinates]) -> Vec<Entity> {
         coords
             .iter()
@@ -36,10 +40,26 @@ impl<C: Cell> CellMap<C> {
             .collect()
     }
 
+    /// Adds a `Cell` entity to the map at `coordinates`.
+    ///
+    /// # Note:
+    ///
+    /// This operation is done automatically when you add a `Cell` component to an entity.
     pub fn insert_cell(&mut self, coordinates: C::Coordinates, entity: Entity) {
         self.cells.insert(coordinates, entity);
     }
 
+    /// Removes a cell from the map, returning the `Entity` value if it was present.
+    ///
+    /// # Note:
+    ///
+    /// Use this method to remove cell entities from the map if you remove a `Cell` component from an `Entity`
+    /// or *despawn* an `Entity` with a `Cell` component.
+    pub fn remove_cell(&mut self, coordinates: &C::Coordinates) -> Option<Entity> {
+        self.cells.remove(coordinates)
+    }
+
+    /// Clears the entire map
     pub fn clear(&mut self) {
         self.cells.clear();
     }

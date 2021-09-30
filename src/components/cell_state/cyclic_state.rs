@@ -71,10 +71,12 @@ impl CellState for CyclicCellState {
 }
 
 impl CyclicCellState {
+    /// The index of `self` in the used `CYCLIC_COLORS` const color array
     pub fn pos(&self) -> usize {
         CYCLIC_COLORS.iter().position(|&c| c == self.0).unwrap_or(0)
     }
 
+    /// Return the available colors
     pub const fn available_colors() -> &'static [Color; 9] {
         &CYCLIC_COLORS
     }

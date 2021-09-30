@@ -16,6 +16,7 @@ default = ["2D", "3D"]
 2D = []
 3D = []
 auto-coloring = []
+debug = []
 
 [dependencies]
 lazy_static = "1.4"

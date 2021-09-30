@@ -10,8 +10,11 @@ use bevy::prelude::{Assets, Color};
 /// - Conductors (`Conductor`) become electron heads if exactly one or two neighboring cells are electron heads. Otherwise, they remain as conductors.
 #[derive(Clone, Debug, PartialEq)]
 pub enum WireWorldCellState {
+    /// Conductor cell state
     Conductor,
+    /// Electron head cell state
     ElectronHead,
+    /// Electron tail cell state
     ElectronTail,
 }
 

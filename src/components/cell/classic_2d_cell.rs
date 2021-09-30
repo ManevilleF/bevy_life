@@ -54,6 +54,7 @@ impl Cell for Cell2d {
 }
 
 impl Cell2d {
+    /// Instantiates a new `Cell2D` with `coords` values
     pub fn new(coords: IVec2) -> Self {
         Self { coords }
     }
