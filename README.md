@@ -56,3 +56,19 @@ Run `cargo run --example 2d_wireworld --features auto-coloring --release`
 The example is dynamic, use the left mouse click to create a conductor cell on an empty space or to create an electron head
 
 ![Alt](./docs/2d_wireworld_demo.gif "wireworld demo gif")
+
+## Cargo Features
+
+No feature is required for the plugin to work and the main traits `Cell` and `CellState` are always available.
+But you may enable the following features
+
+- `2D` (enabled by default): Enables 2D types like:
+  - `Cell2d` (square cell with 8 neighbors)
+  - plugin presets: `GameOfLife2dPlugin`, `WireWorld2dPlugin`, `CyclicAutomaton2dPlugin`
+- `3D` (enabled by default): Enables 3D types like:
+    - `Cell3d` (cube cell with 26 neighbors)
+    - plugin presets: `GameOfLife3dPlugin`, `WireWorld3dPlugin`, `CyclicAutomaton3dPlugin`
+- `auto-coloring`:
+  - Enables `CellStateMaterials2d` (if `2D`) and `CellStateMaterials3d` (if `3D`) types to contain material handles
+  - The `CellState` type now requires to build either of the previous type (according to 2D/3D feature gates)
+  - All `CellState` components with materials will be colored according to their type.
