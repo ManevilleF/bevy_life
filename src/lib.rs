@@ -53,8 +53,6 @@
 #![forbid(unsafe_code)]
 #![deny(warnings)]
 
-use crate::components::Cell;
-use crate::components::CellState;
 use bevy::core::FixedTimestep;
 use bevy::ecs::component::Component;
 use bevy::prelude::*;

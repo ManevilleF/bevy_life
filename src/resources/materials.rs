@@ -6,6 +6,7 @@ use bevy::prelude::*;
 #[derive(Debug)]
 /// Global material handle container ressource for 2D
 pub struct CellStateMaterials2d {
+    /// material handles vector
     pub materials: Vec<Handle<bevy::prelude::ColorMaterial>>,
 }
 
@@ -13,5 +14,6 @@ pub struct CellStateMaterials2d {
 #[derive(Debug)]
 /// Global material handle container ressource for 3D
 pub struct CellStateMaterials3d {
+    /// material handles vector
     pub materials: Vec<Handle<bevy::prelude::StandardMaterial>>,
 }

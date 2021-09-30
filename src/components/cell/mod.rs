@@ -13,6 +13,7 @@ mod classic_3d_cell;
 /// Trait defining a Cell, every cell type (2d, 3d, hexagonal, etc) must implement this trait
 /// and define an associated `Coordinates` type
 pub trait Cell: Debug + Clone {
+    /// Associated coordinates type
     type Coordinates: Clone + Debug + Default + Send + Sync + Eq + Hash;
 
     /// Retrieves the cell coordinates
