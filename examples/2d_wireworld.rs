@@ -51,9 +51,10 @@ fn handle_mouse_input(
         None => return,
         Some(p) => mouse_coords(window, p),
     };
+    let mouse_position = mouse_position / sprite_size as f32;
     let position = IVec2::new(
-        (mouse_position.x / sprite_size as f32) as i32,
-        (mouse_position.y / sprite_size as f32) as i32,
+        mouse_position.x.round() as i32,
+        mouse_position.y.round() as i32,
     );
     let mut found_cell_state = None;
     for (cell, state) in query.iter_mut() {
