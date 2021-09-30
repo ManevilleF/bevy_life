@@ -9,6 +9,30 @@ See:
  - [Game of life variations](https://cs.stanford.edu/people/eroberts/courses/soco/projects/2008-09/modeling-natural-systems/gameOfLife2.html)
  - [Wireworld implementation](https://www.quinapalus.com/wi-index.html)
  
+## Bevy versions
+
+The `main` branch follows the released version of `bevy` (0.5) but I provide 3 useful branches to follow the new engine features:
+- [bevy_main](https://github.com/ManevilleF/bevy_life/tree/feat/bevy_main) follows the `main` branch of `bevy`
+- [bevy_pipelined_rendering](https://github.com/ManevilleF/bevy_life/tree/feat/bevy_pipelined_rendering) follows the `pipelined-rendering` branch of `bevy` to use the new rendering system
+- [sprite_instancing](https://github.com/ManevilleF/bevy_life/tree/feat/sprite_instancing) follows a branch (see [#2642](https://github.com/bevyengine/bevy/pull/2642)) with sprite instacing and batching for better performance.
+
+## How to use
+
+You may add as many generic `CellularAutomatonPlugin` as wished, the lib provides some implementations like:
+- `GameOfLife2dPlugin`
+- `GameOfLife3dPlugin`
+- `WireWorld2dPlugin`
+- `WireWorld3dPlugin`
+- `CyclicAutomaton2dPlugin`
+- `CyclicAutomaton3dPlugin`
+
+Then you may use bevy as usual and add `impl Cell` and `impl CellState`  components to the entities.
+The lib provides some implementations like `Cell2d` or `Cell3d` for cells and `ClassCellState`, `WireWorldCellState` or `CyclicCellState` for states.
+
+You may implement your own cells (coordinate system) and states (rules) as you want, the cellular automaton system is completely dynamic and generic.
+
+For more information yo may look at some examples:
+
 ## Examples
 
 For every example pressing space reloads the board
