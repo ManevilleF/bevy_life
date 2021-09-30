@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use bevy_life::{Cell2d, CyclicAutomaton2dPlugin, CyclicCellState};
+use bevy_life::{CyclicAutomaton2dPlugin, CyclicCellState, MooreCell2d};
 use rand::Rng;
 
 struct MapEntity(pub Entity);
@@ -75,7 +75,7 @@ fn spawn_map(commands: &mut Commands, assets: &mut Assets<ColorMaterial>) {
                             material: material.clone(),
                             ..Default::default()
                         })
-                        .insert(Cell2d::new(IVec2::new(x, y)))
+                        .insert(MooreCell2d::new(IVec2::new(x, y)))
                         .insert(state);
                 }
             }

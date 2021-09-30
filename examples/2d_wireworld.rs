@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use bevy_life::{Cell2d, CellMap, WireWorld2dPlugin, WireWorldCellState};
+use bevy_life::{CellMap, MooreCell2d, WireWorld2dPlugin, WireWorldCellState};
 
 struct MapEntity(pub Entity);
 
@@ -38,7 +38,7 @@ fn mouse_coords(window: &Window, position: Vec2) -> Vec2 {
 fn handle_mouse_input(
     mut commands: Commands,
     mouse_input: Res<Input<MouseButton>>,
-    mut query: Query<(&Cell2d, &mut WireWorldCellState)>,
+    mut query: Query<(&MooreCell2d, &mut WireWorldCellState)>,
     windows: Res<Windows>,
     map: Res<MapEntity>,
 ) {
@@ -85,7 +85,7 @@ fn handle_mouse_input(
                     ),
                     ..Default::default()
                 })
-                .insert(Cell2d::new(position))
+                .insert(MooreCell2d::new(position))
                 .insert(WireWorldCellState::Conductor);
         });
     }
@@ -96,7 +96,7 @@ fn handle_reset(
     keys: Res<Input<KeyCode>>,
     map: Res<MapEntity>,
     mut assets: ResMut<Assets<ColorMaterial>>,
-    mut cell_map: ResMut<CellMap<Cell2d>>,
+    mut cell_map: ResMut<CellMap<MooreCell2d>>,
 ) {
     if keys.just_released(KeyCode::Space) {
         commands.entity(map.0).despawn_recursive();
@@ -142,7 +142,7 @@ fn spawn_map(commands: &mut Commands, assets: &mut Assets<ColorMaterial>) {
                             material: material.clone(),
                             ..Default::default()
                         })
-                        .insert(Cell2d::new(IVec2::new(x, y)))
+                        .insert(MooreCell2d::new(IVec2::new(x, y)))
                         .insert(state);
                 }
             }

@@ -1,17 +1,17 @@
 use crate::components::Cell;
 #[cfg(feature = "2D")]
-use crate::components::Cell2d;
+use crate::components::MooreCell2d;
 #[cfg(feature = "3D")]
-use crate::components::Cell3d;
+use crate::components::NeumannCell3d;
 use bevy::prelude::Entity;
 use std::collections::HashMap;
 
 #[cfg(feature = "2D")]
 /// A `CellMap` implementation for `Cell2d`
-pub type Map2d = CellMap<Cell2d>;
+pub type Map2d = CellMap<MooreCell2d>;
 #[cfg(feature = "3D")]
 /// A `CellMap` implementation for `Cell23d`
-pub type Map3d = CellMap<Cell3d>;
+pub type Map3d = CellMap<NeumannCell3d>;
 
 /// Global Cell container resource , uses a `Hashmap`to allow non-continuous cells.
 ///
