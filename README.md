@@ -82,3 +82,5 @@ Run `cargo run --example 2d_wireworld --features auto-coloring --release`
 The example is dynamic, use the left mouse click to create a conductor cell on an empty space or to create an electron head
 
 ![Alt](./docs/2d_wireworld_demo.gif "wireworld demo gif")
+
+![Alt](./docs/2d_wireworld_flip_flop_demo.gif "wireworld flip flop gate gif")
