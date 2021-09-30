@@ -22,7 +22,8 @@ auto-coloring = []
 lazy_static = "1.4"
 
 [dependencies.bevy]
-version = "0.5"
+git = "https://github.com/bevyengine/bevy"
+branch = "main"
 default-features = false
 features = ["render"]
 
@@ -30,7 +31,8 @@ features = ["render"]
 rand = "0.8"
 
 [dev-dependencies.bevy]
-version = "0.5"
+git = "https://github.com/bevyengine/bevy"
+branch = "main"
 features = ["render", "bevy_winit", "png", "x11", "bevy_wgpu"]
 default-features = false
 

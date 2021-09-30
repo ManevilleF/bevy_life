@@ -166,7 +166,7 @@ pub struct CellularAutomatonPlugin<C, S> {
 impl<C: Cell + Component + Debug, S: CellState + Component + Debug> Plugin
     for CellularAutomatonPlugin<C, S>
 {
-    fn build(&self, app: &mut AppBuilder) {
+    fn build(&self, app: &mut App) {
         let system_set = SystemSet::new()
             .with_system(systems::cells::handle_cells::<C, S>.system().label("cells"))
             .with_system(
