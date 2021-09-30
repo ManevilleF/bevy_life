@@ -28,8 +28,8 @@
 //! - `GameOfLife3dPlugin`
 //! - `WireWorld2dPlugin`
 //! - `WireWorld3dPlugin`
-//! - `CyclicAutomaton2dPlugin`
-//! - `CyclicAutomaton3dPlugin`
+//! - `CyclicColors2dPlugin`
+//! - `CyclicColors3dPlugin`
 //!
 //! Then you may use bevy as usual and add `impl Cell` and `impl CellState`  components to the entities.
 //! The lib provides some implementations like `MooreCell2d` or `MooreCell3d` for cells and `ClassicCellState`, `WireWorldCellState` or `CyclicCellState` for states.
@@ -46,6 +46,7 @@
 //! - `2D` (enabled by default): Enables 2D types like:
 //!   - `MooreCell2d` (square cell with 8 neighbors)
 //!   - `NeumannCell2d` (square cell with 4 neighbors)
+//!   - `HexagonCell2d` (hexagon cell with 6 neighbors)
 //!   - plugin presets: `GameOfLife2dPlugin`, `WireWorld2dPlugin`, `CyclicAutomaton2dPlugin`
 //! - `3D` (enabled by default): Enables 3D types like:
 //!   - `MooreCell3d` (cube cell with 26 neighbors)
@@ -74,11 +75,11 @@ pub use {components::*, resources::*};
 
 #[cfg(feature = "2D")]
 /// Cellular automaton plugin type for Conway's Game of life in 2D.
-pub type GameOfLife2dPlugin = CellularAutomatonPlugin<components::MooreCell2d, ClassicCellState>;
+pub type GameOfLife2dPlugin = CellularAutomatonPlugin<components::MooreCell2d, ConwayCellState>;
 
 #[cfg(feature = "3D")]
 /// Cellular automaton plugin type for Conway's Game of life in 3D.
-pub type GameOfLife3dPlugin = CellularAutomatonPlugin<components::MooreCell3d, ClassicCellState>;
+pub type GameOfLife3dPlugin = CellularAutomatonPlugin<components::MooreCell3d, ConwayCellState>;
 
 #[cfg(feature = "2D")]
 /// Cellular automaton plugin type for WireWorld in 2D
@@ -92,13 +93,13 @@ pub type WireWorld3dPlugin =
 
 #[cfg(feature = "2D")]
 /// Cellular automaton plugin type for Colored Cyclic cellular automaton in 2D
-pub type CyclicAutomaton2dPlugin =
-    CellularAutomatonPlugin<components::MooreCell2d, CyclicCellState>;
+pub type CyclicColors2dPlugin =
+    CellularAutomatonPlugin<components::MooreCell2d, CyclicColorCellState>;
 
 #[cfg(feature = "3D")]
 /// Cellular automaton plugin type for Colored Cyclic cellular automaton in 3D
-pub type CyclicAutomaton3dPlugin =
-    CellularAutomatonPlugin<components::MooreCell3d, CyclicCellState>;
+pub type CyclicColors3dPlugin =
+    CellularAutomatonPlugin<components::MooreCell3d, CyclicColorCellState>;
 
 /// Generic Cellular Automaton plugin. It will register systems for the matching `Cell` and `CellState` types.
 pub struct CellularAutomatonPlugin<C, S> {

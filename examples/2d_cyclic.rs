@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use bevy_life::{CyclicAutomaton2dPlugin, CyclicCellState, MooreCell2d};
+use bevy_life::{CyclicColorCellState, CyclicColors2dPlugin, MooreCell2d};
 use rand::Rng;
 
 struct MapEntity(pub Entity);
@@ -7,7 +7,7 @@ struct MapEntity(pub Entity);
 fn main() {
     App::build()
         .add_plugins(DefaultPlugins)
-        .add_plugin(CyclicAutomaton2dPlugin::default())
+        .add_plugin(CyclicColors2dPlugin::default())
         .insert_resource(WindowDescriptor {
             title: "Game Of Life".to_string(),
             width: 1000.,
@@ -50,7 +50,7 @@ fn spawn_map(commands: &mut Commands, assets: &mut Assets<ColorMaterial>) {
     let sprite_size = 10.;
     let material = assets.add(Color::rgba(0., 0., 0., 0.).into());
 
-    let available_states = CyclicCellState::available_colors();
+    let available_states = CyclicColorCellState::available_colors();
     let state_size = available_states.len();
     let entity = commands
         .spawn()
@@ -63,7 +63,8 @@ fn spawn_map(commands: &mut Commands, assets: &mut Assets<ColorMaterial>) {
         .with_children(|builder| {
             for y in 0..=map_size {
                 for x in 0..=map_size {
-                    let state = CyclicCellState(available_states[rng.gen_range(0..state_size)]);
+                    let state =
+                        CyclicColorCellState(available_states[rng.gen_range(0..state_size)]);
                     builder
                         .spawn_bundle(SpriteBundle {
                             sprite: Sprite::new(Vec2::splat(sprite_size)),

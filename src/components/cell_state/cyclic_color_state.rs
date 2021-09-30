@@ -24,9 +24,9 @@ const CYCLIC_COLORS: [Color; 9] = [
 ///
 /// For this type we use `9` for `n` and arbitrary colors.
 #[derive(Debug, Clone, PartialEq)]
-pub struct CyclicCellState(pub Color);
+pub struct CyclicColorCellState(pub Color);
 
-impl CellState for CyclicCellState {
+impl CellState for CyclicColorCellState {
     fn new_cell_state(&self, neighbor_cells: &[Self]) -> Self {
         let pos = self.pos();
         let target_color = if pos >= 8 {
@@ -70,7 +70,7 @@ impl CellState for CyclicCellState {
     }
 }
 
-impl CyclicCellState {
+impl CyclicColorCellState {
     /// The index of `self` in the used `CYCLIC_COLORS` const color array
     pub fn pos(&self) -> usize {
         CYCLIC_COLORS.iter().position(|&c| c == self.0).unwrap_or(0)
@@ -82,7 +82,7 @@ impl CyclicCellState {
     }
 }
 
-impl Default for CyclicCellState {
+impl Default for CyclicColorCellState {
     fn default() -> Self {
         Self(CYCLIC_COLORS[0])
     }

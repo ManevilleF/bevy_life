@@ -12,9 +12,9 @@ use std::ops::{Deref, DerefMut};
 ///
 /// A dead cell is `false`, a live cell is `true`
 #[derive(Debug, Clone, Default, Eq, PartialEq)]
-pub struct ClassicCellState(pub bool);
+pub struct ConwayCellState(pub bool);
 
-impl CellState for ClassicCellState {
+impl CellState for ConwayCellState {
     fn new_cell_state(&self, neighbor_cells: &[Self]) -> Self {
         let alive_cells_count = neighbor_cells.iter().filter(|&c| c.0).count();
         if self.0 {
@@ -58,7 +58,7 @@ impl CellState for ClassicCellState {
     }
 }
 
-impl Deref for ClassicCellState {
+impl Deref for ConwayCellState {
     type Target = bool;
 
     fn deref(&self) -> &Self::Target {
@@ -66,13 +66,13 @@ impl Deref for ClassicCellState {
     }
 }
 
-impl DerefMut for ClassicCellState {
+impl DerefMut for ConwayCellState {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.0
     }
 }
 
-impl From<bool> for ClassicCellState {
+impl From<bool> for ConwayCellState {
     fn from(val: bool) -> Self {
         Self(val)
     }
@@ -84,7 +84,7 @@ mod tests {
 
     #[test]
     fn overpopulation_rule() {
-        let cell_state = ClassicCellState(true);
+        let cell_state = ConwayCellState(true);
 
         // 4 alive neighbors
         let neighbors = vec![
@@ -118,7 +118,7 @@ mod tests {
 
     #[test]
     fn generation_rule() {
-        let cell_state = ClassicCellState(true);
+        let cell_state = ConwayCellState(true);
 
         // 3 alive neighbors
         let neighbors = vec![
@@ -151,7 +151,7 @@ mod tests {
         assert!(new_state.0);
 
         // 2 alive neighbors but "off"
-        let cell_state = ClassicCellState(false);
+        let cell_state = ConwayCellState(false);
         let neighbors = vec![
             false.into(),
             true.into(),
@@ -169,7 +169,7 @@ mod tests {
 
     #[test]
     fn reproduction_rule() {
-        let cell_state = ClassicCellState(false);
+        let cell_state = ConwayCellState(false);
 
         // 3 alive neighbors
         let neighbors = vec![
@@ -189,7 +189,7 @@ mod tests {
 
     #[test]
     fn underpopulation_rule() {
-        let cell_state = ClassicCellState(true);
+        let cell_state = ConwayCellState(true);
 
         // 1 alive neighbors
         let neighbors = vec![

@@ -1,10 +1,10 @@
 #[cfg(feature = "auto-coloring")]
 use bevy::prelude::Assets;
 use std::fmt::Debug;
-pub use {classic_state::*, cyclic_state::*, wire_world_cell_state::*};
+pub use {conway_state::*, cyclic_color_state::*, wire_world_cell_state::*};
 
-mod classic_state;
-mod cyclic_state;
+mod conway_state;
+mod cyclic_color_state;
 mod wire_world_cell_state;
 
 /// This trait defines the state of any given `Cell`. The trait implementation will define the

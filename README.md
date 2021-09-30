@@ -30,11 +30,11 @@ You may add as many generic `CellularAutomatonPlugin` as wished, the lib provide
 - `GameOfLife3dPlugin`
 - `WireWorld2dPlugin`
 - `WireWorld3dPlugin`
-- `CyclicAutomaton2dPlugin`
-- `CyclicAutomaton3dPlugin`
+- `CyclicColors2dPlugin`
+- `CyclicColors3dPlugin`
 
 Then you may use bevy as usual and add `impl Cell` and `impl CellState`  components to the entities.
-The lib provides some implementations like `Cell2d` or `Cell3d` for cells and `ClassCellState`, `WireWorldCellState` or `CyclicCellState` for states.
+The lib provides some implementations like `MooreCell2d` or `MooreCell3d` for cells and `ClassicCellState`, `WireWorldCellState` or `CyclicCellState` for states.
 
 You may implement your own cells (coordinate system) and states (rules) as you want, the cellular automaton system is completely dynamic and generic.
 
@@ -46,11 +46,14 @@ No feature is required for the plugin to work and the main traits `Cell` and `Ce
 But you may enable the following features
 
 - `2D` (enabled by default): Enables 2D types like:
-  - `Cell2d` (square cell with 8 neighbors)
+  - `MooreCell2d` (square cell with 8 neighbors)
+  - `NeumannCell2d` (square cell with 4 neighbors)
+  - `HexagonCell2d` (hexagon cell with 6 neighbors)
   - plugin presets: `GameOfLife2dPlugin`, `WireWorld2dPlugin`, `CyclicAutomaton2dPlugin`
 - `3D` (enabled by default): Enables 3D types like:
-    - `Cell3d` (cube cell with 26 neighbors)
-    - plugin presets: `GameOfLife3dPlugin`, `WireWorld3dPlugin`, `CyclicAutomaton3dPlugin`
+  - `MooreCell3d` (cube cell with 26 neighbors)
+  - `NeumannCell3d` (cube cell with 6 neighbors)
+  - plugin presets: `GameOfLife3dPlugin`, `WireWorld3dPlugin`, `CyclicAutomaton3dPlugin`
 - `auto-coloring`:
   - Enables `CellStateMaterials2d` (if `2D`) and `CellStateMaterials3d` (if `3D`) types to contain material handles
   - The `CellState` type now requires to build either of the previous type (according to 2D/3D feature gates)

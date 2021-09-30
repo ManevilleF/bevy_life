@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use bevy_life::{ClassicCellState, GameOfLife2dPlugin, MooreCell2d};
+use bevy_life::{ConwayCellState, GameOfLife2dPlugin, MooreCell2d};
 use rand::Rng;
 
 struct MapEntity(pub Entity);
@@ -61,7 +61,7 @@ fn spawn_map(commands: &mut Commands, assets: &mut Assets<ColorMaterial>) {
         .with_children(|builder| {
             for y in 0..=map_size {
                 for x in 0..=map_size {
-                    let state = ClassicCellState(rng.gen_bool(1. / 3.));
+                    let state = ConwayCellState(rng.gen_bool(1. / 3.));
                     builder
                         .spawn_bundle(SpriteBundle {
                             sprite: Sprite::new(Vec2::splat(sprite_size - 1.)),
