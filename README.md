@@ -1,4 +1,4 @@
-# Bevy Game of life
+# Bevy Cellular Automaton
 
 [![workflow](https://github.com/ManevilleF/bevy_life/actions/workflows/rust.yml/badge.svg)](https://github.com/ManevilleF/bevy_life/actions/workflows/rust.yml)
 
