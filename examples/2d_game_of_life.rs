@@ -6,7 +6,7 @@ mod common;
 use common::*;
 
 fn main() {
-    App::build()
+    App::new()
         .insert_resource(WindowDescriptor {
             title: "Game Of Life".to_string(),
             width: 1300.,
