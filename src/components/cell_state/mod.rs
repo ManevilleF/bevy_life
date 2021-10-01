@@ -45,25 +45,15 @@ pub trait CellState: Debug + Default + Sized + Clone + PartialEq {
     /// All available colors of the state
     fn colors() -> &'static [Color];
 
-    #[cfg(all(feature = "auto-coloring", feature = "2D"))]
-    /// Builds the `CellStateMaterials2d` ressource storing every material handle for every possible state.
-    fn setup_materials_2d(
-        materials: &mut Assets<bevy::prelude::ColorMaterial>,
-    ) -> crate::resources::materials::CellStateMaterials2d {
-        crate::resources::materials::CellStateMaterials2d {
-            materials: Self::colors()
-                .iter()
-                .map(|c| materials.add((*c).into()))
-                .collect(),
-        }
-    }
-
-    #[cfg(all(feature = "auto-coloring", feature = "3D"))]
-    /// Builds the `CellStateMaterials3d` ressource storing every material handle for every possible state.
-    fn setup_materials_3d(
-        materials: &mut Assets<bevy::prelude::StandardMaterial>,
-    ) -> crate::resources::materials::CellStateMaterials3d {
-        crate::resources::materials::CellStateMaterials3d {
+    #[cfg(feature = "auto-coloring")]
+    /// Builds the `CellStateMaterials` ressource storing every material handle for every possible state.
+    fn setup_materials<A>(
+        materials: &mut Assets<A>,
+    ) -> crate::resources::materials::CellStateMaterials<A>
+    where
+        A: bevy::asset::Asset + From<Color>,
+    {
+        crate::resources::materials::CellStateMaterials {
             materials: Self::colors()
                 .iter()
                 .map(|c| materials.add((*c).into()))

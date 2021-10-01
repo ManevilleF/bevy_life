@@ -159,13 +159,13 @@ impl<C: Cell + Component + Debug, S: CellState + Component + Debug> Plugin
         {
             #[cfg(feature = "2D")]
             {
-                app.add_startup_system(Self::setup_materials_2d.system());
-                app.add_system(systems::coloring::color_states_2d::<S>.system());
+                app.add_startup_system(Self::setup_materials::<ColorMaterial>.system());
+                app.add_system(systems::coloring::color_states::<S, ColorMaterial>.system());
             }
             #[cfg(feature = "3D")]
             {
-                app.add_startup_system(Self::setup_materials_3d.system());
-                app.add_system(systems::coloring::color_states_3d::<S>.system());
+                app.add_startup_system(Self::setup_materials::<StandardMaterial>.system());
+                app.add_system(systems::coloring::color_states::<S, StandardMaterial>.system());
             }
         }
     }
@@ -180,21 +180,12 @@ impl<C: Cell + Component + Debug, S: CellState + Component + Debug> CellularAuto
         }
     }
 
-    #[cfg(all(feature = "auto-coloring", feature = "2D"))]
-    fn setup_materials_2d(
-        mut commands: Commands,
-        mut assets: ResMut<Assets<bevy::prelude::ColorMaterial>>,
-    ) {
-        let color_assets = S::setup_materials_2d(&mut assets);
-        commands.insert_resource(color_assets);
-    }
-
-    #[cfg(all(feature = "auto-coloring", feature = "3D"))]
-    fn setup_materials_3d(
-        mut commands: Commands,
-        mut assets: ResMut<Assets<bevy::prelude::StandardMaterial>>,
-    ) {
-        let color_assets = S::setup_materials_3d(&mut assets);
+    #[cfg(feature = "auto-coloring")]
+    fn setup_materials<A>(mut commands: Commands, mut assets: ResMut<Assets<A>>)
+    where
+        A: bevy::asset::Asset + From<Color>,
+    {
+        let color_assets = S::setup_materials(&mut assets);
         commands.insert_resource(color_assets);
     }
 }
