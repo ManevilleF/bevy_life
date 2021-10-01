@@ -99,6 +99,14 @@ pub type ImmigrationGame3dPlugin =
     CellularAutomatonPlugin<components::MooreCell3d, ImmigrationCellState>;
 
 #[cfg(feature = "2D")]
+/// Cellular automaton plugin type for a binary (blue and orange) Immigration Game of life variation in 2D.
+pub type RainbowGame2dPlugin = CellularAutomatonPlugin<components::MooreCell2d, RainbowCellState>;
+
+#[cfg(feature = "3D")]
+/// Cellular automaton plugin type for a binary (blue and orange) Immigration Game of life variation in 3D.
+pub type RainbowGame3dPlugin = CellularAutomatonPlugin<components::MooreCell3d, RainbowCellState>;
+
+#[cfg(feature = "2D")]
 /// Cellular automaton plugin type for WireWorld in 2D
 pub type WireWorld2dPlugin =
     CellularAutomatonPlugin<components::MooreCell2d, components::WireWorldCellState>;

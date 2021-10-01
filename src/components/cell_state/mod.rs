@@ -1,12 +1,26 @@
 #[cfg(feature = "auto-coloring")]
 use bevy::prelude::{Assets, Color};
 use std::fmt::Debug;
-pub use {conway_state::*, cyclic_color_state::*, immigration_state::*, wire_world_cell_state::*};
+pub use {
+    conway_state::*, cyclic_color_state::*, immigration_state::*, rainbow_state::*,
+    wire_world_cell_state::*,
+};
 
 mod conway_state;
 mod cyclic_color_state;
 mod immigration_state;
+mod rainbow_state;
 mod wire_world_cell_state;
+
+#[cfg(feature = "auto-coloring")]
+/// Enum returned by a cell state to define its color:
+/// either a material handle index or a new color
+pub enum ColorResponse {
+    /// A Material handle index
+    MaterialIndex(usize),
+    /// A new color
+    Color(Color),
+}
 
 /// This trait defines the state of any given `Cell`. The trait implementation will define the
 /// cellular automaton rules which will be automatically applied.
@@ -25,7 +39,7 @@ pub trait CellState: Debug + Default + Sized + Clone + PartialEq {
 
     #[cfg(feature = "auto-coloring")]
     /// Index of the material handle matching the current `self` state
-    fn material_index(&self) -> usize;
+    fn color_or_material_index(&self) -> ColorResponse;
 
     #[cfg(feature = "auto-coloring")]
     /// All available colors of the state

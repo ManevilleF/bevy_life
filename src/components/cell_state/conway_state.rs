@@ -1,5 +1,7 @@
 use crate::components::CellState;
 #[cfg(feature = "auto-coloring")]
+use crate::ColorResponse;
+#[cfg(feature = "auto-coloring")]
 use bevy::prelude::Color;
 use std::ops::{Deref, DerefMut};
 
@@ -25,12 +27,8 @@ impl CellState for ConwayCellState {
     }
 
     #[cfg(feature = "auto-coloring")]
-    fn material_index(&self) -> usize {
-        if self.0 {
-            1
-        } else {
-            0
-        }
+    fn color_or_material_index(&self) -> ColorResponse {
+        ColorResponse::MaterialIndex(if self.0 { 1 } else { 0 })
     }
 
     #[cfg(feature = "auto-coloring")]

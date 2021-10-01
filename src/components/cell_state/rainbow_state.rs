@@ -3,7 +3,6 @@ use crate::components::CellState;
 use crate::ColorResponse;
 #[cfg(feature = "auto-coloring")]
 use bevy::prelude::Color;
-use std::collections::HashMap;
 use std::fmt::Debug;
 
 #[derive(Debug, Clone, PartialEq)]
@@ -13,18 +12,18 @@ use std::fmt::Debug;
 /// - Any live cell with two or three live neighbours lives on to the next generation.
 /// - Any live cell with more than three live neighbours dies, as if by overpopulation.
 /// - Any dead cell with exactly three live neighbours becomes a live cell,
-/// as if by reproduction and takes the state of the majority of the live neighbors.
+/// as if by reproduction and takes the arithmetic mean state of the majority of the live neighbors.
 ///
-pub enum ImmigrationCellState {
+pub enum RainbowCellState {
     /// A dead cell
     Dead,
-    /// Alive cell with a boolean sub-state
-    Alive(bool),
+    /// Alive cell with a `f32` sub-state
+    Alive(f32),
 }
 
-impl CellState for ImmigrationCellState {
+impl CellState for RainbowCellState {
     fn new_cell_state(&self, neighbor_cells: &[Self]) -> Self {
-        let alive_cells: Vec<bool> = neighbor_cells
+        let alive_cells: Vec<f32> = neighbor_cells
             .iter()
             .filter_map(|c| match c {
                 Self::Dead => None,
@@ -39,16 +38,8 @@ impl CellState for ImmigrationCellState {
                 Self::Dead
             }
         } else if alive_cells_count == 3 {
-            let mut map = HashMap::new();
-            for alive_cell in alive_cells {
-                *map.entry(alive_cell).or_insert(0) += 1;
-            }
-            Self::Alive(
-                map.into_iter()
-                    .max_by_key(|(_k, v)| *v)
-                    .map(|(k, _v)| k)
-                    .unwrap(),
-            )
+            let val: f32 = alive_cells.into_iter().sum::<f32>() / 3.;
+            Self::Alive(val)
         } else {
             Self::Dead
         }
@@ -56,32 +47,26 @@ impl CellState for ImmigrationCellState {
 
     #[cfg(feature = "auto-coloring")]
     fn color_or_material_index(&self) -> ColorResponse {
-        ColorResponse::MaterialIndex(match self {
-            Self::Dead => 0,
-            Self::Alive(b) => {
-                if *b {
-                    1
-                } else {
-                    2
-                }
-            }
-        })
+        match self {
+            Self::Dead => ColorResponse::MaterialIndex(0),
+            Self::Alive(v) => ColorResponse::Color(Color::rgb(*v, *v, *v)),
+        }
     }
 
     #[cfg(feature = "auto-coloring")]
     fn colors() -> &'static [Color] {
-        &[Color::BLACK, Color::CYAN, Color::ORANGE]
+        &[Color::GOLD]
     }
 }
 
-impl ImmigrationCellState {
+impl RainbowCellState {
     /// Is the cell considered alive
     pub fn is_alive(&self) -> bool {
         matches!(self, Self::Alive(_))
     }
 }
 
-impl Default for ImmigrationCellState {
+impl Default for RainbowCellState {
     fn default() -> Self {
         Self::Dead
     }

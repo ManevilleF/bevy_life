@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use bevy_life::{CellMap, MooreCell2d, WireWorld2dPlugin, WireWorldCellState};
+use bevy_life::{MooreCell2d, WireWorld2dPlugin, WireWorldCellState};
 
 mod common;
 
