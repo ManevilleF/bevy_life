@@ -11,7 +11,7 @@ fn main() {
         .add_plugins(DefaultPlugins)
         .add_plugin(CyclicColors2dPlugin::default())
         .insert_resource(WindowDescriptor {
-            title: "Gyclic colors".to_string(),
+            title: "Cyclic colors".to_string(),
             width: 1000.,
             height: 1000.,
             ..Default::default()
