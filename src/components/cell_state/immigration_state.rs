@@ -70,7 +70,23 @@ impl CellState for ImmigrationCellState {
 
     #[cfg(feature = "auto-coloring")]
     fn colors() -> &'static [Color] {
-        &[Color::BLACK, Color::CYAN, Color::ORANGE]
+        #[cfg(feature = "2D")]
+        {
+            &[Color::BLACK, Color::CYAN, Color::ORANGE]
+        }
+        #[cfg(not(feature = "2D"))]
+        {
+            &[
+                Color::Rgba {
+                    red: 0.0,
+                    green: 0.0,
+                    blue: 0.0,
+                    alpha: 0.0,
+                },
+                Color::CYAN,
+                Color::ORANGE,
+            ]
+        }
     }
 }
 

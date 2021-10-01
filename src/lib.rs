@@ -26,15 +26,19 @@
 //! You may add as many generic `CellularAutomatonPlugin` as wished, the lib provides some implementations like:
 //! - `GameOfLife2dPlugin`
 //! - `GameOfLife3dPlugin`
+//! - `ImmigrationGame2dPlugin`
+//! - `ImmigrationGame3dPlugin`
+//! - `RainbowGame2dPlugin`
+//! - `RainbowGame3dPlugin`
 //! - `WireWorld2dPlugin`
 //! - `WireWorld3dPlugin`
 //! - `CyclicColors2dPlugin`
 //! - `CyclicColors3dPlugin`
 //!
 //! Then you may use bevy as usual and add `impl Cell` and `impl CellState`  components to the entities.
-//! The lib provides some implementations like `MooreCell2d` or `MooreCell3d` for cells and `ClassicCellState`, `WireWorldCellState` or `CyclicCellState` for states.
+//! The lib provides some implementations like `MooreCell2d` or `MooreCell3d` for cells and `ConwayCellState`, `WireWorldCellState`, etc for states.
 //!
-//! You may implement your own cells (coordinate system) and states (rules) as you want, the cellular automaton system is completely dynamic and generic.
+//! You may implement your own *cells* (coordinate system) and *states* (rules) as you want, the cellular automaton system is completely dynamic and generic.
 //!
 //! For more information yo may look at some [examples](./examples).
 //!
@@ -47,11 +51,11 @@
 //!   - `MooreCell2d` (square cell with 8 neighbors)
 //!   - `NeumannCell2d` (square cell with 4 neighbors)
 //!   - `HexagonCell2d` (hexagon cell with 6 neighbors)
-//!   - plugin presets: `GameOfLife2dPlugin`, `WireWorld2dPlugin`, `CyclicAutomaton2dPlugin`
+//!   - plugin presets: `GameOfLife2dPlugin`, `ImmigrationGame2dPlugin`, `RainbowGame2dPlugin`, `WireWorld2dPlugin`, `CyclicAutomaton2dPlugin`
 //! - `3D` (enabled by default): Enables 3D types like:
 //!   - `MooreCell3d` (cube cell with 26 neighbors)
 //!   - `NeumannCell3d` (cube cell with 6 neighbors)
-//!   - plugin presets: `GameOfLife3dPlugin`, `WireWorld3dPlugin`, `CyclicAutomaton3dPlugin`
+//!   - plugin presets: `GameOfLife3dPlugin`, `ImmigrationGame3dPlugin`, `RainbowGame3dPlugin`, `WireWorld3dPlugin`, `CyclicAutomaton3dPlugin`
 //! - `auto-coloring`:
 //!   - Enables `CellStateMaterials2d` (if `2D`) and `CellStateMaterials3d` (if `3D`) types to contain material handles
 //!   - The `CellState` type now requires to build either of the previous type (according to 2D/3D feature gates)
