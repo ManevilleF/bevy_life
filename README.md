@@ -59,6 +59,13 @@ But you may enable the following features
   - The `CellState` type now requires to build either of the previous type (according to 2D/3D feature gates)
   - All `CellState` components with materials will be colored according to their type.
 
+## Disclaimer
+
+This is probably not the fastest rust implementation of a cellular automaton in rust.
+For example, using Gosper's [HashLife](https://www.drdobbs.com/jvm/an-algorithm-for-compressing-space-and-t/184406478) a classic game of life could be much faster.
+
+This library aim is to be generic and dynamic, so that you can integrate cellular automata to any project in bevy, with any rules, in 2D or 3D.
+
 
 <!-- cargo-sync-readme end -->
 
@@ -66,19 +73,25 @@ But you may enable the following features
 
 For every example pressing space reloads the board
 
-### Classic 2D
+### 2D Game of life
 
-Run `cargo run --example 2d_classic --features auto-coloring --release`
+Run `cargo run --example 2d_game_of_life --features auto-coloring --release`
 
 ![Alt](./docs/2d_classic_demo.gif "classic demo gif")
 
-### Cyclic 2D
+### 2D Immigration game
 
-Run `cargo run --example 2d_cyclic --features auto-coloring --release`
+Run `cargo run --example 2d_immigration_game --features auto-coloring --release`
+
+![Alt](./docs/2d_immigration_demo.gif "immigration demo gif")
+
+### 2D Cyclic colors
+
+Run `cargo run --example 2d_cyclic_colors --features auto-coloring --release`
 
 ![Alt](./docs/2d_cyclic_demo.gif "cyclic demo gif")
 
-### Wire World 2D
+### 2D Wire World
 
 Run `cargo run --example 2d_wireworld --features auto-coloring --release`
 

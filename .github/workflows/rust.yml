@@ -39,9 +39,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: build 2d game of life
-        run: cargo build --verbose --example 2d_classic
+        run: cargo build --verbose --example 2d_game_of_life
+      - name: build 2d game of life
+        run: cargo build --verbose --example 2d_immigration_game
       - name: build 2d color cyclic
-        run: cargo build --verbose --example 2d_cyclic
+        run: cargo build --verbose --example 2d_cyclic_colors
       - name: build 2d wireworld
         run: cargo build --verbose --example 2d_wireworld
 
@@ -66,7 +68,7 @@ jobs:
       - name: Cargo clippy installation
         run: rustup component add clippy
       - name: Cargo clippy check
-        run: cargo clippy --all-targets -- -D warnings
+        run: cargo clippy --all-targets --all --tests -- -D warnings
 
   rustdoc:
     runs-on: ubuntu-latest

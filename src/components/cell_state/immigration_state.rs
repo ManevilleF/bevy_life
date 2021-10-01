@@ -36,21 +36,19 @@ impl CellState for ImmigrationCellState {
             } else {
                 Self::Dead
             }
-        } else {
-            if alive_cells_count == 3 {
-                let mut map = HashMap::new();
-                for alive_cell in alive_cells {
-                    *map.entry(alive_cell).or_insert(0) += 1;
-                }
-                Self::Alive(
-                    map.into_iter()
-                        .max_by_key(|(_k, v)| *v)
-                        .map(|(k, _v)| k.clone())
-                        .unwrap(),
-                )
-            } else {
-                Self::Dead
+        } else if alive_cells_count == 3 {
+            let mut map = HashMap::new();
+            for alive_cell in alive_cells {
+                *map.entry(alive_cell).or_insert(0) += 1;
             }
+            Self::Alive(
+                map.into_iter()
+                    .max_by_key(|(_k, v)| *v)
+                    .map(|(k, _v)| k)
+                    .unwrap(),
+            )
+        } else {
+            Self::Dead
         }
     }
 
