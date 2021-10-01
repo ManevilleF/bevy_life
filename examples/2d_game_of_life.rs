@@ -2,7 +2,9 @@ use bevy::prelude::*;
 use bevy_life::{ConwayCellState, GameOfLife2dPlugin, MooreCell2d};
 use rand::Rng;
 
-struct MapEntity(pub Entity);
+mod common;
+
+use common::*;
 
 fn main() {
     App::build()
@@ -16,7 +18,7 @@ fn main() {
         })
         .add_startup_system(setup_camera.system())
         .add_startup_system(setup_map.system())
-        .add_system(handle_input.system())
+        .add_system(handle_reset::<MooreCell2d>.system())
         .run();
 }
 
@@ -28,20 +30,6 @@ fn setup_camera(mut commands: Commands) {
 fn setup_map(mut commands: Commands, mut assets: ResMut<Assets<ColorMaterial>>) {
     // map
     spawn_map(&mut commands, &mut assets);
-}
-
-fn handle_input(
-    mut commands: Commands,
-    keys: Res<Input<KeyCode>>,
-    map: Res<MapEntity>,
-    mut assets: ResMut<Assets<ColorMaterial>>,
-) {
-    if keys.just_pressed(KeyCode::Space) {
-        commands.entity(map.0).despawn_recursive();
-        commands.remove_resource::<MapEntity>();
-        println!("regenerating map");
-        spawn_map(&mut commands, &mut assets);
-    }
 }
 
 fn spawn_map(commands: &mut Commands, assets: &mut Assets<ColorMaterial>) {

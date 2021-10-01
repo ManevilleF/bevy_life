@@ -57,6 +57,13 @@
 //!   - The `CellState` type now requires to build either of the previous type (according to 2D/3D feature gates)
 //!   - All `CellState` components with materials will be colored according to their type.
 //!
+//! ## Disclaimer
+//!
+//! This is probably not the fastest rust implementation of a cellular automaton in rust.
+//! For example, using Gosper's [HashLife](https://www.drdobbs.com/jvm/an-algorithm-for-compressing-space-and-t/184406478) a classic game of life could be much faster.
+//!
+//! This library aim is to be generic and dynamic, so that you can integrate cellular automata to any project in bevy, with any rules, in 2D or 3D.
+//!
 #![forbid(missing_docs)]
 #![forbid(unsafe_code)]
 #![deny(warnings)]
@@ -80,6 +87,16 @@ pub type GameOfLife2dPlugin = CellularAutomatonPlugin<components::MooreCell2d, C
 #[cfg(feature = "3D")]
 /// Cellular automaton plugin type for Conway's Game of life in 3D.
 pub type GameOfLife3dPlugin = CellularAutomatonPlugin<components::MooreCell3d, ConwayCellState>;
+
+#[cfg(feature = "2D")]
+/// Cellular automaton plugin type for a binary (blue and orange) Immigration Game of life variation in 2D.
+pub type ImmigrationGame2dPlugin =
+    CellularAutomatonPlugin<components::MooreCell2d, ImmigrationCellState>;
+
+#[cfg(feature = "3D")]
+/// Cellular automaton plugin type for a binary (blue and orange) Immigration Game of life variation in 3D.
+pub type ImmigrationGame3dPlugin =
+    CellularAutomatonPlugin<components::MooreCell3d, ImmigrationCellState>;
 
 #[cfg(feature = "2D")]
 /// Cellular automaton plugin type for WireWorld in 2D

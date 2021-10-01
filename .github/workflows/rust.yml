@@ -38,8 +38,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: build
-        run: cargo build --verbose --examples
+      - name: build 2d game of life
+        run: cargo build --verbose --example 2d_classic
+      - name: build 2d color cyclic
+        run: cargo build --verbose --example 2d_cyclic
+      - name: build 2d wireworld
+        run: cargo build --verbose --example 2d_wireworld
 
   test:
     runs-on: ubuntu-latest

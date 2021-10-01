@@ -1,6 +1,4 @@
 use crate::CellState;
-#[cfg(feature = "auto-coloring")]
-use bevy::asset::Assets;
 use bevy::prelude::Color;
 
 const CYCLIC_COLORS: [Color; 9] = [
@@ -47,26 +45,9 @@ impl CellState for CyclicColorCellState {
         self.pos()
     }
 
-    #[cfg(all(feature = "auto-coloring", feature = "2D"))]
-    fn setup_materials_2d(
-        materials: &mut Assets<bevy::prelude::ColorMaterial>,
-    ) -> crate::materials::CellStateMaterials2d {
-        let materials = CYCLIC_COLORS
-            .iter()
-            .map(|c| materials.add((*c).into()))
-            .collect();
-        crate::materials::CellStateMaterials2d { materials }
-    }
-
-    #[cfg(all(feature = "auto-coloring", feature = "3D"))]
-    fn setup_materials_3d(
-        materials: &mut Assets<bevy::prelude::StandardMaterial>,
-    ) -> crate::materials::CellStateMaterials3d {
-        let materials = CYCLIC_COLORS
-            .iter()
-            .map(|c| materials.add((*c).into()))
-            .collect();
-        crate::materials::CellStateMaterials3d { materials }
+    #[cfg(feature = "auto-coloring")]
+    fn colors() -> &'static [Color] {
+        &CYCLIC_COLORS
     }
 }
 

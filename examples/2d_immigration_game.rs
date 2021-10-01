@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use bevy_life::{CyclicColorCellState, CyclicColors2dPlugin, MooreCell2d};
+use bevy_life::{ImmigrationCellState, ImmigrationGame2dPlugin, MooreCell2d};
 use rand::Rng;
 
 mod common;
@@ -9,9 +9,9 @@ use common::*;
 fn main() {
     App::build()
         .add_plugins(DefaultPlugins)
-        .add_plugin(CyclicColors2dPlugin::default())
+        .add_plugin(ImmigrationGame2dPlugin::default())
         .insert_resource(WindowDescriptor {
-            title: "Gyclic colors".to_string(),
+            title: "Immigration game".to_string(),
             width: 1000.,
             height: 1000.,
             ..Default::default()
@@ -38,8 +38,6 @@ fn spawn_map(commands: &mut Commands, assets: &mut Assets<ColorMaterial>) {
     let sprite_size = 10.;
     let material = assets.add(Color::rgba(0., 0., 0., 0.).into());
 
-    let available_states = CyclicColorCellState::available_colors();
-    let state_size = available_states.len();
     let entity = commands
         .spawn()
         .insert(Transform::from_xyz(
@@ -51,11 +49,14 @@ fn spawn_map(commands: &mut Commands, assets: &mut Assets<ColorMaterial>) {
         .with_children(|builder| {
             for y in 0..=map_size {
                 for x in 0..=map_size {
-                    let state =
-                        CyclicColorCellState(available_states[rng.gen_range(0..state_size)]);
+                    let state = if rng.gen_bool(1. / 3.) {
+                        ImmigrationCellState::Alive(rng.gen_bool(1. / 2.))
+                    } else {
+                        ImmigrationCellState::Dead
+                    };
                     builder
                         .spawn_bundle(SpriteBundle {
-                            sprite: Sprite::new(Vec2::splat(sprite_size)),
+                            sprite: Sprite::new(Vec2::splat(sprite_size - 1.)),
                             transform: Transform::from_xyz(
                                 sprite_size * x as f32,
                                 sprite_size * y as f32,
