@@ -54,7 +54,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: test
-        run: cargo test --all-features
+        run: cargo test --tests --all-features
 
   fmt:
     runs-on: ubuntu-latest
@@ -70,7 +70,7 @@ jobs:
       - name: Cargo clippy installation
         run: rustup component add clippy
       - name: Cargo clippy check
-        run: cargo clippy --all-targets --all --tests -- -D warnings
+        run: cargo clippy --all-features --all --tests -- -D warnings
 
   rustdoc:
     runs-on: ubuntu-latest

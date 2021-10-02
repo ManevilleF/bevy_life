@@ -135,6 +135,9 @@ pub type CyclicColors3dPlugin =
     CellularAutomatonPlugin<components::MooreCell3d, CyclicColorCellState, 1000>;
 
 /// Generic Cellular Automaton plugin. It will register systems for the matching `Cell` and `CellState` types.
+///
+/// The `BATCH_SIZE` const argument determines the size of query batches to be queried in parallel.
+/// It has a big performance impact on worlds with a lot of cells.
 pub struct CellularAutomatonPlugin<C, S, const BATCH_SIZE: usize> {
     /// Custom time step constraint value for the systems. If not set, the systems will run every frame.
     pub tick_time_step: Option<f64>,
