@@ -175,12 +175,16 @@ impl<C: Cell + Component + Debug, S: CellState + Component + Debug, const BATCH_
             #[cfg(feature = "2D")]
             {
                 app.add_startup_system(Self::setup_materials::<ColorMaterial>.system());
-                app.add_system(systems::coloring::color_states::<S, ColorMaterial>.system());
+                app.add_system(
+                    systems::coloring::color_states::<S, ColorMaterial, BATCH_SIZE>.system(),
+                );
             }
             #[cfg(feature = "3D")]
             {
                 app.add_startup_system(Self::setup_materials::<StandardMaterial>.system());
-                app.add_system(systems::coloring::color_states::<S, StandardMaterial>.system());
+                app.add_system(
+                    systems::coloring::color_states::<S, StandardMaterial, BATCH_SIZE>.system(),
+                );
             }
         }
     }

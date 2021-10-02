@@ -31,14 +31,7 @@ impl CellState for ConwayCellState {
         if self.0 {
             ColorResponse::MaterialIndex(1)
         } else {
-            #[cfg(feature = "2D")]
-            {
-                ColorResponse::MaterialIndex(0)
-            }
-            #[cfg(not(feature = "2D"))]
-            {
-                ColorResponse::None
-            }
+            ColorResponse::None
         }
     }
 
