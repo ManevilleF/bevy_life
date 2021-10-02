@@ -1,7 +1,6 @@
 use bevy::prelude::*;
 use bevy_life::{CellMap, ConwayCell4555State, GameOfLife3dPlugin, MooreCell3d};
 use rand::Rng;
-use std::ops::DerefMut;
 
 pub struct MapEntity(pub Entity);
 

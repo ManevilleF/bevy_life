@@ -54,11 +54,11 @@ But you may enable the following features
   - `NeumannCell2d` (square cell with 4 neighbors)
   - `HexagonCell2d` (hexagon cell with 6 neighbors)
   - plugin presets: `GameOfLife2dPlugin`, `ImmigrationGame2dPlugin`, `RainbowGame2dPlugin`, `WireWorld2dPlugin`, `CyclicAutomaton2dPlugin`
-- `3D` (enabled by default): Enables 3D types like:
+- `3D`: Enables 3D types like:
   - `MooreCell3d` (cube cell with 26 neighbors)
   - `NeumannCell3d` (cube cell with 6 neighbors)
   - plugin presets: `GameOfLife3dPlugin`, `ImmigrationGame3dPlugin`, `RainbowGame3dPlugin`, `WireWorld3dPlugin`, `CyclicAutomaton3dPlugin`
-- `auto-coloring`:
+- `auto-coloring` (Example or debug purpose):
   - Enables `CellStateMaterials2d` (if `2D`) and `CellStateMaterials3d` (if `3D`) types to contain material handles
   - The `CellState` type now requires to build either of the previous type (according to 2D/3D feature gates)
   - All `CellState` components with materials will be colored according to their type.
@@ -110,3 +110,9 @@ The example is dynamic, use the left mouse click to create a conductor cell on a
 ![Alt](./docs/2d_wireworld_demo.gif "wireworld demo gif")
 
 ![Alt](./docs/2d_wireworld_flip_flop_demo.gif "wireworld flip flop gate gif")
+
+### 3D Game of life (4555 rule)
+
+Run `cargo run --example 3d_game_of_life --features "3D auto-coloring" --no-default-features --release`
+
+![Alt](./docs/3d_classic_demo.gif "3D classic demo gif")

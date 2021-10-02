@@ -40,6 +40,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: build 2d game of life
         run: cargo clippy --all-features --example 2d_game_of_life
+      - name: build 3d game of life
+        run: cargo clippy --all-features --example 3d_game_of_life
       - name: build 2d immigration game
         run: cargo clippy --all-features --example 2d_immigration_game
       - name: build 2d rainbow game
