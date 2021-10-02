@@ -3,6 +3,7 @@ use crate::spawn_map;
 use bevy::ecs::component::Component;
 use bevy::prelude::*;
 use bevy_life::{Cell, CellMap};
+use std::ops::DerefMut;
 
 pub struct MapEntity(pub Entity);
 
@@ -19,7 +20,7 @@ pub fn mouse_coords_to_cell(world_pos: Vec2, cell_size: i32) -> IVec2 {
     )
 }
 
-pub fn handle_reset<C>(
+pub fn handle_reset_2d<C>(
     mut commands: Commands,
     keys: Res<Input<KeyCode>>,
     map: Res<MapEntity>,
@@ -33,6 +34,6 @@ pub fn handle_reset<C>(
         commands.remove_resource::<MapEntity>();
         cell_map.clear();
         println!("regenerating map");
-        spawn_map(&mut commands, &mut assets);
+        spawn_map(&mut commands, assets.deref_mut());
     }
 }

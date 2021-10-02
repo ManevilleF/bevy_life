@@ -86,52 +86,56 @@ pub use {components::*, resources::*};
 
 #[cfg(feature = "2D")]
 /// Cellular automaton plugin type for Conway's Game of life in 2D.
-pub type GameOfLife2dPlugin = CellularAutomatonPlugin<components::MooreCell2d, ConwayCellState>;
+pub type GameOfLife2dPlugin =
+    CellularAutomatonPlugin<components::MooreCell2d, ConwayCellState, 1000>;
 
 #[cfg(feature = "3D")]
 /// Cellular automaton plugin type for Conway's Game of life in 3D.
-pub type GameOfLife3dPlugin = CellularAutomatonPlugin<components::MooreCell3d, ConwayCellState>;
+pub type GameOfLife3dPlugin =
+    CellularAutomatonPlugin<components::MooreCell3d, ConwayCell4555State, 1000>;
 
 #[cfg(feature = "2D")]
 /// Cellular automaton plugin type for a binary (blue and orange) Immigration Game of life variation in 2D.
 pub type ImmigrationGame2dPlugin =
-    CellularAutomatonPlugin<components::MooreCell2d, ImmigrationCellState>;
+    CellularAutomatonPlugin<components::MooreCell2d, ImmigrationCellState, 1000>;
 
 #[cfg(feature = "3D")]
 /// Cellular automaton plugin type for a binary (blue and orange) Immigration Game of life variation in 3D.
 pub type ImmigrationGame3dPlugin =
-    CellularAutomatonPlugin<components::MooreCell3d, ImmigrationCellState>;
+    CellularAutomatonPlugin<components::MooreCell3d, ImmigrationCellState, 1000>;
 
 #[cfg(feature = "2D")]
 /// Cellular automaton plugin type for a binary (blue and orange) Immigration Game of life variation in 2D.
-pub type RainbowGame2dPlugin = CellularAutomatonPlugin<components::MooreCell2d, RainbowCellState>;
+pub type RainbowGame2dPlugin =
+    CellularAutomatonPlugin<components::MooreCell2d, RainbowCellState, 1000>;
 
 #[cfg(feature = "3D")]
 /// Cellular automaton plugin type for a binary (blue and orange) Immigration Game of life variation in 3D.
-pub type RainbowGame3dPlugin = CellularAutomatonPlugin<components::MooreCell3d, RainbowCellState>;
+pub type RainbowGame3dPlugin =
+    CellularAutomatonPlugin<components::MooreCell3d, RainbowCellState, 1000>;
 
 #[cfg(feature = "2D")]
 /// Cellular automaton plugin type for WireWorld in 2D
 pub type WireWorld2dPlugin =
-    CellularAutomatonPlugin<components::MooreCell2d, components::WireWorldCellState>;
+    CellularAutomatonPlugin<components::MooreCell2d, components::WireWorldCellState, 1000>;
 
 #[cfg(feature = "3D")]
 /// Cellular automaton plugin type for WireWorld in 3D
 pub type WireWorld3dPlugin =
-    CellularAutomatonPlugin<components::MooreCell3d, components::WireWorldCellState>;
+    CellularAutomatonPlugin<components::MooreCell3d, components::WireWorldCellState, 1000>;
 
 #[cfg(feature = "2D")]
 /// Cellular automaton plugin type for Colored Cyclic cellular automaton in 2D
 pub type CyclicColors2dPlugin =
-    CellularAutomatonPlugin<components::MooreCell2d, CyclicColorCellState>;
+    CellularAutomatonPlugin<components::MooreCell2d, CyclicColorCellState, 1000>;
 
 #[cfg(feature = "3D")]
 /// Cellular automaton plugin type for Colored Cyclic cellular automaton in 3D
 pub type CyclicColors3dPlugin =
-    CellularAutomatonPlugin<components::MooreCell3d, CyclicColorCellState>;
+    CellularAutomatonPlugin<components::MooreCell3d, CyclicColorCellState, 1000>;
 
 /// Generic Cellular Automaton plugin. It will register systems for the matching `Cell` and `CellState` types.
-pub struct CellularAutomatonPlugin<C, S> {
+pub struct CellularAutomatonPlugin<C, S, const BATCH_SIZE: usize> {
     /// Custom time step constraint value for the systems. If not set, the systems will run every frame.
     pub tick_time_step: Option<f64>,
     /// Phantom data for the `C` (`Cell`) type
@@ -140,12 +144,16 @@ pub struct CellularAutomatonPlugin<C, S> {
     pub phantom_s: PhantomData<S>,
 }
 
-impl<C: Cell + Component + Debug, S: CellState + Component + Debug> Plugin
-    for CellularAutomatonPlugin<C, S>
+impl<C: Cell + Component + Debug, S: CellState + Component + Debug, const BATCH_SIZE: usize> Plugin
+    for CellularAutomatonPlugin<C, S, BATCH_SIZE>
 {
     fn build(&self, app: &mut AppBuilder) {
         let system_set = SystemSet::new()
-            .with_system(systems::cells::handle_cells::<C, S>.system().label("cells"))
+            .with_system(
+                systems::cells::handle_cells::<C, S, BATCH_SIZE>
+                    .system()
+                    .label("cells"),
+            )
             .with_system(
                 systems::cells::handle_new_cells::<C>
                     .system()
@@ -175,7 +183,9 @@ impl<C: Cell + Component + Debug, S: CellState + Component + Debug> Plugin
     }
 }
 
-impl<C: Cell + Component + Debug, S: CellState + Component + Debug> CellularAutomatonPlugin<C, S> {
+impl<C: Cell + Component + Debug, S: CellState + Component + Debug, const BATCH_SIZE: usize>
+    CellularAutomatonPlugin<C, S, BATCH_SIZE>
+{
     /// Instantiates Self with custom `tick_time_step` value for systems execution
     pub fn new(tick_time_step: f64) -> Self {
         Self {
@@ -194,7 +204,7 @@ impl<C: Cell + Component + Debug, S: CellState + Component + Debug> CellularAuto
     }
 }
 
-impl<C, S> Default for CellularAutomatonPlugin<C, S> {
+impl<C, S, const BATCH_SIZE: usize> Default for CellularAutomatonPlugin<C, S, BATCH_SIZE> {
     fn default() -> Self {
         Self {
             tick_time_step: None,

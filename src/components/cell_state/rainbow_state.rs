@@ -48,26 +48,23 @@ impl CellState for RainbowCellState {
     #[cfg(feature = "auto-coloring")]
     fn color_or_material_index(&self) -> ColorResponse {
         match self {
-            Self::Dead => ColorResponse::MaterialIndex(0),
+            Self::Dead => {
+                #[cfg(feature = "2D")]
+                {
+                    ColorResponse::MaterialIndex(0)
+                }
+                #[cfg(not(feature = "2D"))]
+                {
+                    ColorResponse::None
+                }
+            }
             Self::Alive(v) => ColorResponse::Color(Color::rgb(*v, *v, *v)),
         }
     }
 
     #[cfg(feature = "auto-coloring")]
     fn colors() -> &'static [Color] {
-        #[cfg(feature = "2D")]
-        {
-            &[Color::GOLD]
-        }
-        #[cfg(not(feature = "2D"))]
-        {
-            &[Color::Rgba {
-                red: 0.0,
-                green: 0.0,
-                blue: 0.0,
-                alpha: 0.0,
-            }]
-        }
+        &[Color::GOLD]
     }
 }
 

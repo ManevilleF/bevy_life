@@ -5,7 +5,7 @@ use crate::ColorResponse;
 use bevy::prelude::Color;
 use std::ops::{Deref, DerefMut};
 
-/// Classic cellular automation state and rules following Conway's game of life rules:
+/// Classic cellular automation state and rules following Conway's game of life classic **2333** rules:
 ///
 /// - Any live cell with fewer than two live neighbours dies, as if by underpopulation.
 /// - Any live cell with two or three live neighbours lives on to the next generation.
@@ -28,7 +28,18 @@ impl CellState for ConwayCellState {
 
     #[cfg(feature = "auto-coloring")]
     fn color_or_material_index(&self) -> ColorResponse {
-        ColorResponse::MaterialIndex(if self.0 { 1 } else { 0 })
+        if self.0 {
+            ColorResponse::MaterialIndex(1)
+        } else {
+            #[cfg(feature = "2D")]
+            {
+                ColorResponse::MaterialIndex(0)
+            }
+            #[cfg(not(feature = "2D"))]
+            {
+                ColorResponse::None
+            }
+        }
     }
 
     #[cfg(feature = "auto-coloring")]

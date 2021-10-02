@@ -56,37 +56,24 @@ impl CellState for ImmigrationCellState {
 
     #[cfg(feature = "auto-coloring")]
     fn color_or_material_index(&self) -> ColorResponse {
-        ColorResponse::MaterialIndex(match self {
-            Self::Dead => 0,
-            Self::Alive(b) => {
-                if *b {
-                    1
-                } else {
-                    2
+        match self {
+            Self::Dead => {
+                #[cfg(feature = "2D")]
+                {
+                    ColorResponse::MaterialIndex(0)
+                }
+                #[cfg(not(feature = "2D"))]
+                {
+                    ColorResponse::None
                 }
             }
-        })
+            Self::Alive(b) => ColorResponse::MaterialIndex(if *b { 1 } else { 2 }),
+        }
     }
 
     #[cfg(feature = "auto-coloring")]
     fn colors() -> &'static [Color] {
-        #[cfg(feature = "2D")]
-        {
-            &[Color::BLACK, Color::CYAN, Color::ORANGE]
-        }
-        #[cfg(not(feature = "2D"))]
-        {
-            &[
-                Color::Rgba {
-                    red: 0.0,
-                    green: 0.0,
-                    blue: 0.0,
-                    alpha: 0.0,
-                },
-                Color::CYAN,
-                Color::ORANGE,
-            ]
-        }
+        &[Color::BLACK, Color::CYAN, Color::ORANGE]
     }
 }
 

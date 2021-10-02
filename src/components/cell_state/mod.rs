@@ -2,11 +2,12 @@
 use bevy::prelude::{Assets, Color};
 use std::fmt::Debug;
 pub use {
-    conway_state::*, cyclic_color_state::*, immigration_state::*, rainbow_state::*,
-    wire_world_cell_state::*,
+    conway_state::*, conway_state_3d::*, cyclic_color_state::*, immigration_state::*,
+    rainbow_state::*, wire_world_cell_state::*,
 };
 
 mod conway_state;
+mod conway_state_3d;
 mod cyclic_color_state;
 mod immigration_state;
 mod rainbow_state;
@@ -16,6 +17,8 @@ mod wire_world_cell_state;
 /// Enum returned by a cell state to define its color:
 /// either a material handle index or a new color
 pub enum ColorResponse {
+    /// No material
+    None,
     /// A Material handle index
     MaterialIndex(usize),
     /// A new color

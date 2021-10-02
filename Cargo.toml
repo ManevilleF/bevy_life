@@ -12,7 +12,7 @@ exclude = ["examples", "docs", ".github", ".gitignore", "examples_utilities"]
 documentation = "http://docs.rs/bevy_life"
 
 [features]
-default = ["2D", "3D"]
+default = ["2D"]
 2D = []
 3D = []
 auto-coloring = []

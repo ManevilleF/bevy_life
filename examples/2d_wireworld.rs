@@ -17,7 +17,7 @@ fn main() {
         })
         .add_startup_system(setup_camera.system())
         .add_startup_system(setup_map.system())
-        .add_system(handle_reset::<MooreCell2d>.system())
+        .add_system(handle_reset_2d::<MooreCell2d>.system())
         .add_system(handle_mouse_input.system())
         .run();
 }
