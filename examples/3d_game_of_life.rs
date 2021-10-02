@@ -5,7 +5,7 @@ use rand::Rng;
 pub struct MapEntity(pub Entity);
 
 fn main() {
-    App::build()
+    App::new()
         .insert_resource(WindowDescriptor {
             title: "3D Game Of Life".to_string(),
             width: 1300.,
