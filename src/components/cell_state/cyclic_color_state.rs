@@ -1,6 +1,6 @@
 use crate::CellState;
 #[cfg(feature = "auto-coloring")]
-use bevy::asset::Assets;
+use crate::ColorResponse;
 use bevy::prelude::Color;
 
 const CYCLIC_COLORS: [Color; 9] = [
@@ -24,9 +24,9 @@ const CYCLIC_COLORS: [Color; 9] = [
 ///
 /// For this type we use `9` for `n` and arbitrary colors.
 #[derive(Debug, Clone, PartialEq)]
-pub struct CyclicCellState(pub Color);
+pub struct CyclicColorCellState(pub Color);
 
-impl CellState for CyclicCellState {
+impl CellState for CyclicColorCellState {
     fn new_cell_state(&self, neighbor_cells: &[Self]) -> Self {
         let pos = self.pos();
         let target_color = if pos >= 8 {
@@ -43,34 +43,17 @@ impl CellState for CyclicCellState {
     }
 
     #[cfg(feature = "auto-coloring")]
-    fn material_index(&self) -> usize {
-        self.pos()
+    fn color_or_material_index(&self) -> ColorResponse {
+        ColorResponse::MaterialIndex(self.pos())
     }
 
-    #[cfg(all(feature = "auto-coloring", feature = "2D"))]
-    fn setup_materials_2d(
-        materials: &mut Assets<bevy::prelude::ColorMaterial>,
-    ) -> crate::materials::CellStateMaterials2d {
-        let materials = CYCLIC_COLORS
-            .iter()
-            .map(|c| materials.add((*c).into()))
-            .collect();
-        crate::materials::CellStateMaterials2d { materials }
-    }
-
-    #[cfg(all(feature = "auto-coloring", feature = "3D"))]
-    fn setup_materials_3d(
-        materials: &mut Assets<bevy::prelude::StandardMaterial>,
-    ) -> crate::materials::CellStateMaterials3d {
-        let materials = CYCLIC_COLORS
-            .iter()
-            .map(|c| materials.add((*c).into()))
-            .collect();
-        crate::materials::CellStateMaterials3d { materials }
+    #[cfg(feature = "auto-coloring")]
+    fn colors() -> &'static [Color] {
+        &CYCLIC_COLORS
     }
 }
 
-impl CyclicCellState {
+impl CyclicColorCellState {
     /// The index of `self` in the used `CYCLIC_COLORS` const color array
     pub fn pos(&self) -> usize {
         CYCLIC_COLORS.iter().position(|&c| c == self.0).unwrap_or(0)
@@ -82,7 +65,7 @@ impl CyclicCellState {
     }
 }
 
-impl Default for CyclicCellState {
+impl Default for CyclicColorCellState {
     fn default() -> Self {
         Self(CYCLIC_COLORS[0])
     }

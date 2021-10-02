@@ -38,15 +38,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: build
-        run: cargo build --verbose --examples
+      - name: build 2d game of life
+        run: cargo clippy --all-features --example 2d_game_of_life
+      - name: build 3d game of life
+        run: cargo clippy --all-features --example 3d_game_of_life
+      - name: build 2d immigration game
+        run: cargo clippy --all-features --example 2d_immigration_game
+      - name: build 2d rainbow game
+        run: cargo clippy --all-features --example 2d_rainbow_game
+      - name: build 2d color cyclic
+        run: cargo clippy --all-features --example 2d_cyclic_colors
+      - name: build 2d wireworld
+        run: cargo clippy --all-features --example 2d_wireworld
 
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: test
-        run: cargo test --all-features
+        run: cargo test --tests --all-features
 
   fmt:
     runs-on: ubuntu-latest
@@ -62,7 +72,7 @@ jobs:
       - name: Cargo clippy installation
         run: rustup component add clippy
       - name: Cargo clippy check
-        run: cargo clippy --all-targets -- -D warnings
+        run: cargo clippy --all-features --all --tests -- -D warnings
 
   rustdoc:
     runs-on: ubuntu-latest

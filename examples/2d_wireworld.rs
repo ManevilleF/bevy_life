@@ -1,21 +1,23 @@
 use bevy::prelude::*;
-use bevy_life::{Cell2d, CellMap, WireWorld2dPlugin, WireWorldCellState};
+use bevy_life::{MooreCell2d, WireWorld2dPlugin, WireWorldCellState};
 
-struct MapEntity(pub Entity);
+mod common;
+
+use common::*;
 
 fn main() {
     App::build()
         .add_plugins(DefaultPlugins)
         .add_plugin(WireWorld2dPlugin::new(0.1))
         .insert_resource(WindowDescriptor {
-            title: "Game Of Life".to_string(),
+            title: "WireWorld".to_string(),
             width: 1000.,
             height: 1000.,
             ..Default::default()
         })
         .add_startup_system(setup_camera.system())
         .add_startup_system(setup_map.system())
-        .add_system(handle_reset.system())
+        .add_system(handle_reset_2d::<MooreCell2d>.system())
         .add_system(handle_mouse_input.system())
         .run();
 }
@@ -30,15 +32,10 @@ fn setup_map(mut commands: Commands, mut assets: ResMut<Assets<ColorMaterial>>) 
     spawn_map(&mut commands, &mut assets);
 }
 
-fn mouse_coords(window: &Window, position: Vec2) -> Vec2 {
-    let window_size = Vec2::new(window.width(), window.height());
-    position - window_size / 2.
-}
-
 fn handle_mouse_input(
     mut commands: Commands,
     mouse_input: Res<Input<MouseButton>>,
-    mut query: Query<(&Cell2d, &mut WireWorldCellState)>,
+    mut query: Query<(&MooreCell2d, &mut WireWorldCellState)>,
     windows: Res<Windows>,
     map: Res<MapEntity>,
 ) {
@@ -51,11 +48,7 @@ fn handle_mouse_input(
         None => return,
         Some(p) => mouse_coords(window, p),
     };
-    let mouse_position = mouse_position / sprite_size as f32;
-    let position = IVec2::new(
-        mouse_position.x.round() as i32,
-        mouse_position.y.round() as i32,
-    );
+    let position = mouse_coords_to_cell(mouse_position, sprite_size);
     let mut found_cell_state = None;
     for (cell, state) in query.iter_mut() {
         if cell.coords == position {
@@ -85,25 +78,9 @@ fn handle_mouse_input(
                     ),
                     ..Default::default()
                 })
-                .insert(Cell2d::new(position))
+                .insert(MooreCell2d::new(position))
                 .insert(WireWorldCellState::Conductor);
         });
-    }
-}
-
-fn handle_reset(
-    mut commands: Commands,
-    keys: Res<Input<KeyCode>>,
-    map: Res<MapEntity>,
-    mut assets: ResMut<Assets<ColorMaterial>>,
-    mut cell_map: ResMut<CellMap<Cell2d>>,
-) {
-    if keys.just_released(KeyCode::Space) {
-        commands.entity(map.0).despawn_recursive();
-        commands.remove_resource::<MapEntity>();
-        cell_map.clear();
-        println!("regenerating map");
-        spawn_map(&mut commands, &mut assets);
     }
 }
 
@@ -142,7 +119,7 @@ fn spawn_map(commands: &mut Commands, assets: &mut Assets<ColorMaterial>) {
                             material: material.clone(),
                             ..Default::default()
                         })
-                        .insert(Cell2d::new(IVec2::new(x, y)))
+                        .insert(MooreCell2d::new(IVec2::new(x, y)))
                         .insert(state);
                 }
             }

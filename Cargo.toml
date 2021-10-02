@@ -8,11 +8,11 @@ repository = "https://github.com/ManevilleF/bevy_life"
 readme = "README.md"
 description = "Generic and dynamic cellular automaton lib for bevy"
 keywords = ["conway", "bevy", "wireworld", "cellular", "automaton"]
-exclude = ["examples", "docs", ".github", ".gitignore"]
+exclude = ["examples", "docs", ".github", ".gitignore", "examples_utilities"]
 documentation = "http://docs.rs/bevy_life"
 
 [features]
-default = ["2D", "3D"]
+default = ["2D"]
 2D = []
 3D = []
 auto-coloring = []

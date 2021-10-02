@@ -8,7 +8,7 @@ lazy_static::lazy_static! {
 
         // Center
         IVec3::new(0, 0, -1),
-        // Bottom left
+        // Left
         IVec3::new(-1, 0, -1),
         // Top Left
         IVec3::new(-1, 1, -1),
@@ -26,7 +26,7 @@ lazy_static::lazy_static! {
         IVec3::new(-1, -1, -1),
         // Z
 
-        // Bottom left
+        // Left
         IVec3::new(-1, 0, 0),
         // Top Left
         IVec3::new(-1, 1, 0),
@@ -46,7 +46,7 @@ lazy_static::lazy_static! {
 
         // Center
         IVec3::new(0, 0, 1),
-        // Bottom left
+        // Left
         IVec3::new(-1, 0, 1),
         // Top Left
         IVec3::new(-1, 1, 1),
@@ -65,14 +65,16 @@ lazy_static::lazy_static! {
     ];
 }
 
-/// Classic cube 3D cell, it has 26 neighbors and uses `IVec3` coordinates
+/// [Moore] 3D cell, it has 26 neighbors and uses `IVec3` coordinates
+///
+/// [Moore]: https://en.wikipedia.org/wiki/Moore_neighborhood
 #[derive(Debug, Clone)]
-pub struct Cell3d {
+pub struct MooreCell3d {
     /// The 3D cell coordinates
     pub coords: IVec3,
 }
 
-impl Deref for Cell3d {
+impl Deref for MooreCell3d {
     type Target = IVec3;
 
     fn deref(&self) -> &Self::Target {
@@ -80,7 +82,7 @@ impl Deref for Cell3d {
     }
 }
 
-impl Cell for Cell3d {
+impl Cell for MooreCell3d {
     type Coordinates = IVec3;
 
     fn coords(&self) -> &Self::Coordinates {
@@ -95,8 +97,8 @@ impl Cell for Cell3d {
     }
 }
 
-impl Cell3d {
-    /// Instantiates a new `Cell3D` with `coords` values
+impl MooreCell3d {
+    /// Instantiates a new cell with `coords` values
     pub fn new(coords: IVec3) -> Self {
         Self { coords }
     }

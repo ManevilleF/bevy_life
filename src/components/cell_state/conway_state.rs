@@ -1,9 +1,11 @@
 use crate::components::CellState;
 #[cfg(feature = "auto-coloring")]
-use bevy::prelude::{Assets, Color};
+use crate::ColorResponse;
+#[cfg(feature = "auto-coloring")]
+use bevy::prelude::Color;
 use std::ops::{Deref, DerefMut};
 
-/// Classic cellular automation state and rules following Conway's game of life rules:
+/// Classic cellular automation state and rules following Conway's game of life classic **2333** rules:
 ///
 /// - Any live cell with fewer than two live neighbours dies, as if by underpopulation.
 /// - Any live cell with two or three live neighbours lives on to the next generation.
@@ -12,9 +14,9 @@ use std::ops::{Deref, DerefMut};
 ///
 /// A dead cell is `false`, a live cell is `true`
 #[derive(Debug, Clone, Default, Eq, PartialEq)]
-pub struct ClassicCellState(pub bool);
+pub struct ConwayCellState(pub bool);
 
-impl CellState for ClassicCellState {
+impl CellState for ConwayCellState {
     fn new_cell_state(&self, neighbor_cells: &[Self]) -> Self {
         let alive_cells_count = neighbor_cells.iter().filter(|&c| c.0).count();
         if self.0 {
@@ -25,40 +27,28 @@ impl CellState for ClassicCellState {
     }
 
     #[cfg(feature = "auto-coloring")]
-    fn material_index(&self) -> usize {
+    fn color_or_material_index(&self) -> ColorResponse {
         if self.0 {
-            1
+            ColorResponse::MaterialIndex(1)
         } else {
-            0
+            #[cfg(feature = "2D")]
+            {
+                ColorResponse::MaterialIndex(0)
+            }
+            #[cfg(not(feature = "2D"))]
+            {
+                ColorResponse::None
+            }
         }
     }
 
-    #[cfg(all(feature = "auto-coloring", feature = "2D"))]
-    fn setup_materials_2d(
-        materials: &mut Assets<bevy::prelude::ColorMaterial>,
-    ) -> crate::resources::materials::CellStateMaterials2d {
-        crate::resources::materials::CellStateMaterials2d {
-            materials: vec![
-                materials.add(Color::BLACK.into()),
-                materials.add(Color::WHITE.into()),
-            ],
-        }
-    }
-
-    #[cfg(all(feature = "auto-coloring", feature = "3D"))]
-    fn setup_materials_3d(
-        materials: &mut Assets<bevy::prelude::StandardMaterial>,
-    ) -> crate::resources::materials::CellStateMaterials3d {
-        crate::resources::materials::CellStateMaterials3d {
-            materials: vec![
-                materials.add(Color::BLACK.into()),
-                materials.add(Color::WHITE.into()),
-            ],
-        }
+    #[cfg(feature = "auto-coloring")]
+    fn colors() -> &'static [Color] {
+        &[Color::BLACK, Color::WHITE]
     }
 }
 
-impl Deref for ClassicCellState {
+impl Deref for ConwayCellState {
     type Target = bool;
 
     fn deref(&self) -> &Self::Target {
@@ -66,13 +56,13 @@ impl Deref for ClassicCellState {
     }
 }
 
-impl DerefMut for ClassicCellState {
+impl DerefMut for ConwayCellState {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.0
     }
 }
 
-impl From<bool> for ClassicCellState {
+impl From<bool> for ConwayCellState {
     fn from(val: bool) -> Self {
         Self(val)
     }
@@ -84,7 +74,7 @@ mod tests {
 
     #[test]
     fn overpopulation_rule() {
-        let cell_state = ClassicCellState(true);
+        let cell_state = ConwayCellState(true);
 
         // 4 alive neighbors
         let neighbors = vec![
@@ -118,7 +108,7 @@ mod tests {
 
     #[test]
     fn generation_rule() {
-        let cell_state = ClassicCellState(true);
+        let cell_state = ConwayCellState(true);
 
         // 3 alive neighbors
         let neighbors = vec![
@@ -151,7 +141,7 @@ mod tests {
         assert!(new_state.0);
 
         // 2 alive neighbors but "off"
-        let cell_state = ClassicCellState(false);
+        let cell_state = ConwayCellState(false);
         let neighbors = vec![
             false.into(),
             true.into(),
@@ -169,7 +159,7 @@ mod tests {
 
     #[test]
     fn reproduction_rule() {
-        let cell_state = ClassicCellState(false);
+        let cell_state = ConwayCellState(false);
 
         // 3 alive neighbors
         let neighbors = vec![
@@ -189,7 +179,7 @@ mod tests {
 
     #[test]
     fn underpopulation_rule() {
-        let cell_state = ClassicCellState(true);
+        let cell_state = ConwayCellState(true);
 
         // 1 alive neighbors
         let neighbors = vec![

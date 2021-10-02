@@ -28,15 +28,19 @@ The `main` branch follows the released version of `bevy` (0.5) but I provide 3 u
 You may add as many generic `CellularAutomatonPlugin` as wished, the lib provides some implementations like:
 - `GameOfLife2dPlugin`
 - `GameOfLife3dPlugin`
+- `ImmigrationGame2dPlugin`
+- `ImmigrationGame3dPlugin`
+- `RainbowGame2dPlugin`
+- `RainbowGame3dPlugin`
 - `WireWorld2dPlugin`
 - `WireWorld3dPlugin`
-- `CyclicAutomaton2dPlugin`
-- `CyclicAutomaton3dPlugin`
+- `CyclicColors2dPlugin`
+- `CyclicColors3dPlugin`
 
 Then you may use bevy as usual and add `impl Cell` and `impl CellState`  components to the entities.
-The lib provides some implementations like `Cell2d` or `Cell3d` for cells and `ClassCellState`, `WireWorldCellState` or `CyclicCellState` for states.
+The lib provides some implementations like `MooreCell2d` or `MooreCell3d` for cells and `ConwayCellState`, `WireWorldCellState`, etc for states.
 
-You may implement your own cells (coordinate system) and states (rules) as you want, the cellular automaton system is completely dynamic and generic.
+You may implement your own *cells* (coordinate system) and *states* (rules) as you want, the cellular automaton system is completely dynamic and generic.
 
 For more information yo may look at some [examples](./examples).
 
@@ -46,15 +50,25 @@ No feature is required for the plugin to work and the main traits `Cell` and `Ce
 But you may enable the following features
 
 - `2D` (enabled by default): Enables 2D types like:
-  - `Cell2d` (square cell with 8 neighbors)
-  - plugin presets: `GameOfLife2dPlugin`, `WireWorld2dPlugin`, `CyclicAutomaton2dPlugin`
-- `3D` (enabled by default): Enables 3D types like:
-    - `Cell3d` (cube cell with 26 neighbors)
-    - plugin presets: `GameOfLife3dPlugin`, `WireWorld3dPlugin`, `CyclicAutomaton3dPlugin`
-- `auto-coloring`:
+  - `MooreCell2d` (square cell with 8 neighbors)
+  - `NeumannCell2d` (square cell with 4 neighbors)
+  - `HexagonCell2d` (hexagon cell with 6 neighbors)
+  - plugin presets: `GameOfLife2dPlugin`, `ImmigrationGame2dPlugin`, `RainbowGame2dPlugin`, `WireWorld2dPlugin`, `CyclicAutomaton2dPlugin`
+- `3D`: Enables 3D types like:
+  - `MooreCell3d` (cube cell with 26 neighbors)
+  - `NeumannCell3d` (cube cell with 6 neighbors)
+  - plugin presets: `GameOfLife3dPlugin`, `ImmigrationGame3dPlugin`, `RainbowGame3dPlugin`, `WireWorld3dPlugin`, `CyclicAutomaton3dPlugin`
+- `auto-coloring` (Example or debug purpose):
   - Enables `CellStateMaterials2d` (if `2D`) and `CellStateMaterials3d` (if `3D`) types to contain material handles
   - The `CellState` type now requires to build either of the previous type (according to 2D/3D feature gates)
   - All `CellState` components with materials will be colored according to their type.
+
+## Disclaimer
+
+This is probably not the fastest rust implementation of a cellular automaton in rust.
+For example, using Gosper's [HashLife](https://www.drdobbs.com/jvm/an-algorithm-for-compressing-space-and-t/184406478) a classic game of life could be much faster.
+
+This library aim is to be generic and dynamic, so that you can integrate cellular automata to any project in bevy, with any rules, in 2D or 3D.
 
 
 <!-- cargo-sync-readme end -->
@@ -63,19 +77,31 @@ But you may enable the following features
 
 For every example pressing space reloads the board
 
-### Classic 2D
+### 2D Game of life
 
-Run `cargo run --example 2d_classic --features auto-coloring --release`
+Run `cargo run --example 2d_game_of_life --features auto-coloring --release`
 
 ![Alt](./docs/2d_classic_demo.gif "classic demo gif")
 
-### Cyclic 2D
+### 2D Immigration game
 
-Run `cargo run --example 2d_cyclic --features auto-coloring --release`
+Run `cargo run --example 2d_immigration_game --features auto-coloring --release`
+
+![Alt](./docs/2d_immigration_demo.gif "immigration demo gif")
+
+### 2D Rainbow game
+
+Run `cargo run --example 2d_rainbow_game --features auto-coloring --release`
+
+![Alt](./docs/2d_rainbow_demo.gif "rainbow demo gif")
+
+### 2D Cyclic colors
+
+Run `cargo run --example 2d_cyclic_colors --features auto-coloring --release`
 
 ![Alt](./docs/2d_cyclic_demo.gif "cyclic demo gif")
 
-### Wire World 2D
+### 2D Wire World
 
 Run `cargo run --example 2d_wireworld --features auto-coloring --release`
 
@@ -84,3 +110,9 @@ The example is dynamic, use the left mouse click to create a conductor cell on a
 ![Alt](./docs/2d_wireworld_demo.gif "wireworld demo gif")
 
 ![Alt](./docs/2d_wireworld_flip_flop_demo.gif "wireworld flip flop gate gif")
+
+### 3D Game of life (4555 rule)
+
+Run `cargo run --example 3d_game_of_life --features "3D auto-coloring" --no-default-features --release`
+
+![Alt](./docs/3d_classic_demo.gif "3D classic demo gif")

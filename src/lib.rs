@@ -26,15 +26,19 @@
 //! You may add as many generic `CellularAutomatonPlugin` as wished, the lib provides some implementations like:
 //! - `GameOfLife2dPlugin`
 //! - `GameOfLife3dPlugin`
+//! - `ImmigrationGame2dPlugin`
+//! - `ImmigrationGame3dPlugin`
+//! - `RainbowGame2dPlugin`
+//! - `RainbowGame3dPlugin`
 //! - `WireWorld2dPlugin`
 //! - `WireWorld3dPlugin`
-//! - `CyclicAutomaton2dPlugin`
-//! - `CyclicAutomaton3dPlugin`
+//! - `CyclicColors2dPlugin`
+//! - `CyclicColors3dPlugin`
 //!
 //! Then you may use bevy as usual and add `impl Cell` and `impl CellState`  components to the entities.
-//! The lib provides some implementations like `Cell2d` or `Cell3d` for cells and `ClassCellState`, `WireWorldCellState` or `CyclicCellState` for states.
+//! The lib provides some implementations like `MooreCell2d` or `MooreCell3d` for cells and `ConwayCellState`, `WireWorldCellState`, etc for states.
 //!
-//! You may implement your own cells (coordinate system) and states (rules) as you want, the cellular automaton system is completely dynamic and generic.
+//! You may implement your own *cells* (coordinate system) and *states* (rules) as you want, the cellular automaton system is completely dynamic and generic.
 //!
 //! For more information yo may look at some [examples](./examples).
 //!
@@ -44,15 +48,25 @@
 //! But you may enable the following features
 //!
 //! - `2D` (enabled by default): Enables 2D types like:
-//!   - `Cell2d` (square cell with 8 neighbors)
-//!   - plugin presets: `GameOfLife2dPlugin`, `WireWorld2dPlugin`, `CyclicAutomaton2dPlugin`
-//! - `3D` (enabled by default): Enables 3D types like:
-//!     - `Cell3d` (cube cell with 26 neighbors)
-//!     - plugin presets: `GameOfLife3dPlugin`, `WireWorld3dPlugin`, `CyclicAutomaton3dPlugin`
-//! - `auto-coloring`:
+//!   - `MooreCell2d` (square cell with 8 neighbors)
+//!   - `NeumannCell2d` (square cell with 4 neighbors)
+//!   - `HexagonCell2d` (hexagon cell with 6 neighbors)
+//!   - plugin presets: `GameOfLife2dPlugin`, `ImmigrationGame2dPlugin`, `RainbowGame2dPlugin`, `WireWorld2dPlugin`, `CyclicAutomaton2dPlugin`
+//! - `3D`: Enables 3D types like:
+//!   - `MooreCell3d` (cube cell with 26 neighbors)
+//!   - `NeumannCell3d` (cube cell with 6 neighbors)
+//!   - plugin presets: `GameOfLife3dPlugin`, `ImmigrationGame3dPlugin`, `RainbowGame3dPlugin`, `WireWorld3dPlugin`, `CyclicAutomaton3dPlugin`
+//! - `auto-coloring` (Example or debug purpose):
 //!   - Enables `CellStateMaterials2d` (if `2D`) and `CellStateMaterials3d` (if `3D`) types to contain material handles
 //!   - The `CellState` type now requires to build either of the previous type (according to 2D/3D feature gates)
 //!   - All `CellState` components with materials will be colored according to their type.
+//!
+//! ## Disclaimer
+//!
+//! This is probably not the fastest rust implementation of a cellular automaton in rust.
+//! For example, using Gosper's [HashLife](https://www.drdobbs.com/jvm/an-algorithm-for-compressing-space-and-t/184406478) a classic game of life could be much faster.
+//!
+//! This library aim is to be generic and dynamic, so that you can integrate cellular automata to any project in bevy, with any rules, in 2D or 3D.
 //!
 #![forbid(missing_docs)]
 #![forbid(unsafe_code)]
@@ -72,32 +86,59 @@ pub use {components::*, resources::*};
 
 #[cfg(feature = "2D")]
 /// Cellular automaton plugin type for Conway's Game of life in 2D.
-pub type GameOfLife2dPlugin = CellularAutomatonPlugin<components::Cell2d, ClassicCellState>;
+pub type GameOfLife2dPlugin =
+    CellularAutomatonPlugin<components::MooreCell2d, ConwayCellState, 1000>;
 
 #[cfg(feature = "3D")]
 /// Cellular automaton plugin type for Conway's Game of life in 3D.
-pub type GameOfLife3dPlugin = CellularAutomatonPlugin<components::Cell3d, ClassicCellState>;
+pub type GameOfLife3dPlugin =
+    CellularAutomatonPlugin<components::MooreCell3d, ConwayCell4555State, 1000>;
+
+#[cfg(feature = "2D")]
+/// Cellular automaton plugin type for a binary (blue and orange) Immigration Game of life variation in 2D.
+pub type ImmigrationGame2dPlugin =
+    CellularAutomatonPlugin<components::MooreCell2d, ImmigrationCellState, 1000>;
+
+#[cfg(feature = "3D")]
+/// Cellular automaton plugin type for a binary (blue and orange) Immigration Game of life variation in 3D.
+pub type ImmigrationGame3dPlugin =
+    CellularAutomatonPlugin<components::MooreCell3d, ImmigrationCellState, 1000>;
+
+#[cfg(feature = "2D")]
+/// Cellular automaton plugin type for a binary (blue and orange) Immigration Game of life variation in 2D.
+pub type RainbowGame2dPlugin =
+    CellularAutomatonPlugin<components::MooreCell2d, RainbowCellState, 1000>;
+
+#[cfg(feature = "3D")]
+/// Cellular automaton plugin type for a binary (blue and orange) Immigration Game of life variation in 3D.
+pub type RainbowGame3dPlugin =
+    CellularAutomatonPlugin<components::MooreCell3d, RainbowCellState, 1000>;
 
 #[cfg(feature = "2D")]
 /// Cellular automaton plugin type for WireWorld in 2D
 pub type WireWorld2dPlugin =
-    CellularAutomatonPlugin<components::Cell2d, components::WireWorldCellState>;
+    CellularAutomatonPlugin<components::MooreCell2d, components::WireWorldCellState, 1000>;
 
 #[cfg(feature = "3D")]
 /// Cellular automaton plugin type for WireWorld in 3D
 pub type WireWorld3dPlugin =
-    CellularAutomatonPlugin<components::Cell3d, components::WireWorldCellState>;
+    CellularAutomatonPlugin<components::MooreCell3d, components::WireWorldCellState, 1000>;
 
 #[cfg(feature = "2D")]
 /// Cellular automaton plugin type for Colored Cyclic cellular automaton in 2D
-pub type CyclicAutomaton2dPlugin = CellularAutomatonPlugin<components::Cell2d, CyclicCellState>;
+pub type CyclicColors2dPlugin =
+    CellularAutomatonPlugin<components::MooreCell2d, CyclicColorCellState, 1000>;
 
 #[cfg(feature = "3D")]
 /// Cellular automaton plugin type for Colored Cyclic cellular automaton in 3D
-pub type CyclicAutomaton3dPlugin = CellularAutomatonPlugin<components::Cell3d, CyclicCellState>;
+pub type CyclicColors3dPlugin =
+    CellularAutomatonPlugin<components::MooreCell3d, CyclicColorCellState, 1000>;
 
 /// Generic Cellular Automaton plugin. It will register systems for the matching `Cell` and `CellState` types.
-pub struct CellularAutomatonPlugin<C, S> {
+///
+/// The `BATCH_SIZE` const argument determines the size of query batches to be queried in parallel.
+/// It has a big performance impact on worlds with a lot of cells.
+pub struct CellularAutomatonPlugin<C, S, const BATCH_SIZE: usize> {
     /// Custom time step constraint value for the systems. If not set, the systems will run every frame.
     pub tick_time_step: Option<f64>,
     /// Phantom data for the `C` (`Cell`) type
@@ -106,12 +147,16 @@ pub struct CellularAutomatonPlugin<C, S> {
     pub phantom_s: PhantomData<S>,
 }
 
-impl<C: Cell + Component + Debug, S: CellState + Component + Debug> Plugin
-    for CellularAutomatonPlugin<C, S>
+impl<C: Cell + Component + Debug, S: CellState + Component + Debug, const BATCH_SIZE: usize> Plugin
+    for CellularAutomatonPlugin<C, S, BATCH_SIZE>
 {
     fn build(&self, app: &mut AppBuilder) {
         let system_set = SystemSet::new()
-            .with_system(systems::cells::handle_cells::<C, S>.system().label("cells"))
+            .with_system(
+                systems::cells::handle_cells::<C, S, BATCH_SIZE>
+                    .system()
+                    .label("cells"),
+            )
             .with_system(
                 systems::cells::handle_new_cells::<C>
                     .system()
@@ -129,19 +174,21 @@ impl<C: Cell + Component + Debug, S: CellState + Component + Debug> Plugin
         {
             #[cfg(feature = "2D")]
             {
-                app.add_startup_system(Self::setup_materials_2d.system());
-                app.add_system(systems::coloring::color_states_2d::<S>.system());
+                app.add_startup_system(Self::setup_materials::<ColorMaterial>.system());
+                app.add_system(systems::coloring::color_states::<S, ColorMaterial>.system());
             }
             #[cfg(feature = "3D")]
             {
-                app.add_startup_system(Self::setup_materials_3d.system());
-                app.add_system(systems::coloring::color_states_3d::<S>.system());
+                app.add_startup_system(Self::setup_materials::<StandardMaterial>.system());
+                app.add_system(systems::coloring::color_states::<S, StandardMaterial>.system());
             }
         }
     }
 }
 
-impl<C: Cell + Component + Debug, S: CellState + Component + Debug> CellularAutomatonPlugin<C, S> {
+impl<C: Cell + Component + Debug, S: CellState + Component + Debug, const BATCH_SIZE: usize>
+    CellularAutomatonPlugin<C, S, BATCH_SIZE>
+{
     /// Instantiates Self with custom `tick_time_step` value for systems execution
     pub fn new(tick_time_step: f64) -> Self {
         Self {
@@ -150,26 +197,17 @@ impl<C: Cell + Component + Debug, S: CellState + Component + Debug> CellularAuto
         }
     }
 
-    #[cfg(all(feature = "auto-coloring", feature = "2D"))]
-    fn setup_materials_2d(
-        mut commands: Commands,
-        mut assets: ResMut<Assets<bevy::prelude::ColorMaterial>>,
-    ) {
-        let color_assets = S::setup_materials_2d(&mut assets);
-        commands.insert_resource(color_assets);
-    }
-
-    #[cfg(all(feature = "auto-coloring", feature = "3D"))]
-    fn setup_materials_3d(
-        mut commands: Commands,
-        mut assets: ResMut<Assets<bevy::prelude::StandardMaterial>>,
-    ) {
-        let color_assets = S::setup_materials_3d(&mut assets);
+    #[cfg(feature = "auto-coloring")]
+    fn setup_materials<A>(mut commands: Commands, mut assets: ResMut<Assets<A>>)
+    where
+        A: bevy::asset::Asset + From<Color>,
+    {
+        let color_assets = S::setup_materials(&mut assets);
         commands.insert_resource(color_assets);
     }
 }
 
-impl<C, S> Default for CellularAutomatonPlugin<C, S> {
+impl<C, S, const BATCH_SIZE: usize> Default for CellularAutomatonPlugin<C, S, BATCH_SIZE> {
     fn default() -> Self {
         Self {
             tick_time_step: None,

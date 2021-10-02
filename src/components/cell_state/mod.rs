@@ -1,11 +1,29 @@
 #[cfg(feature = "auto-coloring")]
-use bevy::prelude::Assets;
+use bevy::prelude::{Assets, Color};
 use std::fmt::Debug;
-pub use {classic_state::*, cyclic_state::*, wire_world_cell_state::*};
+pub use {
+    conway_state::*, conway_state_3d::*, cyclic_color_state::*, immigration_state::*,
+    rainbow_state::*, wire_world_cell_state::*,
+};
 
-mod classic_state;
-mod cyclic_state;
+mod conway_state;
+mod conway_state_3d;
+mod cyclic_color_state;
+mod immigration_state;
+mod rainbow_state;
 mod wire_world_cell_state;
+
+#[cfg(feature = "auto-coloring")]
+/// Enum returned by a cell state to define its color:
+/// either a material handle index or a new color
+pub enum ColorResponse {
+    /// No material
+    None,
+    /// A Material handle index
+    MaterialIndex(usize),
+    /// A new color
+    Color(Color),
+}
 
 /// This trait defines the state of any given `Cell`. The trait implementation will define the
 /// cellular automaton rules which will be automatically applied.
@@ -24,17 +42,25 @@ pub trait CellState: Debug + Default + Sized + Clone + PartialEq {
 
     #[cfg(feature = "auto-coloring")]
     /// Index of the material handle matching the current `self` state
-    fn material_index(&self) -> usize;
+    fn color_or_material_index(&self) -> ColorResponse;
 
-    #[cfg(all(feature = "auto-coloring", feature = "2D"))]
-    /// Builds the `CellStateMaterials2d` ressource storing every material handle for every possible state.
-    fn setup_materials_2d(
-        materials: &mut Assets<bevy::prelude::ColorMaterial>,
-    ) -> crate::resources::materials::CellStateMaterials2d;
+    #[cfg(feature = "auto-coloring")]
+    /// All available colors of the state
+    fn colors() -> &'static [Color];
 
-    #[cfg(all(feature = "auto-coloring", feature = "3D"))]
-    /// Builds the `CellStateMaterials3d` ressource storing every material handle for every possible state.
-    fn setup_materials_3d(
-        materials: &mut Assets<bevy::prelude::StandardMaterial>,
-    ) -> crate::resources::materials::CellStateMaterials3d;
+    #[cfg(feature = "auto-coloring")]
+    /// Builds the `CellStateMaterials` ressource storing every material handle for every possible state.
+    fn setup_materials<A>(
+        materials: &mut Assets<A>,
+    ) -> crate::resources::materials::CellStateMaterials<A>
+    where
+        A: bevy::asset::Asset + From<Color>,
+    {
+        crate::resources::materials::CellStateMaterials {
+            materials: Self::colors()
+                .iter()
+                .map(|c| materials.add((*c).into()))
+                .collect(),
+        }
+    }
 }
