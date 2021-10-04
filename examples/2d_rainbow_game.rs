@@ -16,6 +16,7 @@ fn main() {
             height: 1000.,
             ..Default::default()
         })
+        .insert_resource(ClearColor(Color::GOLD))
         .add_startup_system(setup_camera.system())
         .add_startup_system(setup_map.system())
         .add_system(handle_reset_2d::<MooreCell2d>.system())
@@ -34,21 +35,21 @@ fn setup_map(mut commands: Commands, mut assets: ResMut<Assets<ColorMaterial>>) 
 
 fn spawn_map(commands: &mut Commands, assets: &mut Assets<ColorMaterial>) {
     let mut rng = rand::thread_rng();
-    let map_size = 100;
-    let sprite_size = 10.;
+    let (size_x, size_y) = (150, 100);
+    let sprite_size = 8.;
     let material = assets.add(Color::rgba(0., 0., 0., 0.).into());
 
     let entity = commands
         .spawn()
         .insert(Transform::from_xyz(
-            -(map_size as f32 * sprite_size) / 2.,
-            -(map_size as f32 * sprite_size) / 2.,
+            -(size_x as f32 * sprite_size) / 2.,
+            -(size_y as f32 * sprite_size) / 2.,
             0.,
         ))
         .insert(GlobalTransform::default())
         .with_children(|builder| {
-            for y in 0..=map_size {
-                for x in 0..=map_size {
+            for y in 0..=size_y {
+                for x in 0..=size_x {
                     let state = if rng.gen_bool(1. / 3.) {
                         RainbowCellState::Alive(if rng.gen_bool(1. / 2.) { 0. } else { 1. })
                     } else {

@@ -29,7 +29,7 @@ impl CellState for ConwayCellState {
     #[cfg(feature = "auto-coloring")]
     fn color_or_material_index(&self) -> ColorResponse {
         if self.0 {
-            ColorResponse::MaterialIndex(1)
+            ColorResponse::MaterialIndex(0)
         } else {
             ColorResponse::None
         }
@@ -37,7 +37,7 @@ impl CellState for ConwayCellState {
 
     #[cfg(feature = "auto-coloring")]
     fn colors() -> &'static [Color] {
-        &[Color::BLACK, Color::WHITE]
+        &[Color::WHITE]
     }
 }
 

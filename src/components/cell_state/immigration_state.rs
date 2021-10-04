@@ -58,13 +58,13 @@ impl CellState for ImmigrationCellState {
     fn color_or_material_index(&self) -> ColorResponse {
         match self {
             Self::Dead => ColorResponse::None,
-            Self::Alive(b) => ColorResponse::MaterialIndex(if *b { 1 } else { 2 }),
+            Self::Alive(b) => ColorResponse::MaterialIndex(if *b { 0 } else { 1 }),
         }
     }
 
     #[cfg(feature = "auto-coloring")]
     fn colors() -> &'static [Color] {
-        &[Color::BLACK, Color::CYAN, Color::ORANGE]
+        &[Color::CYAN, Color::ORANGE]
     }
 }
 
