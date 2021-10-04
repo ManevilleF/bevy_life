@@ -39,7 +39,7 @@ pub fn handle_reset_3d(
 fn setup_camera(mut commands: Commands) {
     // Camera
     commands.spawn_bundle(PerspectiveCameraBundle {
-        transform: Transform::from_xyz(75., 75., -75.).looking_at(Vec3::ZERO, Vec3::Y),
+        transform: Transform::from_xyz(50., 50., -50.).looking_at(Vec3::ZERO, Vec3::Y),
         ..Default::default()
     });
 }
@@ -52,7 +52,7 @@ fn setup_map(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>) {
 fn spawn_map(commands: &mut Commands, meshes: &mut Assets<Mesh>) {
     let mesh = meshes.add(Mesh::from(shape::Cube::new(1.)));
     let mut rng = rand::thread_rng();
-    let map_size = 75;
+    let map_size = 50;
     let entity = commands
         .spawn()
         .insert(Transform::from_xyz(

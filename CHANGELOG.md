@@ -1,15 +1,16 @@
 # Changelog
 
-## Unreleased
+## 0.2.1
 
 - `CellMap`:
   - Using a `bevy::utils::Hashmap` instead of the standard library one, which is slightly faster
 - Cells system:
-  - Removed reference couting `Arc` from the `RwLock` for the batched query iterations
+  - Removed reference counting `Arc` from the `RwLock` for the batched query iterations
 - Using batched queries for the coloring systems (`auto-coloring` feature)
 - Examples:
   - Improved examples map sizes
   - Reworked the color system for the provided `CellStates`
+- Issues Github template
 
 ## 0.2.0
 
