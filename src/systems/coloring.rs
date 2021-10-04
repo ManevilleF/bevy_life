@@ -30,7 +30,7 @@ pub fn color_states<S, A, const BATCH_SIZE: usize>(
                 .materials
                 .get(i)
                 .cloned()
-                .map(|h| ColorOrHandle::Handle(h)),
+                .map(ColorOrHandle::Handle),
             ColorResponse::Color(c) => Some(ColorOrHandle::Color(c)),
             ColorResponse::None => None,
         };
