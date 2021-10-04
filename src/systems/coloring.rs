@@ -4,7 +4,7 @@ use bevy::asset::Asset;
 use bevy::ecs::component::Component;
 use bevy::prelude::*;
 use bevy::tasks::ComputeTaskPool;
-use std::sync::{Arc, RwLock};
+use std::sync::RwLock;
 
 enum ColorOrHandle<A: Asset> {
     Color(Color),
@@ -22,7 +22,7 @@ pub fn color_states<S, A, const BATCH_SIZE: usize>(
     S: CellState + Component,
     A: Asset + From<Color>,
 {
-    let vec = Arc::new(RwLock::new(Vec::new()));
+    let vec = RwLock::new(Vec::new());
     query.par_for_each_mut(&pool, BATCH_SIZE, |(entity, state, mut visible)| {
         let response: ColorResponse = state.color_or_material_index();
         let handle = match response {

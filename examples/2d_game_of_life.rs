@@ -1,9 +1,4 @@
-use bevy::asset::diagnostic::AssetCountDiagnosticsPlugin;
-use bevy::diagnostic::{
-    EntityCountDiagnosticsPlugin, FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin,
-};
 use bevy::prelude::*;
-use bevy::wgpu::diagnostic::WgpuResourceDiagnosticsPlugin;
 use bevy_life::{ConwayCellState, GameOfLife2dPlugin, MooreCell2d};
 use rand::Rng;
 mod common;
@@ -14,11 +9,6 @@ fn main() {
     App::build()
         .add_plugins(DefaultPlugins)
         .add_plugin(GameOfLife2dPlugin::default())
-        .add_plugin(FrameTimeDiagnosticsPlugin)
-        .add_plugin(LogDiagnosticsPlugin::default())
-        .add_plugin(WgpuResourceDiagnosticsPlugin::default())
-        .add_plugin(AssetCountDiagnosticsPlugin::<ColorMaterial>::default())
-        .add_plugin(EntityCountDiagnosticsPlugin)
         .insert_resource(WindowDescriptor {
             title: "Game Of Life".to_string(),
             width: 1000.,
