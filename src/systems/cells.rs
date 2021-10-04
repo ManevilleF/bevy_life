@@ -4,7 +4,7 @@ use bevy::ecs::component::Component;
 use bevy::log;
 use bevy::prelude::*;
 use bevy::tasks::ComputeTaskPool;
-use std::sync::{Arc, RwLock};
+use std::sync::RwLock;
 
 pub fn handle_cells<C, S, const BATCH_SIZE: usize>(
     mut commands: Commands,
@@ -15,7 +15,7 @@ pub fn handle_cells<C, S, const BATCH_SIZE: usize>(
     C: Cell + Component,
     S: CellState + Component,
 {
-    let vec = Arc::new(RwLock::new(Vec::new()));
+    let vec = RwLock::new(Vec::new());
     query.par_for_each(&pool, BATCH_SIZE, |(entity, cell, state)| {
         let neighbor_coords = cell.neighbor_coordinates();
         let neighbor_cells = map.get_cell_entities(&neighbor_coords);

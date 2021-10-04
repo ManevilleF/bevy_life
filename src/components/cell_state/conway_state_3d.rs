@@ -29,22 +29,15 @@ impl CellState for ConwayCell4555State {
     #[cfg(feature = "auto-coloring")]
     fn color_or_material_index(&self) -> ColorResponse {
         if self.0 {
-            ColorResponse::MaterialIndex(1)
+            ColorResponse::MaterialIndex(0)
         } else {
-            #[cfg(feature = "2D")]
-            {
-                ColorResponse::MaterialIndex(0)
-            }
-            #[cfg(not(feature = "2D"))]
-            {
-                ColorResponse::None
-            }
+            ColorResponse::None
         }
     }
 
     #[cfg(feature = "auto-coloring")]
     fn colors() -> &'static [Color] {
-        &[Color::BLACK, Color::WHITE]
+        &[Color::WHITE]
     }
 }
 

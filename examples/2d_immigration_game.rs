@@ -34,29 +34,29 @@ fn setup_map(mut commands: Commands, mut assets: ResMut<Assets<ColorMaterial>>) 
 
 fn spawn_map(commands: &mut Commands, assets: &mut Assets<ColorMaterial>) {
     let mut rng = rand::thread_rng();
-    let map_size = 100;
-    let sprite_size = 10.;
+    let (size_x, size_y) = (300, 200);
+    let sprite_size = 4.;
     let material = assets.add(Color::rgba(0., 0., 0., 0.).into());
 
     let entity = commands
         .spawn()
         .insert(Transform::from_xyz(
-            -(map_size as f32 * sprite_size) / 2.,
-            -(map_size as f32 * sprite_size) / 2.,
+            -(size_x as f32 * sprite_size) / 2.,
+            -(size_y as f32 * sprite_size) / 2.,
             0.,
         ))
         .insert(GlobalTransform::default())
         .with_children(|builder| {
-            for y in 0..=map_size {
-                for x in 0..=map_size {
-                    let state = if rng.gen_bool(1. / 3.) {
+            for y in 0..=size_y {
+                for x in 0..=size_x {
+                    let state = if rng.gen_bool(1. / 4.) {
                         ImmigrationCellState::Alive(rng.gen_bool(1. / 2.))
                     } else {
                         ImmigrationCellState::Dead
                     };
                     builder
                         .spawn_bundle(SpriteBundle {
-                            sprite: Sprite::new(Vec2::splat(sprite_size - 1.)),
+                            sprite: Sprite::new(Vec2::splat(sprite_size)),
                             transform: Transform::from_xyz(
                                 sprite_size * x as f32,
                                 sprite_size * y as f32,

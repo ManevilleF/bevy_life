@@ -4,7 +4,7 @@ use crate::components::MooreCell2d;
 #[cfg(feature = "3D")]
 use crate::components::NeumannCell3d;
 use bevy::prelude::Entity;
-use std::collections::HashMap;
+use bevy::utils::HashMap;
 
 #[cfg(feature = "2D")]
 /// A `CellMap` implementation for `Cell2d`
