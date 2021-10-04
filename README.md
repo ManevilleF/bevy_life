@@ -7,7 +7,7 @@
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![Crates.io](https://img.shields.io/crates/v/bevy_life.svg)](https://crates.io/crates/bevy_life)
 [![aragog](https://docs.rs/bevy_life/badge.svg)](https://docs.rs/bevy_life)
-[![dependency status](https://deps.rs/crate/bevy_life/0.1.0/status.svg)](https://deps.rs/crate/bevy_life)
+[![dependency status](https://deps.rs/crate/bevy_life/0.2.0/status.svg)](https://deps.rs/crate/bevy_life)
 
 `bevy_life` is a generic plugin for [cellular automaton](https://en.wikipedia.org/wiki/Cellular_automaton).
 From the classic 2D [Conway's game of life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) to [WireWorld](https://en.wikipedia.org/wiki/Wireworld) and 3D rules, the plugin is completely generic and dynamic.
@@ -79,31 +79,31 @@ For every example pressing space reloads the board
 
 ### 2D Game of life
 
-Run `cargo run --example 2d_game_of_life --features auto-coloring --release`
+Run `cargo run --example 2d_game_of_life --features auto-coloring`
 
 ![Alt](./docs/2d_classic_demo.gif "classic demo gif")
 
 ### 2D Immigration game
 
-Run `cargo run --example 2d_immigration_game --features auto-coloring --release`
+Run `cargo run --example 2d_immigration_game --features auto-coloring`
 
 ![Alt](./docs/2d_immigration_demo.gif "immigration demo gif")
 
 ### 2D Rainbow game
 
-Run `cargo run --example 2d_rainbow_game --features auto-coloring --release`
+Run `cargo run --example 2d_rainbow_game --features auto-coloring`
 
 ![Alt](./docs/2d_rainbow_demo.gif "rainbow demo gif")
 
 ### 2D Cyclic colors
 
-Run `cargo run --example 2d_cyclic_colors --features auto-coloring --release`
+Run `cargo run --example 2d_cyclic_colors --features auto-coloring`
 
 ![Alt](./docs/2d_cyclic_demo.gif "cyclic demo gif")
 
 ### 2D Wire World
 
-Run `cargo run --example 2d_wireworld --features auto-coloring --release`
+Run `cargo run --example 2d_wireworld --features auto-coloring`
 
 The example is dynamic, use the left mouse click to create a conductor cell on an empty space or to create an electron head
 
@@ -113,6 +113,6 @@ The example is dynamic, use the left mouse click to create a conductor cell on a
 
 ### 3D Game of life (4555 rule)
 
-Run `cargo run --example 3d_game_of_life --features "3D auto-coloring" --no-default-features --release`
+Run `cargo run --example 3d_game_of_life --features "3D auto-coloring" --no-default-features`
 
 ![Alt](./docs/3d_classic_demo.gif "3D classic demo gif")
