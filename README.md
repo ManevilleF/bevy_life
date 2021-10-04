@@ -59,8 +59,8 @@ But you may enable the following features
   - `NeumannCell3d` (cube cell with 6 neighbors)
   - plugin presets: `GameOfLife3dPlugin`, `ImmigrationGame3dPlugin`, `RainbowGame3dPlugin`, `WireWorld3dPlugin`, `CyclicAutomaton3dPlugin`
 - `auto-coloring` (Example or debug purpose):
-  - Enables `CellStateMaterials2d` (if `2D`) and `CellStateMaterials3d` (if `3D`) types to contain material handles
-  - The `CellState` type now requires to build either of the previous type (according to 2D/3D feature gates)
+  - Enables `CellStateMaterials` resource to contain material handles
+  - The `CellState` type now requires to build a `CellStateMaterials`
   - All `CellState` components with materials will be colored according to their type.
 
 ## Disclaimer
