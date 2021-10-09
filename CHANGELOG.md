@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Added `CellMap<T>::get_cell` method to retrieve a cell entity
+- Added a `SimulationPause` resource to allow simulation pausing
+
 ## 0.2.1
 
 - `CellMap`:

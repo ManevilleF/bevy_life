@@ -1,5 +1,6 @@
 use crate::components::{Cell, CellState};
 use crate::resources::CellMap;
+use crate::SimulationPause;
 use bevy::ecs::component::Component;
 use bevy::log;
 use bevy::prelude::*;
@@ -11,10 +12,14 @@ pub fn handle_cells<C, S, const BATCH_SIZE: usize>(
     pool: Res<ComputeTaskPool>,
     query: Query<(Entity, &C, &S)>,
     map: Res<CellMap<C>>,
+    pause: Option<Res<SimulationPause>>,
 ) where
     C: Cell + Component,
     S: CellState + Component,
 {
+    if pause.is_some() {
+        return;
+    }
     let vec = RwLock::new(Vec::new());
     query.par_for_each(&pool, BATCH_SIZE, |(entity, cell, state)| {
         let neighbor_coords = cell.neighbor_coordinates();
