@@ -28,8 +28,13 @@ pub fn handle_cells<C, S, const BATCH_SIZE: usize>(
             .into_iter()
             .filter_map(|e| match query.get(e) {
                 Ok((_e, _c, s)) => Some(s.clone()),
-                Err(e) => {
-                    log::error!("Query error: {}", e);
+                Err(err) => {
+                    log::error!(
+                        "Could not retrieve neighbor entity {:?} for cell at {:?}: {}",
+                        e,
+                        cell.coords(),
+                        err
+                    );
                     None
                 }
             })
@@ -51,6 +56,16 @@ where
     C: Cell + Component,
 {
     for (entity, new_cell) in query.iter() {
-        map.insert_cell(new_cell.coords().clone(), entity);
+        let old_entity = map.insert_cell(new_cell.coords().clone(), entity);
+        if let Some(e) = old_entity {
+            if e != entity {
+                log::warn!(
+                    "{:?} replaced {:?} at {:?} coordinates",
+                    entity,
+                    e,
+                    new_cell.coords()
+                )
+            }
+        }
     }
 }

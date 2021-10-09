@@ -4,6 +4,8 @@
 
 - Added `CellMap<T>::get_cell` method to retrieve a cell entity
 - Added a `SimulationPause` resource to allow simulation pausing
+- Improved logging in systems
+- `CellMap<T>::insert_cell` now returns the previus entity if it was present
 
 ## 0.2.1
 
