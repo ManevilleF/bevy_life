@@ -45,8 +45,13 @@ impl<C: Cell> CellMap<C> {
     /// # Note:
     ///
     /// This operation is done automatically when you add a `Cell` component to an entity.
-    pub fn insert_cell(&mut self, coordinates: C::Coordinates, entity: Entity) {
-        self.cells.insert(coordinates, entity);
+    ///
+    /// # Returns
+    ///
+    /// If the map did not have this key present, `None` is returned.
+    /// If the map did have this key present, the value is updated, and the old value is returned
+    pub fn insert_cell(&mut self, coordinates: C::Coordinates, entity: Entity) -> Option<Entity> {
+        self.cells.insert(coordinates, entity)
     }
 
     /// Removes a cell from the map, returning the `Entity` value if it was present.
