@@ -1,6 +1,6 @@
 [package]
 name = "bevy_life"
-version = "0.2.1"
+version = "0.2.2"
 edition = "2018"
 authors = ["Felix de Maneville <felix.maneville@gmail.com>"]
 license-file = "./LICENSE"
