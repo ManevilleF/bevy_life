@@ -59,6 +59,11 @@ impl<C: Cell> CellMap<C> {
         self.cells.remove(coordinates)
     }
 
+    /// Retrieves a cell entity using its `coordinates`
+    pub fn get_cell(&self, coordinates: &C::Coordinates) -> Option<Entity> {
+        self.cells.get(coordinates).copied()
+    }
+
     /// Clears the entire map
     pub fn clear(&mut self) {
         self.cells.clear();
