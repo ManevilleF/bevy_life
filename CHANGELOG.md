@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.3
 
 - Removed `BATCH_SIZE` generic constant value from `CellularAutomatonPlugin`
 - Added `SimulationBatch` resource to handle parallel computation and batches
