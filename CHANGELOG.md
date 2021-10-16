@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- Removed `BATCH_SIZE` generic constant value from `CellularAutomatonPlugin`
+- Added `SimulationBatch` resource to handle parallel computation and batches
+- Auto coloring job optimized
+- Fixed example windows
+- Removed `2d_wireworld` example. A better standalone version is available [here](https://github.com/ManevilleF/wireworld-rs)
+
 ## 0.2.2
 
 - Added `CellMap<T>::get_cell` method to retrieve a cell entity
