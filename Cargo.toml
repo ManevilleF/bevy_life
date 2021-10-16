@@ -10,6 +10,7 @@ description = "Generic and dynamic cellular automaton lib for bevy"
 keywords = ["conway", "bevy", "wireworld", "cellular", "automaton"]
 exclude = ["examples", "docs", ".github", ".gitignore", "examples_utilities"]
 documentation = "http://docs.rs/bevy_life"
+categories = ["game-engines", "game-development"]
 
 [features]
 default = ["2D"]

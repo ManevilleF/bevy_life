@@ -44,6 +44,14 @@ You may implement your own *cells* (coordinate system) and *states* (rules) as y
 
 For more information yo may look at some [examples](./examples).
 
+### Pausing
+
+Inserting a `SimulationPause` resource will pause the simulation, removing it wil resume the it.
+
+### Parallel execution and batching
+
+Inserting a `SimulationBatch` resource will allow parallel computation of cells with custom batch sizes.
+
 ## Cargo Features
 
 No feature is required for the plugin to work and the main traits `Cell` and `CellState` are always available.
@@ -73,9 +81,21 @@ This library aim is to be generic and dynamic, so that you can integrate cellula
 
 <!-- cargo-sync-readme end -->
 
-## Examples
+## Example projects
 
-For every example pressing space reloads the board
+### [Wire World][wireworld]
+
+The [wireworld-rs][wireworld] project uses `bevy_life` and wireworld rules to simulate electrical systems.
+
+![Alt](./docs/2d_wireworld_demo.gif "wireworld demo gif")
+
+![Alt](./docs/2d_wireworld_flip_flop_demo.gif "wireworld flip flop gate gif")
+
+## Internal Examples
+
+For every example pressing space reloads the board.
+
+> Note: adding the release flag increases performance for examples
 
 ### 2D Game of life
 
@@ -101,18 +121,10 @@ Run `cargo run --example 2d_cyclic_colors --features auto-coloring`
 
 ![Alt](./docs/2d_cyclic_demo.gif "cyclic demo gif")
 
-### 2D Wire World
-
-Run `cargo run --example 2d_wireworld --features auto-coloring`
-
-The example is dynamic, use the left mouse click to create a conductor cell on an empty space or to create an electron head
-
-![Alt](./docs/2d_wireworld_demo.gif "wireworld demo gif")
-
-![Alt](./docs/2d_wireworld_flip_flop_demo.gif "wireworld flip flop gate gif")
-
 ### 3D Game of life (4555 rule)
 
 Run `cargo run --example 3d_game_of_life --features "3D auto-coloring" --no-default-features`
 
 ![Alt](./docs/3d_classic_demo.gif "3D classic demo gif")
+
+[wireworld]: https://github.com/ManevilleF/wireworld-rs "Wire world project"

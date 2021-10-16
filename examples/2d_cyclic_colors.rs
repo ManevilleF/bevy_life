@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use bevy_life::{CyclicColorCellState, CyclicColors2dPlugin, MooreCell2d};
+use bevy_life::{CyclicColorCellState, CyclicColors2dPlugin, MooreCell2d, SimulationBatch};
 use rand::Rng;
 
 mod common;
@@ -8,14 +8,15 @@ use common::*;
 
 fn main() {
     App::build()
-        .add_plugins(DefaultPlugins)
-        .add_plugin(CyclicColors2dPlugin::default())
         .insert_resource(WindowDescriptor {
             title: "Cyclic colors".to_string(),
-            width: 1000.,
-            height: 1000.,
+            width: 1300.,
+            height: 800.,
             ..Default::default()
         })
+        .add_plugins(DefaultPlugins)
+        .add_plugin(CyclicColors2dPlugin::default())
+        .insert_resource(SimulationBatch::default())
         .add_startup_system(setup_camera.system())
         .add_startup_system(setup_map.system())
         .add_system(handle_reset_2d::<MooreCell2d>.system())

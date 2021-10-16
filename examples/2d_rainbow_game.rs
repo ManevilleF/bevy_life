@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use bevy_life::{MooreCell2d, RainbowCellState, RainbowGame2dPlugin};
+use bevy_life::{MooreCell2d, RainbowCellState, RainbowGame2dPlugin, SimulationBatch};
 use rand::Rng;
 
 mod common;
@@ -8,14 +8,15 @@ use common::*;
 
 fn main() {
     App::build()
-        .add_plugins(DefaultPlugins)
-        .add_plugin(RainbowGame2dPlugin::default())
         .insert_resource(WindowDescriptor {
             title: "Rainbow game".to_string(),
-            width: 1000.,
-            height: 1000.,
+            width: 1300.,
+            height: 800.,
             ..Default::default()
         })
+        .add_plugins(DefaultPlugins)
+        .add_plugin(RainbowGame2dPlugin::default())
+        .insert_resource(SimulationBatch::default())
         .insert_resource(ClearColor(Color::GOLD))
         .add_startup_system(setup_camera.system())
         .add_startup_system(setup_map.system())
