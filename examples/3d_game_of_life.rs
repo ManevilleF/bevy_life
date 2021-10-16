@@ -1,19 +1,20 @@
 use bevy::prelude::*;
-use bevy_life::{CellMap, ConwayCell4555State, GameOfLife3dPlugin, MooreCell3d};
+use bevy_life::{CellMap, ConwayCell4555State, GameOfLife3dPlugin, MooreCell3d, SimulationBatch};
 use rand::Rng;
 
 pub struct MapEntity(pub Entity);
 
 fn main() {
     App::build()
-        .add_plugins(DefaultPlugins)
-        .add_plugin(GameOfLife3dPlugin::default())
         .insert_resource(WindowDescriptor {
             title: "3D Game Of Life".to_string(),
-            width: 1000.,
-            height: 1000.,
+            width: 1300.,
+            height: 800.,
             ..Default::default()
         })
+        .add_plugins(DefaultPlugins)
+        .add_plugin(GameOfLife3dPlugin::default())
+        .insert_resource(SimulationBatch::default())
         .add_startup_system(setup_camera.system())
         .add_startup_system(setup_map.system())
         .add_system(handle_reset_3d.system())
