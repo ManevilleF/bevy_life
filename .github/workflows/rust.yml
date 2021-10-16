@@ -48,8 +48,6 @@ jobs:
         run: cargo clippy --all-features --example 2d_rainbow_game
       - name: build 2d color cyclic
         run: cargo clippy --all-features --example 2d_cyclic_colors
-      - name: build 2d wireworld
-        run: cargo clippy --all-features --example 2d_wireworld
 
   test:
     runs-on: ubuntu-latest
