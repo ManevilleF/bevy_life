@@ -17,9 +17,9 @@ fn main() {
         .add_plugins(DefaultPlugins)
         .add_plugin(ImmigrationGame2dPlugin::default())
         .insert_resource(SimulationBatch::default())
-        .add_startup_system(setup_camera.system())
-        .add_startup_system(setup_map.system())
-        .add_system(handle_reset_2d::<MooreCell2d>.system())
+        .add_startup_system(setup_camera)
+        .add_startup_system(setup_map)
+        .add_system(handle_reset_2d::<MooreCell2d>)
         .run();
 }
 

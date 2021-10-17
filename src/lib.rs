@@ -162,12 +162,8 @@ pub struct CellularAutomatonPlugin<C, S> {
 impl<C: Cell, S: CellState> Plugin for CellularAutomatonPlugin<C, S> {
     fn build(&self, app: &mut App) {
         let system_set = SystemSet::new()
-            .with_system(systems::cells::handle_cells::<C, S>.system().label("cells"))
-            .with_system(
-                systems::cells::handle_new_cells::<C>
-                    .system()
-                    .before("cells"),
-            );
+            .with_system(systems::cells::handle_cells::<C, S>.label("cells"))
+            .with_system(systems::cells::handle_new_cells::<C>.before("cells"));
         let system_set = if let Some(time_step) = self.tick_time_step {
             system_set.with_run_criteria(FixedTimestep::step(time_step))
         } else {
@@ -180,13 +176,13 @@ impl<C: Cell, S: CellState> Plugin for CellularAutomatonPlugin<C, S> {
         {
             #[cfg(feature = "2D")]
             {
-                app.add_startup_system(Self::setup_materials::<ColorMaterial>.system());
-                app.add_system(systems::coloring::color_states::<S, ColorMaterial>.system());
+                app.add_startup_system(Self::setup_materials::<ColorMaterial>);
+                app.add_system(systems::coloring::color_states::<S, ColorMaterial>);
             }
             #[cfg(feature = "3D")]
             {
-                app.add_startup_system(Self::setup_materials::<StandardMaterial>.system());
-                app.add_system(systems::coloring::color_states::<S, StandardMaterial>.system());
+                app.add_startup_system(Self::setup_materials::<StandardMaterial>);
+                app.add_system(systems::coloring::color_states::<S, StandardMaterial>);
             }
         }
         log::info!("Loaded cellular automaton plugin")
