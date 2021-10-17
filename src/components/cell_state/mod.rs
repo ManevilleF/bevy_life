@@ -1,3 +1,4 @@
+use bevy::prelude::Component;
 #[cfg(feature = "auto-coloring")]
 use bevy::prelude::{Assets, Color};
 use std::fmt::Debug;
@@ -29,7 +30,7 @@ pub enum ColorResponse {
 /// cellular automaton rules which will be automatically applied.
 ///
 /// Every type defining a `Cell` state and rules must implement this trait.
-pub trait CellState: Debug + Default + Sized + Clone + PartialEq {
+pub trait CellState: Component + Debug + Default + Sized + Clone + PartialEq {
     /// Defines the new state for a cell given the `neighbor_cells` states and `self`.
     ///
     /// This method defines the cellular automaton rules

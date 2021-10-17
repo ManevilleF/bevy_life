@@ -19,10 +19,8 @@ See:
  
 ## Bevy versions
 
-The `main` branch follows the released version of `bevy` (0.5) but I provide 3 useful branches to follow the new engine features:
-- [bevy_main](https://github.com/ManevilleF/bevy_life/tree/feat/bevy_main) follows the `main` branch of `bevy`
-- [bevy_pipelined_rendering](https://github.com/ManevilleF/bevy_life/tree/feat/bevy_pipelined_rendering) follows the `pipelined-rendering` branch of `bevy` to use the new rendering system
-- [sprite_instancing](https://github.com/ManevilleF/bevy_life/tree/feat/sprite_instancing) follows a branch (see [#2642](https://github.com/bevyengine/bevy/pull/2642)) with sprite instacing and batching for better performance.
+The `main` branch follows the released version of `bevy` (0.5) but I provide the [bevy_main](https://github.com/ManevilleF/bevy_life/tree/feat/bevy_main) branch
+to follow the `main` branch of `bevy`
 
 ## How to use
 
