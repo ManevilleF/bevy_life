@@ -3,6 +3,7 @@ use crate::components::CellState;
 use crate::ColorResponse;
 #[cfg(feature = "auto-coloring")]
 use bevy::prelude::Color;
+use bevy::prelude::Component;
 
 /// Wireworld is a cellular automaton that simulates electronic devices and logic gates by having cells represent electrons traveling across conductors.
 /// Wireworld uses three possible cell states and has the following rules:
@@ -10,7 +11,7 @@ use bevy::prelude::Color;
 /// - Electron heads (`ElectronHead`) become electron tails in the succeeding generation.
 /// - Electron tails (`ElectronTail`) become conductors.
 /// - Conductors (`Conductor`) become electron heads if exactly one or two neighboring cells are electron heads. Otherwise, they remain as conductors.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Component)]
 pub enum WireWorldCellState {
     /// Conductor cell state
     Conductor,

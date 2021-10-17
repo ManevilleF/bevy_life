@@ -1,7 +1,6 @@
 use crate::resources::materials::CellStateMaterials;
 use crate::{CellState, ColorResponse};
 use bevy::asset::Asset;
-use bevy::ecs::component::Component;
 use bevy::prelude::*;
 
 enum ColorOrHandle<A: Asset> {
@@ -14,7 +13,7 @@ fn color_state<S, A>(
     cell_materials: &CellStateMaterials<A>,
 ) -> Option<ColorOrHandle<A>>
 where
-    S: CellState + Component,
+    S: CellState,
     A: Asset,
 {
     let response: ColorResponse = state.color_or_material_index();
@@ -42,7 +41,7 @@ pub fn color_states<S, A>(
     cell_materials: Res<CellStateMaterials<A>>,
     mut materials: ResMut<Assets<A>>,
 ) where
-    S: CellState + Component,
+    S: CellState,
     A: Asset + From<Color>,
 {
     for (state, mut visible, mut handle) in query.iter_mut() {

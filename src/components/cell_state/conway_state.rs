@@ -3,6 +3,7 @@ use crate::components::CellState;
 use crate::ColorResponse;
 #[cfg(feature = "auto-coloring")]
 use bevy::prelude::Color;
+use bevy::prelude::Component;
 use std::ops::{Deref, DerefMut};
 
 /// Classic cellular automation state and rules following Conway's game of life classic **2333** rules:
@@ -13,7 +14,7 @@ use std::ops::{Deref, DerefMut};
 /// - Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 ///
 /// A dead cell is `false`, a live cell is `true`
-#[derive(Debug, Clone, Default, Eq, PartialEq)]
+#[derive(Debug, Clone, Default, Eq, PartialEq, Component)]
 pub struct ConwayCellState(pub bool);
 
 impl CellState for ConwayCellState {

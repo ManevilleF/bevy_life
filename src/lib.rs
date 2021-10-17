@@ -17,10 +17,8 @@
 //!  
 //! ## Bevy versions
 //!
-//! The `main` branch follows the released version of `bevy` (0.5) but I provide 3 useful branches to follow the new engine features:
-//! - [bevy_main](https://github.com/ManevilleF/bevy_life/tree/feat/bevy_main) follows the `main` branch of `bevy`
-//! - [bevy_pipelined_rendering](https://github.com/ManevilleF/bevy_life/tree/feat/bevy_pipelined_rendering) follows the `pipelined-rendering` branch of `bevy` to use the new rendering system
-//! - [sprite_instancing](https://github.com/ManevilleF/bevy_life/tree/feat/sprite_instancing) follows a branch (see [#2642](https://github.com/bevyengine/bevy/pull/2642)) with sprite instacing and batching for better performance.
+//! The `main` branch follows the released version of `bevy` (0.5) but I provide the [bevy_main](https://github.com/ManevilleF/bevy_life/tree/feat/bevy_main) branch
+//! to follow the `main` branch of `bevy`
 //!
 //! ## How to use
 //!
@@ -92,7 +90,6 @@
 )]
 
 use bevy::core::FixedTimestep;
-use bevy::ecs::component::Component;
 use bevy::log;
 use bevy::prelude::*;
 use std::marker::PhantomData;
@@ -101,7 +98,6 @@ mod components;
 mod resources;
 mod systems;
 
-use std::fmt::Debug;
 pub use {components::*, resources::*};
 
 #[cfg(feature = "2D")]
@@ -163,9 +159,7 @@ pub struct CellularAutomatonPlugin<C, S> {
     pub phantom_s: PhantomData<S>,
 }
 
-impl<C: Cell + Component + Debug, S: CellState + Component + Debug> Plugin
-    for CellularAutomatonPlugin<C, S>
-{
+impl<C: Cell, S: CellState> Plugin for CellularAutomatonPlugin<C, S> {
     fn build(&self, app: &mut App) {
         let system_set = SystemSet::new()
             .with_system(systems::cells::handle_cells::<C, S>.system().label("cells"))
@@ -199,7 +193,7 @@ impl<C: Cell + Component + Debug, S: CellState + Component + Debug> Plugin
     }
 }
 
-impl<C: Cell + Component + Debug, S: CellState + Component + Debug> CellularAutomatonPlugin<C, S> {
+impl<C: Cell, S: CellState> CellularAutomatonPlugin<C, S> {
     /// Instantiates Self with custom `tick_time_step` value for systems execution
     pub fn new(tick_time_step: f64) -> Self {
         Self {

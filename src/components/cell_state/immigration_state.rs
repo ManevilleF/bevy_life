@@ -3,10 +3,11 @@ use crate::components::CellState;
 use crate::ColorResponse;
 #[cfg(feature = "auto-coloring")]
 use bevy::prelude::Color;
+use bevy::prelude::Component;
 use std::collections::HashMap;
 use std::fmt::Debug;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Component)]
 /// Classic cellular automation state and rules following Conway's game of life variation: The immigration game.
 ///
 /// - Any live cell with fewer than two live neighbours dies, as if by underpopulation.
