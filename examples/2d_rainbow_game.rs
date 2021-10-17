@@ -18,9 +18,9 @@ fn main() {
         .add_plugin(RainbowGame2dPlugin::default())
         .insert_resource(SimulationBatch::default())
         .insert_resource(ClearColor(Color::GOLD))
-        .add_startup_system(setup_camera.system())
-        .add_startup_system(setup_map.system())
-        .add_system(handle_reset_2d::<MooreCell2d>.system())
+        .add_startup_system(setup_camera)
+        .add_startup_system(setup_map)
+        .add_system(handle_reset_2d::<MooreCell2d>)
         .run();
 }
 
