@@ -1,4 +1,10 @@
-use bevy::prelude::*;
+use bevy::prelude::{
+    App, BuildChildren, Commands, GlobalTransform, IVec2, OrthographicCameraBundle, Transform,
+    Vec2, WindowDescriptor,
+};
+use bevy::render2::color::Color;
+use bevy::sprite2::*;
+use bevy::PipelinedDefaultPlugins;
 use bevy_life::{CyclicColorCellState, CyclicColors2dPlugin, MooreCell2d, SimulationBatch};
 use rand::Rng;
 
@@ -14,7 +20,7 @@ fn main() {
             height: 800.,
             ..Default::default()
         })
-        .add_plugins(DefaultPlugins)
+        .add_plugins(PipelinedDefaultPlugins)
         .add_plugin(CyclicColors2dPlugin::default())
         .insert_resource(SimulationBatch::default())
         .add_startup_system(setup_camera)
@@ -28,16 +34,15 @@ fn setup_camera(mut commands: Commands) {
     commands.spawn_bundle(OrthographicCameraBundle::new_2d());
 }
 
-fn setup_map(mut commands: Commands, mut assets: ResMut<Assets<ColorMaterial>>) {
+fn setup_map(mut commands: Commands) {
     // map
-    spawn_map(&mut commands, &mut assets);
+    spawn_map(&mut commands);
 }
 
-fn spawn_map(commands: &mut Commands, assets: &mut Assets<ColorMaterial>) {
+fn spawn_map(commands: &mut Commands) {
     let mut rng = rand::thread_rng();
     let (size_x, size_y) = (150, 100);
     let sprite_size = 8.;
-    let material = assets.add(Color::rgba(0., 0., 0., 0.).into());
 
     let available_states = CyclicColorCellState::available_colors();
     let state_size = available_states.len();
@@ -52,17 +57,20 @@ fn spawn_map(commands: &mut Commands, assets: &mut Assets<ColorMaterial>) {
         .with_children(|builder| {
             for y in 0..=size_y {
                 for x in 0..=size_x {
-                    let state =
-                        CyclicColorCellState(available_states[rng.gen_range(0..state_size)]);
+                    let color = available_states[rng.gen_range(0..state_size)];
+                    let state = CyclicColorCellState(color);
                     builder
-                        .spawn_bundle(SpriteBundle {
-                            sprite: Sprite::new(Vec2::splat(sprite_size)),
+                        .spawn_bundle(PipelinedSpriteBundle {
+                            sprite: Sprite {
+                                custom_size: Some(Vec2::splat(sprite_size)),
+                                color,
+                                ..Default::default()
+                            },
                             transform: Transform::from_xyz(
                                 sprite_size * x as f32,
                                 sprite_size * y as f32,
                                 0.,
                             ),
-                            material: material.clone(),
                             ..Default::default()
                         })
                         .insert(MooreCell2d::new(IVec2::new(x, y)))

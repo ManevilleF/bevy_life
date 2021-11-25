@@ -1,9 +1,7 @@
 use crate::components::CellState;
-#[cfg(feature = "auto-coloring")]
-use crate::ColorResponse;
-#[cfg(feature = "auto-coloring")]
-use bevy::prelude::Color;
 use bevy::prelude::Component;
+#[cfg(feature = "auto-coloring")]
+use bevy::render2::color::Color;
 use std::fmt::Debug;
 
 #[derive(Debug, Clone, PartialEq, Component)]
@@ -47,16 +45,11 @@ impl CellState for RainbowCellState {
     }
 
     #[cfg(feature = "auto-coloring")]
-    fn color_or_material_index(&self) -> ColorResponse {
+    fn color(&self) -> Option<Color> {
         match self {
-            Self::Dead => ColorResponse::None,
-            Self::Alive(v) => ColorResponse::Color(Color::rgb(*v, *v, *v)),
+            Self::Dead => None,
+            Self::Alive(v) => Some(Color::rgb(*v, *v, *v)),
         }
-    }
-
-    #[cfg(feature = "auto-coloring")]
-    fn colors() -> &'static [Color] {
-        &[]
     }
 }
 

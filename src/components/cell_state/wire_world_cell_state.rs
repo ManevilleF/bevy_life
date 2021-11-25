@@ -1,9 +1,7 @@
 use crate::components::CellState;
-#[cfg(feature = "auto-coloring")]
-use crate::ColorResponse;
-#[cfg(feature = "auto-coloring")]
-use bevy::prelude::Color;
 use bevy::prelude::Component;
+#[cfg(feature = "auto-coloring")]
+use bevy::render2::color::Color;
 
 /// Wireworld is a cellular automaton that simulates electronic devices and logic gates by having cells represent electrons traveling across conductors.
 /// Wireworld uses three possible cell states and has the following rules:
@@ -47,16 +45,11 @@ impl CellState for WireWorldCellState {
     }
 
     #[cfg(feature = "auto-coloring")]
-    fn color_or_material_index(&self) -> ColorResponse {
-        ColorResponse::MaterialIndex(match self {
-            WireWorldCellState::Conductor => 0,
-            WireWorldCellState::ElectronHead => 1,
-            WireWorldCellState::ElectronTail => 2,
+    fn color(&self) -> Option<Color> {
+        Some(match self {
+            WireWorldCellState::Conductor => Color::GOLD,
+            WireWorldCellState::ElectronHead => Color::CYAN,
+            WireWorldCellState::ElectronTail => Color::WHITE,
         })
-    }
-
-    #[cfg(feature = "auto-coloring")]
-    fn colors() -> &'static [Color] {
-        &[Color::GOLD, Color::CYAN, Color::WHITE]
     }
 }

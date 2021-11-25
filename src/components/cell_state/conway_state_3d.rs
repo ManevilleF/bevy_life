@@ -1,9 +1,7 @@
 use crate::components::CellState;
-#[cfg(feature = "auto-coloring")]
-use crate::ColorResponse;
-#[cfg(feature = "auto-coloring")]
-use bevy::prelude::Color;
 use bevy::prelude::Component;
+#[cfg(feature = "auto-coloring")]
+use bevy::render2::color::Color;
 use std::ops::{Deref, DerefMut};
 
 /// Classic cellular automation state and rules following Conway's game of life **4555** rules:
@@ -28,17 +26,12 @@ impl CellState for ConwayCell4555State {
     }
 
     #[cfg(feature = "auto-coloring")]
-    fn color_or_material_index(&self) -> ColorResponse {
+    fn color(&self) -> Option<Color> {
         if self.0 {
-            ColorResponse::MaterialIndex(0)
+            Some(Color::WHITE)
         } else {
-            ColorResponse::None
+            None
         }
-    }
-
-    #[cfg(feature = "auto-coloring")]
-    fn colors() -> &'static [Color] {
-        &[Color::WHITE]
     }
 }
 

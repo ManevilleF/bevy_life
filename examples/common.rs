@@ -1,9 +1,10 @@
 #![allow(dead_code)]
 use crate::spawn_map;
 use bevy::ecs::component::Component;
-use bevy::prelude::*;
+use bevy::prelude::{
+    Commands, DespawnRecursiveExt, Entity, IVec2, Input, KeyCode, Res, ResMut, Vec2, Window,
+};
 use bevy_life::{Cell, CellMap};
-use std::ops::DerefMut;
 
 pub struct MapEntity(pub Entity);
 
@@ -24,7 +25,6 @@ pub fn handle_reset_2d<C>(
     mut commands: Commands,
     keys: Res<Input<KeyCode>>,
     map: Res<MapEntity>,
-    mut assets: ResMut<Assets<ColorMaterial>>,
     mut cell_map: ResMut<CellMap<C>>,
 ) where
     C: Cell + Component,
@@ -34,6 +34,6 @@ pub fn handle_reset_2d<C>(
         commands.remove_resource::<MapEntity>();
         cell_map.clear();
         println!("regenerating map");
-        spawn_map(&mut commands, assets.deref_mut());
+        spawn_map(&mut commands);
     }
 }
