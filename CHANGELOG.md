@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Rust 2021
+
 ## 0.2.3
 
 - Removed `BATCH_SIZE` generic constant value from `CellularAutomatonPlugin`

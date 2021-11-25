@@ -1,7 +1,7 @@
 [package]
 name = "bevy_life"
 version = "0.2.3"
-edition = "2018"
+edition = "2021"
 authors = ["Felix de Maneville <felix.maneville@gmail.com>"]
 license-file = "./LICENSE"
 repository = "https://github.com/ManevilleF/bevy_life"
@@ -24,6 +24,7 @@ lazy_static = "1.4"
 [dependencies.bevy]
 version = "0.5"
 default-features = false
+features = ["render"]
 
 [dev-dependencies]
 rand = "0.8"
