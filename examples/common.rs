@@ -2,11 +2,14 @@
 use crate::spawn_map;
 use bevy::ecs::component::Component;
 use bevy::prelude::{
-    Commands, DespawnRecursiveExt, Entity, IVec2, Input, KeyCode, Res, ResMut, Vec2, Window,
+    Commands, DespawnRecursiveExt, Entity, Handle, IVec2, Input, KeyCode, Res, ResMut, Vec2, Window,
 };
+use bevy::render2::texture::Image;
 use bevy_life::{Cell, CellMap};
 
 pub struct MapEntity(pub Entity);
+
+pub struct TileTexture(pub Handle<Image>);
 
 pub fn mouse_coords(window: &Window, position: Vec2) -> Vec2 {
     let window_size = Vec2::new(window.width(), window.height());
@@ -26,6 +29,7 @@ pub fn handle_reset_2d<C>(
     keys: Res<Input<KeyCode>>,
     map: Res<MapEntity>,
     mut cell_map: ResMut<CellMap<C>>,
+    texture: Res<TileTexture>,
 ) where
     C: Cell + Component,
 {
@@ -34,6 +38,6 @@ pub fn handle_reset_2d<C>(
         commands.remove_resource::<MapEntity>();
         cell_map.clear();
         println!("regenerating map");
-        spawn_map(&mut commands);
+        spawn_map(&mut commands, texture.0.clone());
     }
 }

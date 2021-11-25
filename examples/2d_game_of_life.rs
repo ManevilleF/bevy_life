@@ -1,7 +1,8 @@
 use bevy::prelude::{
-    App, BuildChildren, Commands, GlobalTransform, IVec2, Transform, Vec2, WindowDescriptor,
+    App, AssetServer, BuildChildren, Commands, GlobalTransform, Handle, IVec2, Res, Transform,
+    Vec2, WindowDescriptor,
 };
-use bevy::render2::{camera::OrthographicCameraBundle, color::Color};
+use bevy::render2::{camera::OrthographicCameraBundle, color::Color, texture::Image};
 use bevy::sprite2::*;
 use bevy::PipelinedDefaultPlugins;
 use bevy_life::{ConwayCellState, GameOfLife2dPlugin, MooreCell2d, SimulationBatch};
@@ -32,12 +33,14 @@ fn setup_camera(mut commands: Commands) {
     commands.spawn_bundle(OrthographicCameraBundle::new_2d());
 }
 
-fn setup_map(mut commands: Commands) {
+fn setup_map(mut commands: Commands, asset_server: Res<AssetServer>) {
+    let texture = asset_server.load("square.png");
+    commands.insert_resource(TileTexture(texture.clone()));
     // map
-    spawn_map(&mut commands);
+    spawn_map(&mut commands, texture);
 }
 
-fn spawn_map(commands: &mut Commands) {
+fn spawn_map(commands: &mut Commands, texture: Handle<Image>) {
     let mut rng = rand::thread_rng();
     let (size_x, size_y) = (300, 200);
     let sprite_size = 4.;
@@ -67,6 +70,7 @@ fn spawn_map(commands: &mut Commands) {
                                 sprite_size * y as f32,
                                 0.,
                             ),
+                            texture: texture.clone(),
                             ..Default::default()
                         })
                         .insert(MooreCell2d::new(IVec2::new(x, y)))
