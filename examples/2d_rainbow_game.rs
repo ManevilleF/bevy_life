@@ -1,8 +1,7 @@
 use bevy::prelude::{
-    App, BuildChildren, Commands, GlobalTransform, IVec2, OrthographicCameraBundle, Transform,
-    Vec2, WindowDescriptor,
+    App, BuildChildren, Commands, GlobalTransform, IVec2, Transform, Vec2, WindowDescriptor,
 };
-use bevy::render2::color::Color;
+use bevy::render2::{camera::OrthographicCameraBundle, color::Color};
 use bevy::sprite2::*;
 use bevy::PipelinedDefaultPlugins;
 use bevy_life::{MooreCell2d, RainbowCellState, RainbowGame2dPlugin, SimulationBatch};
@@ -43,7 +42,7 @@ fn spawn_map(commands: &mut Commands) {
     let mut rng = rand::thread_rng();
     let (size_x, size_y) = (150, 100);
     let sprite_size = 8.;
-    let color = Color::rgba(0., 0., 0., 0.);
+    let color = Color::rgba(1., 0., 0., 1.);
 
     let entity = commands
         .spawn()

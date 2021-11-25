@@ -1,8 +1,7 @@
 use bevy::prelude::{
-    App, BuildChildren, Commands, GlobalTransform, IVec2, OrthographicCameraBundle, Transform,
-    Vec2, WindowDescriptor,
+    App, BuildChildren, Commands, GlobalTransform, IVec2, Transform, Vec2, WindowDescriptor,
 };
-use bevy::render2::color::Color;
+use bevy::render2::{camera::OrthographicCameraBundle, color::Color};
 use bevy::sprite2::*;
 use bevy::PipelinedDefaultPlugins;
 use bevy_life::{ImmigrationCellState, ImmigrationGame2dPlugin, MooreCell2d, SimulationBatch};
