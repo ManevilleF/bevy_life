@@ -33,10 +33,12 @@ rand = "0.8"
 [dev-dependencies.bevy]
 git = "https://github.com/bevyengine/bevy"
 branch = "main"
+default-features = false
 features = [
     "bevy_core_pipeline",
     "bevy_wgpu",
     "bevy_sprite2",
+    "bevy_pbr2",
     "bevy_render2",
     "bevy_winit",
 ]

@@ -4,11 +4,11 @@ use bevy::prelude::{
     App, Assets, BuildChildren, Changed, Commands, DespawnRecursiveExt, Entity, GlobalTransform,
     IVec3, Input, KeyCode, Query, Res, ResMut, Transform, Vec3, WindowDescriptor,
 };
-use bevy::render2::color::Color;
-use bevy::render2::view::Visibility;
 use bevy::render2::{
     camera::PerspectiveCameraBundle,
+    color::Color,
     mesh::{shape, Mesh},
+    view::Visibility,
 };
 use bevy::PipelinedDefaultPlugins;
 use bevy_life::{CellMap, ConwayCell4555State, GameOfLife3dPlugin, MooreCell3d, SimulationBatch};
