@@ -79,7 +79,17 @@
 //!
 #![forbid(missing_docs)]
 #![forbid(unsafe_code)]
-#![deny(warnings)]
+#![warn(
+    clippy::all,
+    clippy::correctness,
+    clippy::suspicious,
+    clippy::style,
+    clippy::complexity,
+    clippy::perf,
+    clippy::nursery,
+    nonstandard_style,
+    rustdoc::broken_intra_links
+)]
 
 use bevy::core::FixedTimestep;
 use bevy::ecs::component::Component;

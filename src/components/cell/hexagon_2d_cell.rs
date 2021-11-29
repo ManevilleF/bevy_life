@@ -66,7 +66,7 @@ impl Cell for HexagonCell2d {
 
 impl HexagonCell2d {
     /// Instantiates a new cell with `coords` values
-    pub fn new(coords: IVec3) -> Self {
+    pub const fn new(coords: IVec3) -> Self {
         Self { coords }
     }
 }

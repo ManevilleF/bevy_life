@@ -70,7 +70,7 @@ impl CellState for ImmigrationCellState {
 
 impl ImmigrationCellState {
     /// Is the cell considered alive
-    pub fn is_alive(&self) -> bool {
+    pub const fn is_alive(&self) -> bool {
         matches!(self, Self::Alive(_))
     }
 }

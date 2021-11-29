@@ -64,7 +64,7 @@ impl Cell for NeumannCell2d {
 
 impl NeumannCell2d {
     /// Instantiates a new cell with `coords` values
-    pub fn new(coords: IVec2) -> Self {
+    pub const fn new(coords: IVec2) -> Self {
         Self { coords }
     }
 }

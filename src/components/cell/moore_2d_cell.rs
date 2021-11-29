@@ -73,7 +73,7 @@ impl Cell for MooreCell2d {
 
 impl MooreCell2d {
     /// Instantiates a new cell with `coords` values
-    pub fn new(coords: IVec2) -> Self {
+    pub const fn new(coords: IVec2) -> Self {
         Self { coords }
     }
 }
