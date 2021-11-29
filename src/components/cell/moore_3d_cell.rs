@@ -99,7 +99,7 @@ impl Cell for MooreCell3d {
 
 impl MooreCell3d {
     /// Instantiates a new cell with `coords` values
-    pub fn new(coords: IVec3) -> Self {
+    pub const fn new(coords: IVec3) -> Self {
         Self { coords }
     }
 }
