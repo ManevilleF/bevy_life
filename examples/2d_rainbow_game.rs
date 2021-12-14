@@ -1,10 +1,4 @@
-use bevy::prelude::{
-    App, AssetServer, BuildChildren, Commands, GlobalTransform, Handle, IVec2, Res, Transform,
-    Vec2, WindowDescriptor,
-};
-use bevy::render2::{camera::OrthographicCameraBundle, color::Color, texture::Image};
-use bevy::sprite2::*;
-use bevy::PipelinedDefaultPlugins;
+use bevy::prelude::*;
 use bevy_life::{MooreCell2d, RainbowCellState, RainbowGame2dPlugin, SimulationBatch};
 use rand::Rng;
 
@@ -20,7 +14,7 @@ fn main() {
             height: 800.,
             ..Default::default()
         })
-        .add_plugins(PipelinedDefaultPlugins)
+        .add_plugins(DefaultPlugins)
         .add_plugin(RainbowGame2dPlugin::default())
         .insert_resource(SimulationBatch::default())
         .add_startup_system(setup_camera)
@@ -34,14 +28,11 @@ fn setup_camera(mut commands: Commands) {
     commands.spawn_bundle(OrthographicCameraBundle::new_2d());
 }
 
-fn setup_map(mut commands: Commands, asset_server: Res<AssetServer>) {
-    let texture = asset_server.load("square.png");
-    commands.insert_resource(TileTexture(texture.clone()));
-    // map
-    spawn_map(&mut commands, texture);
+fn setup_map(mut commands: Commands) {
+    spawn_map(&mut commands);
 }
 
-fn spawn_map(commands: &mut Commands, texture: Handle<Image>) {
+fn spawn_map(commands: &mut Commands) {
     let mut rng = rand::thread_rng();
     let (size_x, size_y) = (300, 200);
     let sprite_size = 4.;
@@ -64,7 +55,7 @@ fn spawn_map(commands: &mut Commands, texture: Handle<Image>) {
                         RainbowCellState::Dead
                     };
                     builder
-                        .spawn_bundle(PipelinedSpriteBundle {
+                        .spawn_bundle(SpriteBundle {
                             sprite: Sprite {
                                 custom_size: Some(Vec2::splat(sprite_size)),
                                 color,

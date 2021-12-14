@@ -1,6 +1,5 @@
 use crate::CellState;
-use bevy::prelude::Component;
-use bevy::render2::color::Color;
+use bevy::prelude::{Color, Component};
 
 const CYCLIC_COLORS: [Color; 9] = [
     Color::BLUE,

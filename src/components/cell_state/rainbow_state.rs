@@ -1,7 +1,7 @@
 use crate::components::CellState;
 use bevy::prelude::Component;
 #[cfg(feature = "auto-coloring")]
-use bevy::render2::color::Color;
+use bevy::render::color::Color;
 use std::fmt::Debug;
 
 #[derive(Debug, Clone, PartialEq, Component)]

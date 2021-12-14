@@ -33,10 +33,10 @@ where
         })
         .collect();
     let new_state = state.new_cell_state(&neighbor_states);
-    if &new_state != state {
-        Some(new_state)
-    } else {
+    if &new_state == state {
         None
+    } else {
+        Some(new_state)
     }
 }
 
@@ -88,7 +88,7 @@ where
                     entity,
                     e,
                     new_cell.coords()
-                )
+                );
             }
         }
     }

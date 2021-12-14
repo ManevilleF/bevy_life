@@ -16,7 +16,7 @@ categories = ["game-engines", "game-development"]
 default = ["2D"]
 2D = []
 3D = []
-auto-coloring = ["bevy/bevy_sprite2"]
+auto-coloring = ["bevy/bevy_sprite"]
 
 [dependencies]
 lazy_static = "1.4"
@@ -25,7 +25,7 @@ lazy_static = "1.4"
 git = "https://github.com/bevyengine/bevy"
 branch = "main"
 default-features = false
-features = ["bevy_render2"]
+features = ["bevy_render"]
 
 [dev-dependencies]
 rand = "0.8"
@@ -36,10 +36,9 @@ branch = "main"
 default-features = false
 features = [
     "bevy_core_pipeline",
-    "bevy_wgpu",
-    "bevy_sprite2",
-    "bevy_pbr2",
-    "bevy_render2",
+    "bevy_sprite",
+    "bevy_pbr",
+    "bevy_render",
     "bevy_winit",
 ]
 

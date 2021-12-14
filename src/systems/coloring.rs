@@ -1,7 +1,5 @@
 use crate::CellState;
-use bevy::prelude::{Changed, Query};
-use bevy::render2::view::Visibility;
-use bevy::sprite2::Sprite;
+use bevy::prelude::{Changed, Query, Sprite, Visibility};
 
 #[allow(clippy::type_complexity)]
 pub fn color_sprites<S>(mut query: Query<(&S, &mut Visibility, &mut Sprite), Changed<S>>)

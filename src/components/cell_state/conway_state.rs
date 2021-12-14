@@ -1,7 +1,7 @@
 use crate::components::CellState;
 use bevy::prelude::Component;
 #[cfg(feature = "auto-coloring")]
-use bevy::render2::color::Color;
+use bevy::render::color::Color;
 use std::ops::{Deref, DerefMut};
 
 /// Classic cellular automation state and rules following Conway's game of life classic **2333** rules:

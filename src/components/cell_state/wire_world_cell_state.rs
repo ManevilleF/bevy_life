@@ -1,7 +1,7 @@
 use crate::components::CellState;
 use bevy::prelude::Component;
 #[cfg(feature = "auto-coloring")]
-use bevy::render2::color::Color;
+use bevy::render::color::Color;
 
 /// Wireworld is a cellular automaton that simulates electronic devices and logic gates by having cells represent electrons traveling across conductors.
 /// Wireworld uses three possible cell states and has the following rules:

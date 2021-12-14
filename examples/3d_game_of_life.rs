@@ -1,16 +1,4 @@
-use bevy::asset::Handle;
-use bevy::pbr2::{PbrBundle, StandardMaterial};
-use bevy::prelude::{
-    App, Assets, BuildChildren, Changed, Commands, DespawnRecursiveExt, Entity, GlobalTransform,
-    IVec3, Input, KeyCode, Query, Res, ResMut, Transform, Vec3, WindowDescriptor,
-};
-use bevy::render2::{
-    camera::PerspectiveCameraBundle,
-    color::Color,
-    mesh::{shape, Mesh},
-    view::Visibility,
-};
-use bevy::PipelinedDefaultPlugins;
+use bevy::prelude::*;
 use bevy_life::{CellMap, ConwayCell4555State, GameOfLife3dPlugin, MooreCell3d, SimulationBatch};
 use rand::Rng;
 
@@ -24,7 +12,7 @@ fn main() {
             height: 800.,
             ..Default::default()
         })
-        .add_plugins(PipelinedDefaultPlugins)
+        .add_plugins(DefaultPlugins)
         .add_plugin(GameOfLife3dPlugin::default())
         .insert_resource(SimulationBatch::default())
         .add_startup_system(setup_camera)
