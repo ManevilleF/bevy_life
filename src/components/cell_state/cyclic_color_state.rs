@@ -1,6 +1,4 @@
 use crate::CellState;
-#[cfg(feature = "auto-coloring")]
-use crate::ColorResponse;
 use bevy::prelude::{Color, Component};
 
 const CYCLIC_COLORS: [Color; 9] = [
@@ -43,13 +41,8 @@ impl CellState for CyclicColorCellState {
     }
 
     #[cfg(feature = "auto-coloring")]
-    fn color_or_material_index(&self) -> ColorResponse {
-        ColorResponse::MaterialIndex(self.pos())
-    }
-
-    #[cfg(feature = "auto-coloring")]
-    fn colors() -> &'static [Color] {
-        &CYCLIC_COLORS
+    fn color(&self) -> Option<Color> {
+        Some(self.0)
     }
 }
 

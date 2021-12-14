@@ -176,13 +176,11 @@ impl<C: Cell, S: CellState> Plugin for CellularAutomatonPlugin<C, S> {
         {
             #[cfg(feature = "2D")]
             {
-                app.add_startup_system(Self::setup_materials::<ColorMaterial>);
-                app.add_system(systems::coloring::color_states::<S, ColorMaterial>);
+                app.add_system(systems::coloring::color_sprites::<S>);
             }
             #[cfg(feature = "3D")]
             {
-                app.add_startup_system(Self::setup_materials::<StandardMaterial>);
-                app.add_system(systems::coloring::color_states::<S, StandardMaterial>);
+                log::warn!("No auto coloring is available for 3D materials");
             }
         }
         log::info!("Loaded cellular automaton plugin")
@@ -196,15 +194,6 @@ impl<C: Cell, S: CellState> CellularAutomatonPlugin<C, S> {
             tick_time_step: Some(tick_time_step),
             ..Default::default()
         }
-    }
-
-    #[cfg(feature = "auto-coloring")]
-    fn setup_materials<A>(mut commands: Commands, mut assets: ResMut<Assets<A>>)
-    where
-        A: bevy::asset::Asset + From<Color>,
-    {
-        let color_assets = S::setup_materials(&mut assets);
-        commands.insert_resource(color_assets);
     }
 }
 

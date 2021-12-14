@@ -91,7 +91,7 @@ mod tests {
                 IVec3::new(9, 10, 11),
                 IVec3::new(9, 11, 10)
             ]
-        )
+        );
     }
 
     #[test]
@@ -110,7 +110,7 @@ mod tests {
                 IVec3::new(-11, 8, 6),
                 IVec3::new(-11, 9, 5)
             ]
-        )
+        );
     }
 
     #[test]
@@ -129,6 +129,6 @@ mod tests {
                 IVec3::new(-1, 0, 1),
                 IVec3::new(-1, 1, 0),
             ]
-        )
+        );
     }
 }

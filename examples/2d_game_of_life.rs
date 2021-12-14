@@ -27,16 +27,15 @@ fn setup_camera(mut commands: Commands) {
     commands.spawn_bundle(OrthographicCameraBundle::new_2d());
 }
 
-fn setup_map(mut commands: Commands, mut assets: ResMut<Assets<ColorMaterial>>) {
-    // map
-    spawn_map(&mut commands, &mut assets);
+fn setup_map(mut commands: Commands) {
+    spawn_map(&mut commands);
 }
 
-fn spawn_map(commands: &mut Commands, assets: &mut Assets<ColorMaterial>) {
+fn spawn_map(commands: &mut Commands) {
     let mut rng = rand::thread_rng();
     let (size_x, size_y) = (300, 200);
     let sprite_size = 4.;
-    let material = assets.add(Color::rgba(0., 0., 0., 0.).into());
+    let color = Color::rgba(0., 0., 0., 0.);
 
     let entity = commands
         .spawn()
@@ -52,13 +51,16 @@ fn spawn_map(commands: &mut Commands, assets: &mut Assets<ColorMaterial>) {
                     let state = ConwayCellState(rng.gen_bool(1. / 3.));
                     builder
                         .spawn_bundle(SpriteBundle {
-                            sprite: Sprite::new(Vec2::splat(sprite_size)),
+                            sprite: Sprite {
+                                custom_size: Some(Vec2::splat(sprite_size)),
+                                color,
+                                ..Default::default()
+                            },
                             transform: Transform::from_xyz(
                                 sprite_size * x as f32,
                                 sprite_size * y as f32,
                                 0.,
                             ),
-                            material: material.clone(),
                             ..Default::default()
                         })
                         .insert(MooreCell2d::new(IVec2::new(x, y)))

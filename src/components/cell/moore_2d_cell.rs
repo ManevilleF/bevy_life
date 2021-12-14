@@ -108,7 +108,7 @@ mod tests {
                 // Bottom Left
                 IVec2::new(9, 9),
             ]
-        )
+        );
     }
 
     #[test]
@@ -137,7 +137,7 @@ mod tests {
                 // Bottom Left
                 IVec2::new(-11, 9),
             ]
-        )
+        );
     }
 
     #[test]
@@ -166,6 +166,6 @@ mod tests {
                 // Bottom Left
                 IVec2::new(-1, -1),
             ]
-        )
+        );
     }
 }

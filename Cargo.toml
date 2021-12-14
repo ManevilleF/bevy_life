@@ -8,7 +8,7 @@ repository = "https://github.com/ManevilleF/bevy_life"
 readme = "README.md"
 description = "Generic and dynamic cellular automaton lib for bevy"
 keywords = ["conway", "bevy", "wireworld", "cellular", "automaton"]
-exclude = ["examples", "docs", ".github", ".gitignore", "examples_utilities"]
+exclude = ["examples", "docs", ".github", ".gitignore", "assets"]
 documentation = "http://docs.rs/bevy_life"
 categories = ["game-engines", "game-development"]
 
@@ -16,7 +16,7 @@ categories = ["game-engines", "game-development"]
 default = ["2D"]
 2D = []
 3D = []
-auto-coloring = []
+auto-coloring = ["bevy/bevy_sprite"]
 
 [dependencies]
 lazy_static = "1.4"
@@ -25,7 +25,7 @@ lazy_static = "1.4"
 git = "https://github.com/bevyengine/bevy"
 branch = "main"
 default-features = false
-features = ["render"]
+features = ["bevy_render"]
 
 [dev-dependencies]
 rand = "0.8"
@@ -33,8 +33,14 @@ rand = "0.8"
 [dev-dependencies.bevy]
 git = "https://github.com/bevyengine/bevy"
 branch = "main"
-features = ["render", "bevy_winit", "png", "x11", "bevy_wgpu"]
 default-features = false
+features = [
+    "bevy_core_pipeline",
+    "bevy_sprite",
+    "bevy_pbr",
+    "bevy_render",
+    "bevy_winit",
+]
 
 # Enable optimizations for dependencies (incl. Bevy), but not for our code:
 [profile.dev.package."*"]
