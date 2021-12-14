@@ -66,7 +66,6 @@ fn spawn_map(commands: &mut Commands) {
                                 sprite_size * y as f32,
                                 0.,
                             ),
-                            texture: texture.clone(),
                             ..Default::default()
                         })
                         .insert(MooreCell2d::new(IVec2::new(x, y)))
