@@ -13,11 +13,11 @@
 //!
 //! See:
 //!  - [Game of life variations](https://cs.stanford.edu/people/eroberts/courses/soco/projects/2008-09/modeling-natural-systems/gameOfLife2.html)
-//!  - [Wireworld implementation](https://www.quinapalus.com/wi-index.html)
+//!  - [`Wireworld` implementation](https://www.quinapalus.com/wi-index.html)
 //!  
 //! ## Bevy versions
 //!
-//! The `main` branch follows the released version of `bevy` (0.5) but I provide the [bevy_main](https://github.com/ManevilleF/bevy_life/tree/feat/bevy_main) branch
+//! The `main` branch follows the released version of `bevy` (0.5) but I provide the [`bevy_main`](https://github.com/ManevilleF/bevy_life/tree/feat/bevy_main) branch
 //! to follow the `main` branch of `bevy`
 //!
 //! ## How to use
@@ -71,7 +71,7 @@
 //! ## Disclaimer
 //!
 //! This is probably not the fastest rust implementation of a cellular automaton in rust.
-//! For example, using Gosper's [HashLife](https://www.drdobbs.com/jvm/an-algorithm-for-compressing-space-and-t/184406478) a classic game of life could be much faster.
+//! For example, using Gosper's [`HashLife`](https://www.drdobbs.com/jvm/an-algorithm-for-compressing-space-and-t/184406478) a classic game of life could be much faster.
 //!
 //! This library aim is to be generic and dynamic, so that you can integrate cellular automata to any project in bevy, with any rules, in 2D or 3D.
 //!

@@ -24,7 +24,7 @@ pub trait CellState: Component + Debug + Default + Sized + Clone + PartialEq {
 
     /// Mutably applies the new state defined in `new_cell_state` to `self`
     fn apply_new_cell_state(&mut self, neighbor_cells: &[Self]) {
-        *self = self.new_cell_state(neighbor_cells)
+        *self = self.new_cell_state(neighbor_cells);
     }
 
     #[cfg(feature = "auto-coloring")]
