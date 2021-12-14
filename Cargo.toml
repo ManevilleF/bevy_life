@@ -40,6 +40,7 @@ features = [
     "bevy_pbr",
     "bevy_render",
     "bevy_winit",
+    "x11"
 ]
 
 # Enable optimizations for dependencies (incl. Bevy), but not for our code:
