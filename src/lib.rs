@@ -187,7 +187,7 @@ impl<C: Cell, S: CellState> Plugin for CellularAutomatonPlugin<C, S> {
     }
 }
 
-impl<C: Cell, S: CellState> CellularAutomatonPlugin<C, S> {
+impl<C, S> CellularAutomatonPlugin<C, S> {
     /// Instantiates Self with custom `tick_time_step` value for systems execution
     pub fn new(tick_time_step: f64) -> Self {
         Self {
