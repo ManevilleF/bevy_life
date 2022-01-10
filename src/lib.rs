@@ -17,7 +17,7 @@
 //!  
 //! ## Bevy versions
 //!
-//! The `main` branch follows the released version of `bevy` (0.5) but I provide the [`bevy_main`](https://github.com/ManevilleF/bevy_life/tree/feat/bevy_main) branch
+//! The `main` branch follows the released version of `bevy` (0.6) but I provide the [`bevy-main`](https://github.com/ManevilleF/bevy_life/tree/feat/bevy-main) branch
 //! to follow the `main` branch of `bevy`
 //!
 //! ## How to use
