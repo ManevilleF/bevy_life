@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Bevy 0.6
 - Rust 2021
 - Clippy extra restrictions
 

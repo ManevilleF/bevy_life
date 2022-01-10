@@ -1,7 +1,6 @@
 use crate::components::{Cell, CellState};
 use crate::resources::CellMap;
 use crate::{SimulationBatch, SimulationPause};
-use bevy::ecs::component::Component;
 use bevy::log;
 use bevy::prelude::*;
 use bevy::tasks::ComputeTaskPool;
@@ -13,8 +12,8 @@ fn handle_cell<C, S>(
     query: &Query<(Entity, &C, &S)>,
 ) -> Option<S>
 where
-    C: Cell + Component,
-    S: CellState + Component,
+    C: Cell,
+    S: CellState,
 {
     let neighbor_coords = cell.neighbor_coordinates();
     let neighbor_cells = map.get_cell_entities(&neighbor_coords);
@@ -34,10 +33,10 @@ where
         })
         .collect();
     let new_state = state.new_cell_state(&neighbor_states);
-    if &new_state != state {
-        Some(new_state)
-    } else {
+    if &new_state == state {
         None
+    } else {
+        Some(new_state)
     }
 }
 
@@ -49,8 +48,8 @@ pub fn handle_cells<C, S>(
     pause: Option<Res<SimulationPause>>,
     batch: Option<Res<SimulationBatch>>,
 ) where
-    C: Cell + Component,
-    S: CellState + Component,
+    C: Cell,
+    S: CellState,
 {
     if pause.is_some() {
         return;
@@ -78,7 +77,7 @@ pub fn handle_cells<C, S>(
 
 pub fn handle_new_cells<C>(query: Query<(Entity, &C), Added<C>>, mut map: ResMut<CellMap<C>>)
 where
-    C: Cell + Component,
+    C: Cell,
 {
     for (entity, new_cell) in query.iter() {
         let old_entity = map.insert_cell(new_cell.coords().clone(), entity);
@@ -89,7 +88,7 @@ where
                     entity,
                     e,
                     new_cell.coords()
-                )
+                );
             }
         }
     }

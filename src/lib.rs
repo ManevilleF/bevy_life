@@ -13,14 +13,12 @@
 //!
 //! See:
 //!  - [Game of life variations](https://cs.stanford.edu/people/eroberts/courses/soco/projects/2008-09/modeling-natural-systems/gameOfLife2.html)
-//!  - [Wireworld implementation](https://www.quinapalus.com/wi-index.html)
+//!  - [`Wireworld` implementation](https://www.quinapalus.com/wi-index.html)
 //!  
 //! ## Bevy versions
 //!
-//! The `main` branch follows the released version of `bevy` (0.5) but I provide 3 useful branches to follow the new engine features:
-//! - [bevy_main](https://github.com/ManevilleF/bevy_life/tree/feat/bevy_main) follows the `main` branch of `bevy`
-//! - [bevy_pipelined_rendering](https://github.com/ManevilleF/bevy_life/tree/feat/bevy_pipelined_rendering) follows the `pipelined-rendering` branch of `bevy` to use the new rendering system
-//! - [sprite_instancing](https://github.com/ManevilleF/bevy_life/tree/feat/sprite_instancing) follows a branch (see [#2642](https://github.com/bevyengine/bevy/pull/2642)) with sprite instacing and batching for better performance.
+//! The `main` branch follows the released version of `bevy` (0.5) but I provide the [`bevy_main`](https://github.com/ManevilleF/bevy_life/tree/feat/bevy_main) branch
+//! to follow the `main` branch of `bevy`
 //!
 //! ## How to use
 //!
@@ -73,7 +71,7 @@
 //! ## Disclaimer
 //!
 //! This is probably not the fastest rust implementation of a cellular automaton in rust.
-//! For example, using Gosper's [HashLife](https://www.drdobbs.com/jvm/an-algorithm-for-compressing-space-and-t/184406478) a classic game of life could be much faster.
+//! For example, using Gosper's [`HashLife`](https://www.drdobbs.com/jvm/an-algorithm-for-compressing-space-and-t/184406478) a classic game of life could be much faster.
 //!
 //! This library aim is to be generic and dynamic, so that you can integrate cellular automata to any project in bevy, with any rules, in 2D or 3D.
 //!
@@ -92,7 +90,6 @@
 )]
 
 use bevy::core::FixedTimestep;
-use bevy::ecs::component::Component;
 use bevy::log;
 use bevy::prelude::*;
 use std::marker::PhantomData;
@@ -101,7 +98,6 @@ mod components;
 mod resources;
 mod systems;
 
-use std::fmt::Debug;
 pub use {components::*, resources::*};
 
 #[cfg(feature = "2D")]
@@ -163,17 +159,11 @@ pub struct CellularAutomatonPlugin<C, S> {
     pub phantom_s: PhantomData<S>,
 }
 
-impl<C: Cell + Component + Debug, S: CellState + Component + Debug> Plugin
-    for CellularAutomatonPlugin<C, S>
-{
-    fn build(&self, app: &mut AppBuilder) {
+impl<C: Cell, S: CellState> Plugin for CellularAutomatonPlugin<C, S> {
+    fn build(&self, app: &mut App) {
         let system_set = SystemSet::new()
-            .with_system(systems::cells::handle_cells::<C, S>.system().label("cells"))
-            .with_system(
-                systems::cells::handle_new_cells::<C>
-                    .system()
-                    .before("cells"),
-            );
+            .with_system(systems::cells::handle_cells::<C, S>.label("cells"))
+            .with_system(systems::cells::handle_new_cells::<C>.before("cells"));
         let system_set = if let Some(time_step) = self.tick_time_step {
             system_set.with_run_criteria(FixedTimestep::step(time_step))
         } else {
@@ -186,35 +176,24 @@ impl<C: Cell + Component + Debug, S: CellState + Component + Debug> Plugin
         {
             #[cfg(feature = "2D")]
             {
-                app.add_startup_system(Self::setup_materials::<ColorMaterial>.system());
-                app.add_system(systems::coloring::color_states::<S, ColorMaterial>.system());
+                app.add_system(systems::coloring::color_sprites::<S>);
             }
             #[cfg(feature = "3D")]
             {
-                app.add_startup_system(Self::setup_materials::<StandardMaterial>.system());
-                app.add_system(systems::coloring::color_states::<S, StandardMaterial>.system());
+                log::warn!("No auto coloring is available for 3D materials");
             }
         }
         log::info!("Loaded cellular automaton plugin")
     }
 }
 
-impl<C: Cell + Component + Debug, S: CellState + Component + Debug> CellularAutomatonPlugin<C, S> {
+impl<C, S> CellularAutomatonPlugin<C, S> {
     /// Instantiates Self with custom `tick_time_step` value for systems execution
     pub fn new(tick_time_step: f64) -> Self {
         Self {
             tick_time_step: Some(tick_time_step),
             ..Default::default()
         }
-    }
-
-    #[cfg(feature = "auto-coloring")]
-    fn setup_materials<A>(mut commands: Commands, mut assets: ResMut<Assets<A>>)
-    where
-        A: bevy::asset::Asset + From<Color>,
-    {
-        let color_assets = S::setup_materials(&mut assets);
-        commands.insert_resource(color_assets);
     }
 }
 

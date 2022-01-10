@@ -1,7 +1,5 @@
 use crate::CellState;
-#[cfg(feature = "auto-coloring")]
-use crate::ColorResponse;
-use bevy::prelude::Color;
+use bevy::prelude::{Color, Component};
 
 const CYCLIC_COLORS: [Color; 9] = [
     Color::BLUE,
@@ -23,7 +21,7 @@ const CYCLIC_COLORS: [Color; 9] = [
 /// > (Note that `0` is the successor of `n − 1`.
 ///
 /// For this type we use `9` for `n` and arbitrary colors.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Component)]
 pub struct CyclicColorCellState(pub Color);
 
 impl CellState for CyclicColorCellState {
@@ -43,13 +41,8 @@ impl CellState for CyclicColorCellState {
     }
 
     #[cfg(feature = "auto-coloring")]
-    fn color_or_material_index(&self) -> ColorResponse {
-        ColorResponse::MaterialIndex(self.pos())
-    }
-
-    #[cfg(feature = "auto-coloring")]
-    fn colors() -> &'static [Color] {
-        &CYCLIC_COLORS
+    fn color(&self) -> Option<Color> {
+        Some(self.0)
     }
 }
 

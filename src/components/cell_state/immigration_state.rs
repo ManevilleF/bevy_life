@@ -1,12 +1,11 @@
 use crate::components::CellState;
+use bevy::prelude::Component;
 #[cfg(feature = "auto-coloring")]
-use crate::ColorResponse;
-#[cfg(feature = "auto-coloring")]
-use bevy::prelude::Color;
+use bevy::render::color::Color;
 use std::collections::HashMap;
 use std::fmt::Debug;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Component)]
 /// Classic cellular automation state and rules following Conway's game of life variation: The immigration game.
 ///
 /// - Any live cell with fewer than two live neighbours dies, as if by underpopulation.
@@ -55,16 +54,11 @@ impl CellState for ImmigrationCellState {
     }
 
     #[cfg(feature = "auto-coloring")]
-    fn color_or_material_index(&self) -> ColorResponse {
+    fn color(&self) -> Option<Color> {
         match self {
-            Self::Dead => ColorResponse::None,
-            Self::Alive(b) => ColorResponse::MaterialIndex(if *b { 0 } else { 1 }),
+            ImmigrationCellState::Dead => None,
+            ImmigrationCellState::Alive(b) => Some(if *b { Color::CYAN } else { Color::ORANGE }),
         }
-    }
-
-    #[cfg(feature = "auto-coloring")]
-    fn colors() -> &'static [Color] {
-        &[Color::CYAN, Color::ORANGE]
     }
 }
 
