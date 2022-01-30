@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Clippy `pedantic`
+- Added `must_use` and `inline` attributes
+- All components implement `Reflect` and are registered to the app
+- Added example declaration
+
 ## 0.3.0
 
 - Bevy 0.6

@@ -43,7 +43,7 @@ opt-level = 3
 opt-level = 1
 
 [[example]]
-name = "2d_cyclic_color"
+name = "2d_cyclic_colors"
 path = "examples/2d_cyclic_colors.rs"
 required-features = ["auto-coloring", "2D"]
 

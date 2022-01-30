@@ -128,7 +128,7 @@ pub type WireWorld2dPlugin =
     CellularAutomatonPlugin<components::MooreCell2d, components::WireWorldCellState>;
 
 #[cfg(feature = "3D")]
-/// Cellular automaton plugin type for WireWorld in 3D
+/// Cellular automaton plugin type for `WireWorld` in 3D
 pub type WireWorld3dPlugin =
     CellularAutomatonPlugin<components::MooreCell3d, components::WireWorldCellState>;
 
