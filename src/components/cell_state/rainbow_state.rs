@@ -1,10 +1,10 @@
 use crate::components::CellState;
-use bevy::prelude::Component;
+use bevy::prelude::{Component, Reflect};
 #[cfg(feature = "auto-coloring")]
 use bevy::render::color::Color;
 use std::fmt::Debug;
 
-#[derive(Debug, Clone, PartialEq, Component)]
+#[derive(Debug, Clone, PartialEq, Component, Reflect)]
 /// Classic cellular automation state and rules following Conway's game of life variation: The immigration game.
 ///
 /// - Any live cell with fewer than two live neighbours dies, as if by underpopulation.
@@ -55,6 +55,8 @@ impl CellState for RainbowCellState {
 
 impl RainbowCellState {
     /// Is the cell considered alive
+    #[must_use]
+    #[inline]
     pub const fn is_alive(&self) -> bool {
         matches!(self, Self::Alive(_))
     }

@@ -40,6 +40,7 @@ where
     }
 }
 
+#[allow(clippy::needless_pass_by_value)]
 pub fn handle_cells<C, S>(
     mut commands: Commands,
     pool: Res<ComputeTaskPool>,
@@ -75,6 +76,7 @@ pub fn handle_cells<C, S>(
     }
 }
 
+#[allow(clippy::needless_pass_by_value)]
 pub fn handle_new_cells<C>(query: Query<(Entity, &C), Added<C>>, mut map: ResMut<CellMap<C>>)
 where
     C: Cell,

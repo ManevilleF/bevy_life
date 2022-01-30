@@ -1,5 +1,5 @@
 use crate::components::Cell;
-use bevy::prelude::{Component, IVec2};
+use bevy::prelude::{Component, IVec2, Reflect};
 use std::ops::Deref;
 
 lazy_static::lazy_static! {
@@ -42,7 +42,7 @@ lazy_static::lazy_static! {
 /// ```
 ///
 /// [Moore]: https://en.wikipedia.org/wiki/Moore_neighborhood
-#[derive(Debug, Clone, Component)]
+#[derive(Debug, Clone, Component, Reflect)]
 pub struct MooreCell2d {
     /// The 2D cell coordinates
     pub coords: IVec2,
@@ -73,6 +73,8 @@ impl Cell for MooreCell2d {
 
 impl MooreCell2d {
     /// Instantiates a new cell with `coords` values
+    #[must_use]
+    #[inline]
     pub const fn new(coords: IVec2) -> Self {
         Self { coords }
     }

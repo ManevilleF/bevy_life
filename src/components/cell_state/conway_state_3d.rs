@@ -1,5 +1,5 @@
 use crate::components::CellState;
-use bevy::prelude::Component;
+use bevy::prelude::{Component, Reflect};
 #[cfg(feature = "auto-coloring")]
 use bevy::render::color::Color;
 use std::ops::{Deref, DerefMut};
@@ -12,7 +12,7 @@ use std::ops::{Deref, DerefMut};
 /// - Any dead cell with exactly five live neighbours becomes a live cell, as if by reproduction.
 ///
 /// A dead cell is `false`, a live cell is `true`
-#[derive(Debug, Clone, Default, Eq, PartialEq, Component)]
+#[derive(Debug, Clone, Default, Eq, PartialEq, Component, Reflect)]
 pub struct ConwayCell4555State(pub bool);
 
 impl CellState for ConwayCell4555State {

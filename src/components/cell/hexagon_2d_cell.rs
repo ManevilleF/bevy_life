@@ -1,5 +1,5 @@
 use crate::components::Cell;
-use bevy::prelude::{Component, IVec3};
+use bevy::prelude::{Component, IVec3, Reflect};
 use std::ops::Deref;
 
 lazy_static::lazy_static! {
@@ -35,7 +35,7 @@ lazy_static::lazy_static! {
 ///            \_____/
 ///
 /// [Moore]: https://en.wikipedia.org/wiki/Moore_neighborhood
-#[derive(Debug, Clone, Component)]
+#[derive(Debug, Clone, Component, Reflect)]
 pub struct HexagonCell2d {
     /// The 2D cell coordinates
     pub coords: IVec3,
@@ -66,6 +66,8 @@ impl Cell for HexagonCell2d {
 
 impl HexagonCell2d {
     /// Instantiates a new cell with `coords` values
+    #[must_use]
+    #[inline]
     pub const fn new(coords: IVec3) -> Self {
         Self { coords }
     }

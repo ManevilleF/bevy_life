@@ -9,7 +9,7 @@
 //! [![dependency status](https://deps.rs/crate/bevy_life/0.3.0/status.svg)](https://deps.rs/crate/bevy_life)
 //!
 //! `bevy_life` is a generic plugin for [cellular automaton](https://en.wikipedia.org/wiki/Cellular_automaton).
-//! From the classic 2D [Conway's game of life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) to [WireWorld](https://en.wikipedia.org/wiki/Wireworld) and 3D rules, the plugin is completely generic and dynamic.
+//! From the classic 2D [Conway's game of life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) to [`WireWorld`](https://en.wikipedia.org/wiki/Wireworld) and 3D rules, the plugin is completely generic and dynamic.
 //!
 //! See:
 //!  - [Game of life variations](https://cs.stanford.edu/people/eroberts/courses/soco/projects/2008-09/modeling-natural-systems/gameOfLife2.html)
@@ -78,16 +78,12 @@
 #![forbid(missing_docs)]
 #![forbid(unsafe_code)]
 #![warn(
-    clippy::all,
-    clippy::correctness,
-    clippy::suspicious,
-    clippy::style,
-    clippy::complexity,
-    clippy::perf,
     clippy::nursery,
+    clippy::pedantic,
     nonstandard_style,
     rustdoc::broken_intra_links
 )]
+#![allow(clippy::default_trait_access, clippy::module_name_repetitions)]
 
 use bevy::core::FixedTimestep;
 use bevy::log;
@@ -127,7 +123,7 @@ pub type RainbowGame2dPlugin = CellularAutomatonPlugin<components::MooreCell2d, 
 pub type RainbowGame3dPlugin = CellularAutomatonPlugin<components::MooreCell3d, RainbowCellState>;
 
 #[cfg(feature = "2D")]
-/// Cellular automaton plugin type for WireWorld in 2D
+/// Cellular automaton plugin type for `WireWorld` in 2D
 pub type WireWorld2dPlugin =
     CellularAutomatonPlugin<components::MooreCell2d, components::WireWorldCellState>;
 
@@ -171,6 +167,7 @@ impl<C: Cell, S: CellState> Plugin for CellularAutomatonPlugin<C, S> {
         };
         app.add_system_set(system_set);
         app.insert_resource(CellMap::<C>::default());
+        app.register_type::<C>().register_type::<S>();
 
         #[cfg(feature = "auto-coloring")]
         {
@@ -183,12 +180,14 @@ impl<C: Cell, S: CellState> Plugin for CellularAutomatonPlugin<C, S> {
                 log::warn!("No auto coloring is available for 3D materials");
             }
         }
-        log::info!("Loaded cellular automaton plugin")
+        log::info!("Loaded cellular automaton plugin");
     }
 }
 
 impl<C, S> CellularAutomatonPlugin<C, S> {
     /// Instantiates Self with custom `tick_time_step` value for systems execution
+    #[must_use]
+    #[inline]
     pub fn new(tick_time_step: f64) -> Self {
         Self {
             tick_time_step: Some(tick_time_step),

@@ -1,5 +1,5 @@
 use crate::components::CellState;
-use bevy::prelude::Component;
+use bevy::prelude::{Component, Reflect};
 #[cfg(feature = "auto-coloring")]
 use bevy::render::color::Color;
 
@@ -9,7 +9,7 @@ use bevy::render::color::Color;
 /// - Electron heads (`ElectronHead`) become electron tails in the succeeding generation.
 /// - Electron tails (`ElectronTail`) become conductors.
 /// - Conductors (`Conductor`) become electron heads if exactly one or two neighboring cells are electron heads. Otherwise, they remain as conductors.
-#[derive(Clone, Debug, PartialEq, Component)]
+#[derive(Clone, Debug, PartialEq, Component, Reflect)]
 pub enum WireWorldCellState {
     /// Conductor cell state
     Conductor,

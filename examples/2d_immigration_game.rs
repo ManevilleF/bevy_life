@@ -2,10 +2,6 @@ use bevy::prelude::*;
 use bevy_life::{ImmigrationCellState, ImmigrationGame2dPlugin, MooreCell2d, SimulationBatch};
 use rand::Rng;
 
-mod common;
-
-use common::*;
-
 fn main() {
     App::new()
         .insert_resource(WindowDescriptor {
@@ -19,7 +15,6 @@ fn main() {
         .insert_resource(SimulationBatch::default())
         .add_startup_system(setup_camera)
         .add_startup_system(setup_map)
-        .add_system(handle_reset_2d::<MooreCell2d>)
         .run();
 }
 
@@ -38,7 +33,7 @@ fn spawn_map(commands: &mut Commands) {
     let sprite_size = 4.;
     let color = Color::rgba(0., 0., 0., 0.);
 
-    let entity = commands
+    commands
         .spawn()
         .insert(Transform::from_xyz(
             -(size_x as f32 * sprite_size) / 2.,
@@ -72,8 +67,6 @@ fn spawn_map(commands: &mut Commands) {
                         .insert(state);
                 }
             }
-        })
-        .id();
-    commands.insert_resource(MapEntity(entity));
+        });
     println!("map generated");
 }

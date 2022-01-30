@@ -41,3 +41,28 @@ opt-level = 3
 # Maybe also enable only a small amount of optimization for our code:
 [profile.dev]
 opt-level = 1
+
+[[example]]
+name = "2d_cyclic_color"
+path = "examples/2d_cyclic_colors.rs"
+required-features = ["auto-coloring", "2D"]
+
+[[example]]
+name = "2d_game_of_life"
+path = "examples/2d_game_of_life.rs"
+required-features = ["auto-coloring", "2D"]
+
+[[example]]
+name = "2d_immigration_game"
+path = "examples/2d_immigration_game.rs"
+required-features = ["auto-coloring", "2D"]
+
+[[example]]
+name = "2d_rainbow_game"
+path = "examples/2d_rainbow_game.rs"
+required-features = ["auto-coloring", "2D"]
+
+[[example]]
+name = "3d_game_of_life"
+path = "examples/3d_game_of_life.rs"
+required-features = ["auto-coloring", "3D"]

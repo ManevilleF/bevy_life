@@ -1,5 +1,5 @@
 use crate::components::Cell;
-use bevy::prelude::{Component, IVec2};
+use bevy::prelude::{Component, IVec2, Reflect};
 use std::ops::Deref;
 
 lazy_static::lazy_static! {
@@ -33,7 +33,7 @@ lazy_static::lazy_static! {
 ///         +-------+
 /// ```
 /// [Neumann]: https://en.wikipedia.org/wiki/Von_Neumann_neighborhood
-#[derive(Debug, Clone, Component)]
+#[derive(Debug, Clone, Component, Reflect)]
 pub struct NeumannCell2d {
     /// The 2D cell coordinates
     pub coords: IVec2,
@@ -64,6 +64,8 @@ impl Cell for NeumannCell2d {
 
 impl NeumannCell2d {
     /// Instantiates a new cell with `coords` values
+    #[must_use]
+    #[inline]
     pub const fn new(coords: IVec2) -> Self {
         Self { coords }
     }
