@@ -1,6 +1,6 @@
 [package]
 name = "bevy_life"
-version = "0.3.0"
+version = "0.3.1"
 edition = "2021"
 authors = ["Felix de Maneville <felix.maneville@gmail.com>"]
 license-file = "./LICENSE"
@@ -65,4 +65,4 @@ required-features = ["auto-coloring", "2D"]
 [[example]]
 name = "3d_game_of_life"
 path = "examples/3d_game_of_life.rs"
-required-features = ["auto-coloring", "3D"]
+required-features = ["3D"]

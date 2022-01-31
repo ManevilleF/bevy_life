@@ -1,8 +1,6 @@
 use bevy::prelude::*;
-use bevy_life::{CellMap, ConwayCell4555State, GameOfLife3dPlugin, MooreCell3d, SimulationBatch};
+use bevy_life::{ConwayCell4555State, GameOfLife3dPlugin, MooreCell3d, SimulationBatch};
 use rand::Rng;
-
-pub struct MapEntity(pub Entity);
 
 fn main() {
     App::new()
@@ -17,32 +15,8 @@ fn main() {
         .insert_resource(SimulationBatch::default())
         .add_startup_system(setup_camera)
         .add_startup_system(setup_map)
-        .add_system(handle_reset_3d)
         .add_system(color)
         .run();
-}
-
-pub fn handle_reset_3d(
-    mut commands: Commands,
-    keys: Res<Input<KeyCode>>,
-    map: Res<MapEntity>,
-    mut cell_map: ResMut<CellMap<MooreCell3d>>,
-    mut meshes: ResMut<Assets<Mesh>>,
-    mut materials: ResMut<Assets<StandardMaterial>>,
-) {
-    if keys.just_released(KeyCode::Space) {
-        commands.entity(map.0).despawn_recursive();
-        commands.remove_resource::<MapEntity>();
-        cell_map.clear();
-        println!("regenerating map");
-        let mesh = meshes.add(Mesh::from(shape::Cube::new(1.)));
-        let material = materials.add(StandardMaterial {
-            base_color: Color::WHITE,
-            unlit: true,
-            ..Default::default()
-        });
-        spawn_map(&mut commands, mesh, material);
-    }
 }
 
 fn setup_camera(mut commands: Commands) {
@@ -71,7 +45,7 @@ fn setup_map(
 fn spawn_map(commands: &mut Commands, mesh: Handle<Mesh>, material: Handle<StandardMaterial>) {
     let mut rng = rand::thread_rng();
     let map_size = 60;
-    let entity = commands
+    commands
         .spawn()
         .insert(Transform::from_xyz(
             -(map_size as f32) / 2.,
@@ -96,9 +70,7 @@ fn spawn_map(commands: &mut Commands, mesh: Handle<Mesh>, material: Handle<Stand
                     }
                 }
             }
-        })
-        .id();
-    commands.insert_resource(MapEntity(entity));
+        });
     println!("map generated");
 }
 
