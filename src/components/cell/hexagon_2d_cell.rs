@@ -13,7 +13,7 @@ lazy_static::lazy_static! {
     ];
 }
 
-/// Hexagonal 2D cell. It has 6 neighbors and uses `IVec3` coordinates.
+/// Hexagonal 2D cell. It has 6 neighbors and uses `IVec3` coordinates (Cubic coordinates).
 ///
 /// ````ascii
 ///               X
