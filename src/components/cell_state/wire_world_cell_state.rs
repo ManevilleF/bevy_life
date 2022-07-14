@@ -47,9 +47,9 @@ impl CellState for WireWorldCellState {
     #[cfg(feature = "auto-coloring")]
     fn color(&self) -> Option<Color> {
         Some(match self {
-            WireWorldCellState::Conductor => Color::GOLD,
-            WireWorldCellState::ElectronHead => Color::CYAN,
-            WireWorldCellState::ElectronTail => Color::WHITE,
+            Self::Conductor => Color::GOLD,
+            Self::ElectronHead => Color::CYAN,
+            Self::ElectronTail => Color::WHITE,
         })
     }
 }

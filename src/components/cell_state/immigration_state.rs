@@ -56,8 +56,8 @@ impl CellState for ImmigrationCellState {
     #[cfg(feature = "auto-coloring")]
     fn color(&self) -> Option<Color> {
         match self {
-            ImmigrationCellState::Dead => None,
-            ImmigrationCellState::Alive(b) => Some(if *b { Color::CYAN } else { Color::ORANGE }),
+            Self::Dead => None,
+            Self::Alive(b) => Some(if *b { Color::CYAN } else { Color::ORANGE }),
         }
     }
 }
