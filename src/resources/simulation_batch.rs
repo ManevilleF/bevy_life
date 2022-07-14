@@ -1,3 +1,6 @@
+/// Default simulation batch size
+pub const DEFAULT_BATCH_SIZE: usize = 1024;
+
 /// Resource to insert for parallel queries and batching
 #[derive(Debug, Clone)]
 pub struct SimulationBatch {
@@ -7,6 +10,8 @@ pub struct SimulationBatch {
 
 impl Default for SimulationBatch {
     fn default() -> Self {
-        Self { batch_size: 1000 }
+        Self {
+            batch_size: DEFAULT_BATCH_SIZE,
+        }
     }
 }
