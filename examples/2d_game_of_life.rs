@@ -20,7 +20,7 @@ fn main() {
 
 fn setup_camera(mut commands: Commands) {
     // Camera
-    commands.spawn_bundle(OrthographicCameraBundle::new_2d());
+    commands.spawn_bundle(Camera2dBundle::default());
 }
 
 fn setup_map(mut commands: Commands) {
