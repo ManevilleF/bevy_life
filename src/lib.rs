@@ -84,9 +84,9 @@
 )]
 #![allow(clippy::default_trait_access, clippy::module_name_repetitions)]
 
-use bevy::core::FixedTimestep;
 use bevy::log;
 use bevy::prelude::*;
+use bevy::time::FixedTimestep;
 use std::marker::PhantomData;
 
 mod components;
