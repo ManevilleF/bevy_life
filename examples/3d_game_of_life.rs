@@ -21,7 +21,7 @@ fn main() {
 
 fn setup_camera(mut commands: Commands) {
     // Camera
-    commands.spawn_bundle(PerspectiveCameraBundle {
+    commands.spawn_bundle(Camera3dBundle {
         transform: Transform::from_xyz(50., 50., -100.).looking_at(Vec3::ZERO, Vec3::Y),
         ..Default::default()
     });
