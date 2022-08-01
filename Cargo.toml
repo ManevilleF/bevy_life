@@ -22,21 +22,17 @@ auto-coloring = ["bevy/bevy_sprite"]
 lazy_static = "1.4"
 
 [dependencies.bevy]
-# version = "0.8"
+version = "0.8"
 default-features = false
 features = ["bevy_render"]
-git = "https://github.com/bevyengine/bevy"
-branch = "main"
 
 [dev-dependencies]
 rand = "0.8"
 
 [dev-dependencies.bevy]
-# version = "0.8"
+version = "0.8"
 default-features = false
 features = ["render", "bevy_winit", "x11"]
-git = "https://github.com/bevyengine/bevy"
-branch = "main"
 
 # Enable optimizations for dependencies (incl. Bevy), but not for our code:
 [profile.dev.package."*"]
