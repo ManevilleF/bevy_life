@@ -2,26 +2,24 @@ use crate::components::Cell;
 use bevy::prelude::{Component, IVec2, Reflect};
 use std::ops::Deref;
 
-lazy_static::lazy_static! {
-    static ref NEIGHBOR_COORDINATES: [IVec2; 8] = [
-        // Left
-        IVec2::new(-1, 0),
-        // Top Left
-        IVec2::new(-1, 1),
-        // Top
-        IVec2::new(0, 1),
-        // Top Right
-        IVec2::new(1, 1),
-        // Right
-        IVec2::new(1, 0),
-        // Bottom Right
-        IVec2::new(1, -1),
-        // Bottom
-        IVec2::new(0, -1),
-        // Bottom Left
-        IVec2::new(-1, -1),
-    ];
-}
+const NEIGHBOR_COORDINATES: [IVec2; 8] = [
+    // Left
+    IVec2::new(-1, 0),
+    // Top Left
+    IVec2::new(-1, 1),
+    // Top
+    IVec2::new(0, 1),
+    // Top Right
+    IVec2::new(1, 1),
+    // Right
+    IVec2::new(1, 0),
+    // Bottom Right
+    IVec2::new(1, -1),
+    // Bottom
+    IVec2::new(0, -1),
+    // Bottom Left
+    IVec2::new(-1, -1),
+];
 
 /// [Moore] 2D cell. It has 8 neighbors and uses `IVec2` coordinates.
 ///

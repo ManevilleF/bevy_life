@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+* `bevy` 0.8
+* Dropped `lazy_static` implementation
+* Improved `README`
+* Added a rock paper scissor example
+* Eased the trait bounds on `Cell` and `CellState`
+
 ## 0.4.0
 
 * `bevy` 0.7

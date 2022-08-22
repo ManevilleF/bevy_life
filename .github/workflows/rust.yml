@@ -48,6 +48,8 @@ jobs:
         run: cargo clippy --all-features --example 2d_rainbow_game
       - name: build 2d color cyclic
         run: cargo clippy --all-features --example 2d_cyclic_colors
+      - name: build 2d rock paper scissor
+        run: cargo clippy --example 2d_rock_paper_scissor
 
   test:
     runs-on: ubuntu-latest

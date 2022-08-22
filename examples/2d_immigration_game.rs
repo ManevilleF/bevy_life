@@ -20,7 +20,7 @@ fn main() {
 
 fn setup_camera(mut commands: Commands) {
     // Camera
-    commands.spawn_bundle(OrthographicCameraBundle::new_2d());
+    commands.spawn_bundle(Camera2dBundle::default());
 }
 
 fn setup_map(mut commands: Commands) {
@@ -34,13 +34,11 @@ fn spawn_map(commands: &mut Commands) {
     let color = Color::rgba(0., 0., 0., 0.);
 
     commands
-        .spawn()
-        .insert(Transform::from_xyz(
+        .spawn_bundle(SpatialBundle::from_transform(Transform::from_xyz(
             -(size_x as f32 * sprite_size) / 2.,
             -(size_y as f32 * sprite_size) / 2.,
             0.,
-        ))
-        .insert(GlobalTransform::default())
+        )))
         .with_children(|builder| {
             for y in 0..=size_y {
                 for x in 0..=size_x {

@@ -2,18 +2,16 @@ use crate::components::Cell;
 use bevy::prelude::{Component, IVec2, Reflect};
 use std::ops::Deref;
 
-lazy_static::lazy_static! {
-    static ref NEIGHBOR_COORDINATES: [IVec2; 4] = [
-        // Left
-        IVec2::new(-1, 0),
-        // Top
-        IVec2::new(0, 1),
-        // Right
-        IVec2::new(1, 0),
-        // Bottom
-        IVec2::new(0, -1),
-    ];
-}
+const NEIGHBOR_COORDINATES: [IVec2; 4] = [
+    // Left
+    IVec2::new(-1, 0),
+    // Top
+    IVec2::new(0, 1),
+    // Right
+    IVec2::new(1, 0),
+    // Bottom
+    IVec2::new(0, -1),
+];
 
 /// [Neumann] 2D cell. It has 4 neighbors and uses `IVec2` coordinates.
 ///

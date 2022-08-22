@@ -18,11 +18,8 @@ default = ["2D"]
 3D = []
 auto-coloring = ["bevy/bevy_sprite"]
 
-[dependencies]
-lazy_static = "1.4"
-
 [dependencies.bevy]
-version = "0.7"
+version = "0.8"
 default-features = false
 features = ["bevy_render"]
 
@@ -30,9 +27,9 @@ features = ["bevy_render"]
 rand = "0.8"
 
 [dev-dependencies.bevy]
-version = "0.7"
+version = "0.8"
 default-features = false
-features = ["render", "bevy_winit", "x11"]
+features = ["render", "bevy_winit", "x11", "bevy_asset"]
 
 # Enable optimizations for dependencies (incl. Bevy), but not for our code:
 [profile.dev.package."*"]
@@ -66,3 +63,8 @@ required-features = ["auto-coloring", "2D"]
 name = "3d_game_of_life"
 path = "examples/3d_game_of_life.rs"
 required-features = ["3D"]
+
+[[example]]
+name = "2d_rock_paper_scissor"
+path = "examples/2d_rock_paper_scissor.rs"
+required-features = ["2D"]
