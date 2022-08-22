@@ -62,7 +62,8 @@ pub fn handle_cells<C, S>(
             }
         });
         let lock = vec.read().unwrap();
-        for (e, s) in lock.iter() {
+        let iterator = lock.iter();
+        for (e, s) in iterator {
             commands.entity(*e).insert(s.clone());
         }
     } else {

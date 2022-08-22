@@ -6,21 +6,33 @@
 //! [![unsafe forbidden](https://img.shields.io/badge/unsafe-forbidden-success.svg)](https://github.com/rust-secure-code/safety-dance/)
 //! [![Crates.io](https://img.shields.io/crates/v/bevy_life.svg)](https://crates.io/crates/bevy_life)
 //! [![Docs.rs](https://docs.rs/bevy_life/badge.svg)](https://docs.rs/bevy_life)
-//! [![dependency status](https://deps.rs/crate/bevy_life/0.4.0/status.svg)](https://deps.rs/crate/bevy_life)
+//! [![dependency status](https://deps.rs/crate/bevy_life/0.5.0/status.svg)](https://deps.rs/crate/bevy_life)
 //!
 //! `bevy_life` is a generic plugin for [cellular automaton](https://en.wikipedia.org/wiki/Cellular_automaton).
 //! From the classic 2D [Conway's game of life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) to [`WireWorld`](https://en.wikipedia.org/wiki/Wireworld) and 3D rules, the plugin is completely generic and dynamic.
 //!
 //! See:
 //!  - [Game of life variations](https://cs.stanford.edu/people/eroberts/courses/soco/projects/2008-09/modeling-natural-systems/gameOfLife2.html)
-//!  - [`Wireworld` implementation](https://www.quinapalus.com/wi-index.html)
+//!  - [`Wireworld` implementation](https://www.quinapalus.com/wi-index.html) (see this lib's [implementation](https://github.com/ManevilleF/wireworld-rs))
 //!  
 //! ## Bevy versions
 //!
-//! The `main` branch follows the released version of `bevy` (0.6) but I provide the [`bevy-main`](https://github.com/ManevilleF/bevy_life/tree/feat/bevy-main) branch
+//! The `main` branch follows the released version of `bevy` but I provide the [`bevy-main`](https://github.com/ManevilleF/bevy_life/tree/feat/bevy-main) branch
 //! to follow the `main` branch of `bevy`
 //!
+//! | `bevy_life`   | `bevy`    |
+//! |---------------|-----------|
+//! | 0.3.x         | 0.6.x     |
+//! | 0.4.x         | 0.7.x     |
+//! | 0.5.x         | 0.8.x     |
+//!
 //! ## How to use
+//!
+//! Add a `CellularAutomatonPlugin` to your bevy app:
+//!
+//! A `CellularAutomatonPlugin<C, S>` has two generic types:
+//! - `C` -> Any type implementing `Cell`, defining the coordinate system
+//! - `S` -> Any type implementing `CellState`, defining the simulation rules.
 //!
 //! You may add as many generic `CellularAutomatonPlugin` as wished, the lib provides some implementations like:
 //! - `GameOfLife2dPlugin`
@@ -39,7 +51,10 @@
 //!
 //! You may implement your own *cells* (coordinate system) and *states* (rules) as you want, the cellular automaton system is completely dynamic and generic.
 //!
-//! For more information yo may look at some [examples](./examples).
+//! For more information you may look at some examples:
+//!- The [Classic examples](./examples) showcase the provided implementations
+//!- the [Rock Paper Scissor](./examples/2d_rock_paper_scissor.rs) defines custom rules.
+//!- the [wireworld](https://github.com/ManevilleF/wireworld-rs) repository
 //!
 //! ### Pausing
 //!
@@ -166,7 +181,6 @@ impl<C: Cell, S: CellState> Plugin for CellularAutomatonPlugin<C, S> {
         };
         app.add_system_set(system_set);
         app.insert_resource(CellMap::<C>::default());
-        app.register_type::<C>().register_type::<S>();
 
         #[cfg(feature = "auto-coloring")]
         {

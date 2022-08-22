@@ -1,6 +1,4 @@
 use bevy::prelude::Component;
-use bevy::reflect::GetTypeRegistration;
-use std::fmt::Debug;
 pub use {
     conway_state::*, conway_state_3d::*, cyclic_color_state::*, immigration_state::*,
     rainbow_state::*, wire_world_cell_state::*,
@@ -17,9 +15,7 @@ mod wire_world_cell_state;
 /// cellular automaton rules which will be automatically applied.
 ///
 /// Every type defining a `Cell` state and rules must implement this trait.
-pub trait CellState:
-    Component + Debug + Default + Sized + Clone + PartialEq + GetTypeRegistration
-{
+pub trait CellState: Component + Sized + Clone + PartialEq {
     /// Defines the new state for a cell given the `neighbor_cells` states and `self`.
     ///
     /// This method defines the cellular automaton rules

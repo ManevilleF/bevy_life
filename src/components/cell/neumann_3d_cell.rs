@@ -2,30 +2,26 @@ use crate::components::Cell;
 use bevy::prelude::{Component, IVec3, Reflect};
 use std::ops::Deref;
 
-lazy_static::lazy_static! {
-    static ref NEIGHBOR_COORDINATES: [IVec3; 6] = [
-        // Z - 1
+const NEIGHBOR_COORDINATES: [IVec3; 6] = [
+    // Z - 1
 
-        // Center
-        IVec3::new(0, 0, -1),
+    // Center
+    IVec3::new(0, 0, -1),
+    // Z
 
-        // Z
+    // Left
+    IVec3::new(-1, 0, 0),
+    // Top
+    IVec3::new(0, 1, 0),
+    // Right
+    IVec3::new(1, 0, 0),
+    // Bottom
+    IVec3::new(0, -1, 0),
+    // Z + 1
 
-        // Left
-        IVec3::new(-1, 0, 0),
-        // Top
-        IVec3::new(0, 1, 0),
-        // Right
-        IVec3::new(1, 0, 0),
-        // Bottom
-        IVec3::new(0, -1, 0),
-
-        // Z + 1
-
-        // Center
-        IVec3::new(0, 0, 1),
-    ];
-}
+    // Center
+    IVec3::new(0, 0, 1),
+];
 
 /// [Neumann] Classic cube 3D cell, it has 6 neighbors and uses `IVec3` coordinates
 ///

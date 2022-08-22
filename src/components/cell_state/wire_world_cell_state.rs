@@ -9,7 +9,7 @@ use bevy::render::color::Color;
 /// - Electron heads (`ElectronHead`) become electron tails in the succeeding generation.
 /// - Electron tails (`ElectronTail`) become conductors.
 /// - Conductors (`Conductor`) become electron heads if exactly one or two neighboring cells are electron heads. Otherwise, they remain as conductors.
-#[derive(Clone, Debug, PartialEq, Component, Reflect)]
+#[derive(Clone, Debug, Eq, PartialEq, Component, Reflect)]
 pub enum WireWorldCellState {
     /// Conductor cell state
     Conductor,

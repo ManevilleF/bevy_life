@@ -1,5 +1,4 @@
 use bevy::prelude::Component;
-use bevy::reflect::GetTypeRegistration;
 use std::fmt::Debug;
 use std::hash::Hash;
 #[cfg(feature = "2D")]
@@ -20,9 +19,9 @@ mod neumann_3d_cell;
 
 /// Trait defining a Cell, every cell type (2d, 3d, hexagonal, etc) must implement this trait
 /// and define an associated `Coordinates` type
-pub trait Cell: Debug + Clone + Component + GetTypeRegistration {
+pub trait Cell: Clone + Component {
     /// Associated coordinates type
-    type Coordinates: Clone + Debug + Default + Send + Sync + Eq + Hash;
+    type Coordinates: Clone + Debug + Send + Sync + Eq + Hash;
 
     /// Retrieves the cell coordinates
     #[must_use]

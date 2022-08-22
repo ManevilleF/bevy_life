@@ -5,7 +5,7 @@ use bevy::render::color::Color;
 use std::collections::HashMap;
 use std::fmt::Debug;
 
-#[derive(Debug, Clone, PartialEq, Component, Reflect)]
+#[derive(Debug, Clone, Eq, PartialEq, Component, Reflect)]
 /// Classic cellular automation state and rules following Conway's game of life variation: The immigration game.
 ///
 /// - Any live cell with fewer than two live neighbours dies, as if by underpopulation.

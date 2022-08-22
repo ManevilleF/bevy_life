@@ -2,16 +2,14 @@ use crate::components::Cell;
 use bevy::prelude::{Component, IVec3, Reflect};
 use std::ops::Deref;
 
-lazy_static::lazy_static! {
-    static ref NEIGHBOR_COORDINATES: [IVec3; 6] = [
-        IVec3::new(0, 1, -1),
-        IVec3::new(1, 0, -1),
-        IVec3::new(1, -1, 0),
-        IVec3::new(0, -1, 1),
-        IVec3::new(-1, 0, 1),
-        IVec3::new(-1, 1, 0),
-    ];
-}
+const NEIGHBOR_COORDINATES: [IVec3; 6] = [
+    IVec3::new(0, 1, -1),
+    IVec3::new(1, 0, -1),
+    IVec3::new(1, -1, 0),
+    IVec3::new(0, -1, 1),
+    IVec3::new(-1, 0, 1),
+    IVec3::new(-1, 1, 0),
+];
 
 /// Hexagonal 2D cell. It has 6 neighbors and uses `IVec3` coordinates (Cubic coordinates).
 ///
