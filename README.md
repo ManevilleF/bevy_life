@@ -22,11 +22,11 @@
  The `main` branch follows the released version of `bevy` but I provide the [`bevy-main`](https://github.com/ManevilleF/bevy_life/tree/feat/bevy-main) branch
  to follow the `main` branch of `bevy`
 
- | bevy_life | bevy  |
- |-----------|-------|
- | 0.3.x     | 0.6.x |
- | 0.4.x     | 0.7.x |
- | 0.5.x     | 0.8.x |
+ | `bevy_life`   | `bevy`    |
+ |---------------|-----------|
+ | 0.3.x         | 0.6.x     |
+ | 0.4.x         | 0.7.x     |
+ | 0.5.x         | 0.8.x     |
 
  ## How to use
 
