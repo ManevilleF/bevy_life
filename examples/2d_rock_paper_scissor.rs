@@ -26,7 +26,7 @@ impl CellState for RockPaperScissor {
             .iter()
             .filter(|state| *state == &beaten_by)
             .count();
-        if count >= 2 {
+        if count > 2 {
             beaten_by
         } else {
             *self
@@ -47,6 +47,7 @@ fn main() {
         .insert_resource(SimulationBatch::default())
         .add_startup_system(setup_camera)
         .add_startup_system(setup_map)
+        .add_system(color_sprites)
         .run();
 }
 
@@ -61,18 +62,16 @@ fn setup_map(mut commands: Commands) {
 
 fn spawn_map(commands: &mut Commands) {
     let mut rng = rand::thread_rng();
-    let (size_x, size_y) = (600, 400);
-    let sprite_size = 2.;
+    let (size_x, size_y) = (300, 200);
+    let sprite_size = 4.;
     let color = Color::rgba(0., 0., 0., 0.);
 
     commands
-        .spawn()
-        .insert(Transform::from_xyz(
+        .spawn_bundle(SpatialBundle::from_transform(Transform::from_xyz(
             -(size_x as f32 * sprite_size) / 2.,
             -(size_y as f32 * sprite_size) / 2.,
             0.,
-        ))
-        .insert(GlobalTransform::default())
+        )))
         .with_children(|builder| {
             for y in 0..=size_y {
                 for x in 0..=size_x {
@@ -101,4 +100,16 @@ fn spawn_map(commands: &mut Commands) {
             }
         });
     println!("map generated");
+}
+
+pub fn color_sprites(
+    mut query: Query<(&RockPaperScissor, &mut Sprite), Changed<RockPaperScissor>>,
+) {
+    for (state, mut sprite) in query.iter_mut() {
+        match state {
+            RockPaperScissor::Rock => sprite.color = Color::BLUE,
+            RockPaperScissor::Paper => sprite.color = Color::BEIGE,
+            RockPaperScissor::Scissor => sprite.color = Color::RED,
+        }
+    }
 }

@@ -135,6 +135,14 @@ Run `cargo run --example 2d_cyclic_colors --features auto-coloring`
 
 ![Alt](./docs/2d_cyclic_demo.gif "cyclic demo gif")
 
+### 2D Rock paper scissor
+
+This example showcases how to define custom rules
+
+Run `cargo run --example 2d_rock_paper_scissor`
+
+![Alt](./docs/2d_rock_paper_scissor_demo.gif "rock paper scissor demo gif")
+
 ### 3D Game of life (4555 rule)
 
 Run `cargo run --example 3d_game_of_life --features "3D auto-coloring" --no-default-features`

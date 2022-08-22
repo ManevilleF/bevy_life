@@ -46,13 +46,11 @@ fn spawn_map(commands: &mut Commands, mesh: Handle<Mesh>, material: Handle<Stand
     let mut rng = rand::thread_rng();
     let map_size = 60;
     commands
-        .spawn()
-        .insert(Transform::from_xyz(
+        .spawn_bundle(SpatialBundle::from_transform(Transform::from_xyz(
             -(map_size as f32) / 2.,
             -(map_size as f32) / 2.,
             -(map_size as f32) / 2.,
-        ))
-        .insert(GlobalTransform::default())
+        )))
         .with_children(|builder| {
             for z in 0..=map_size {
                 for y in 0..=map_size {

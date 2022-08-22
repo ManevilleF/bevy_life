@@ -5,7 +5,7 @@ use bevy::render::color::Color;
 use std::collections::HashMap;
 use std::fmt::Debug;
 
-#[derive(Debug, Clone, Eq, PartialEq, Component, Reflect)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Component, Reflect)]
 /// Classic cellular automation state and rules following Conway's game of life variation: The immigration game.
 ///
 /// - Any live cell with fewer than two live neighbours dies, as if by underpopulation.
@@ -33,7 +33,7 @@ impl CellState for ImmigrationCellState {
         let alive_cells_count = alive_cells.len();
         if self.is_alive() {
             if (2..=3).contains(&alive_cells_count) {
-                self.clone()
+                *self
             } else {
                 Self::Dead
             }

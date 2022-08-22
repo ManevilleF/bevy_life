@@ -35,13 +35,11 @@ fn spawn_map(commands: &mut Commands) {
     let available_states = CyclicColorCellState::available_colors();
     let state_size = available_states.len();
     commands
-        .spawn()
-        .insert(Transform::from_xyz(
+        .spawn_bundle(SpatialBundle::from_transform(Transform::from_xyz(
             -(size_x as f32 * sprite_size) / 2.,
             -(size_y as f32 * sprite_size) / 2.,
             0.,
-        ))
-        .insert(GlobalTransform::default())
+        )))
         .with_children(|builder| {
             for y in 0..=size_y {
                 for x in 0..=size_x {
