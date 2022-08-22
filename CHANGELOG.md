@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.5.0
 
 * `bevy` 0.8
 * Dropped `lazy_static` implementation
