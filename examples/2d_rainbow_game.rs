@@ -4,13 +4,15 @@ use rand::Rng;
 
 fn main() {
     App::new()
-        .insert_resource(WindowDescriptor {
-            title: "Rainbow game".to_string(),
-            width: 1300.,
-            height: 800.,
-            ..Default::default()
-        })
-        .add_plugins(DefaultPlugins)
+        .add_plugins(DefaultPlugins.set(WindowPlugin {
+            window: WindowDescriptor {
+                title: "Rock Paper Scissor".to_string(),
+                width: 1300.,
+                height: 800.,
+                ..Default::default()
+            },
+            ..default()
+        }))
         .add_plugin(RainbowGame2dPlugin::default())
         .insert_resource(SimulationBatch::default())
         .add_startup_system(setup_camera)
