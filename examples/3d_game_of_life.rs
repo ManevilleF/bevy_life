@@ -4,13 +4,15 @@ use rand::Rng;
 
 fn main() {
     App::new()
-        .insert_resource(WindowDescriptor {
-            title: "3D Game Of Life".to_string(),
-            width: 1300.,
-            height: 800.,
-            ..Default::default()
-        })
-        .add_plugins(DefaultPlugins)
+        .add_plugins(DefaultPlugins.set(WindowPlugin {
+            window: WindowDescriptor {
+                title: "Rock Paper Scissor".to_string(),
+                width: 1300.,
+                height: 800.,
+                ..Default::default()
+            },
+            ..default()
+        }))
         .add_plugin(GameOfLife3dPlugin::default())
         .insert_resource(SimulationBatch::default())
         .add_startup_system(setup_camera)
@@ -21,7 +23,7 @@ fn main() {
 
 fn setup_camera(mut commands: Commands) {
     // Camera
-    commands.spawn_bundle(Camera3dBundle {
+    commands.spawn(Camera3dBundle {
         transform: Transform::from_xyz(50., 50., -100.).looking_at(Vec3::ZERO, Vec3::Y),
         ..Default::default()
     });
@@ -46,7 +48,7 @@ fn spawn_map(commands: &mut Commands, mesh: Handle<Mesh>, material: Handle<Stand
     let mut rng = rand::thread_rng();
     let map_size = 60;
     commands
-        .spawn_bundle(SpatialBundle::from_transform(Transform::from_xyz(
+        .spawn(SpatialBundle::from_transform(Transform::from_xyz(
             -(map_size as f32) / 2.,
             -(map_size as f32) / 2.,
             -(map_size as f32) / 2.,
@@ -56,15 +58,16 @@ fn spawn_map(commands: &mut Commands, mesh: Handle<Mesh>, material: Handle<Stand
                 for y in 0..=map_size {
                     for x in 0..=map_size {
                         let state = ConwayCell4555State(rng.gen_bool(1. / 3.));
-                        builder
-                            .spawn_bundle(PbrBundle {
+                        builder.spawn((
+                            PbrBundle {
                                 mesh: mesh.clone(),
                                 transform: Transform::from_xyz(x as f32, y as f32, z as f32),
                                 material: material.clone(),
                                 ..Default::default()
-                            })
-                            .insert(MooreCell3d::new(IVec3::new(x, y, z)))
-                            .insert(state);
+                            },
+                            MooreCell3d::new(IVec3::new(x, y, z)),
+                            state,
+                        ));
                     }
                 }
             }
