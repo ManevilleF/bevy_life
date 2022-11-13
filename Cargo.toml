@@ -19,7 +19,7 @@ default = ["2D"]
 auto-coloring = ["bevy/bevy_sprite"]
 
 [dependencies.bevy]
-version = "0.8"
+version = "0.9"
 default-features = false
 features = ["bevy_render"]
 
@@ -27,7 +27,7 @@ features = ["bevy_render"]
 rand = "0.8"
 
 [dev-dependencies.bevy]
-version = "0.8"
+version = "0.9"
 default-features = false
 features = ["render", "bevy_winit", "x11", "bevy_asset"]
 
