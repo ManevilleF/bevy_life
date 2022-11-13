@@ -3,7 +3,6 @@ use crate::resources::CellMap;
 use crate::{SimulationBatch, SimulationPause};
 use bevy::log;
 use bevy::prelude::*;
-use std::sync::RwLock;
 
 fn handle_cell<C, S>(
     (cell, state): (&C, &S),
@@ -42,6 +41,7 @@ where
 #[allow(clippy::needless_pass_by_value)]
 pub fn handle_cells<C, S>(
     mut commands: Commands,
+    par_commands: ParallelCommands,
     query: Query<(Entity, &C, &S)>,
     map: Res<CellMap<C>>,
     pause: Option<Res<SimulationPause>>,
@@ -54,18 +54,13 @@ pub fn handle_cells<C, S>(
         return;
     }
     if let Some(config) = batch {
-        let vec = RwLock::new(Vec::new());
         query.par_for_each(config.batch_size, |(entity, cell, state)| {
             if let Some(new_state) = handle_cell((cell, state), &map, &query) {
-                let mut lock = vec.write().unwrap();
-                lock.push((entity, new_state));
+                par_commands.command_scope(|mut cmd| {
+                    cmd.entity(entity).insert(new_state);
+                });
             }
         });
-        let lock = vec.read().unwrap();
-        let iterator = lock.iter();
-        for (e, s) in iterator {
-            commands.entity(*e).insert(s.clone());
-        }
     } else {
         for (entity, cell, state) in query.iter() {
             if let Some(new_state) = handle_cell((cell, state), &map, &query) {
