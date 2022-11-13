@@ -53,21 +53,24 @@ pub fn handle_cells<C, S>(
     if pause.is_some() {
         return;
     }
-    if let Some(config) = batch {
-        query.par_for_each(config.batch_size, |(entity, cell, state)| {
-            if let Some(new_state) = handle_cell((cell, state), &map, &query) {
-                par_commands.command_scope(|mut cmd| {
-                    cmd.entity(entity).insert(new_state);
-                });
+    batch.map_or_else(
+        || {
+            for (entity, cell, state) in query.iter() {
+                if let Some(new_state) = handle_cell((cell, state), &map, &query) {
+                    commands.entity(entity).insert(new_state);
+                }
             }
-        });
-    } else {
-        for (entity, cell, state) in query.iter() {
-            if let Some(new_state) = handle_cell((cell, state), &map, &query) {
-                commands.entity(entity).insert(new_state);
-            }
-        }
-    }
+        },
+        |config| {
+            query.par_for_each(config.batch_size, |(entity, cell, state)| {
+                if let Some(new_state) = handle_cell((cell, state), &map, &query) {
+                    par_commands.command_scope(|mut cmd| {
+                        cmd.entity(entity).insert(new_state);
+                    });
+                }
+            });
+        },
+    );
 }
 
 #[allow(clippy::needless_pass_by_value)]

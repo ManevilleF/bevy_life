@@ -6,8 +6,8 @@ fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             window: WindowDescriptor {
-                title: "Rock Paper Scissor".to_string(),
-                width: 1300.,
+                title: "Immigration Game".to_string(),
+                width: 1200.,
                 height: 800.,
                 ..Default::default()
             },

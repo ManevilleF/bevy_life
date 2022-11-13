@@ -6,8 +6,8 @@ fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             window: WindowDescriptor {
-                title: "Rock Paper Scissor".to_string(),
-                width: 1300.,
+                title: "3D Game Of Life".to_string(),
+                width: 1200.,
                 height: 800.,
                 ..Default::default()
             },
@@ -24,7 +24,7 @@ fn main() {
 fn setup_camera(mut commands: Commands) {
     // Camera
     commands.spawn(Camera3dBundle {
-        transform: Transform::from_xyz(50., 50., -100.).looking_at(Vec3::ZERO, Vec3::Y),
+        transform: Transform::from_xyz(100., 100., -150.).looking_at(Vec3::ZERO, Vec3::Y),
         ..Default::default()
     });
 }
@@ -46,7 +46,7 @@ fn setup_map(
 
 fn spawn_map(commands: &mut Commands, mesh: Handle<Mesh>, material: Handle<StandardMaterial>) {
     let mut rng = rand::thread_rng();
-    let map_size = 60;
+    let map_size = 80;
     commands
         .spawn(SpatialBundle::from_transform(Transform::from_xyz(
             -(map_size as f32) / 2.,

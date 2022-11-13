@@ -6,8 +6,8 @@ fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             window: WindowDescriptor {
-                title: "Rock Paper Scissor".to_string(),
-                width: 1300.,
+                title: "Rainbow Game".to_string(),
+                width: 1200.,
                 height: 800.,
                 ..Default::default()
             },
@@ -31,8 +31,8 @@ fn setup_map(mut commands: Commands) {
 
 fn spawn_map(commands: &mut Commands) {
     let mut rng = rand::thread_rng();
-    let (size_x, size_y) = (300, 200);
-    let sprite_size = 4.;
+    let (size_x, size_y) = (600, 400);
+    let sprite_size = 2.;
     let color = Color::rgba(1., 0., 0., 1.);
 
     commands
