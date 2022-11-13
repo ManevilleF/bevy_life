@@ -3,7 +3,7 @@ use crate::components::Cell;
 use crate::components::MooreCell2d;
 #[cfg(feature = "3D")]
 use crate::components::NeumannCell3d;
-use bevy::prelude::Entity;
+use bevy::prelude::{Entity, Resource};
 use bevy::utils::HashMap;
 
 #[cfg(feature = "2D")]
@@ -16,7 +16,7 @@ pub type Map3d = CellMap<NeumannCell3d>;
 /// Global Cell container resource , uses a `Hashmap`to allow non-continuous cells.
 ///
 /// The resource is automatically added and refreshed, it may be used for clearing (see examples).
-#[derive(Clone)]
+#[derive(Clone, Resource)]
 pub struct CellMap<C: Cell> {
     cells: HashMap<C::Coordinates, Entity>,
 }

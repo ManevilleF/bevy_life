@@ -1,3 +1,5 @@
+use bevy::prelude::Resource;
+
 /// Resource to insert to pause the cellular automaton simulation
-#[derive(Debug)]
+#[derive(Debug, Resource)]
 pub struct SimulationPause;

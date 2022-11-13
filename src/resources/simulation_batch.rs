@@ -1,8 +1,10 @@
+use bevy::prelude::Resource;
+
 /// Default simulation batch size
 pub const DEFAULT_BATCH_SIZE: usize = 1024;
 
 /// Resource to insert for parallel queries and batching
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Resource)]
 pub struct SimulationBatch {
     /// Batch size for parallel execution
     pub batch_size: usize,
