@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
       - name: build
         run: cargo build --verbose
 
@@ -21,6 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
       - name: all features
         run: cargo build --verbose --all-features
       - name: no default features
@@ -38,6 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
       - name: build 2d game of life
         run: cargo clippy --all-features --example 2d_game_of_life
       - name: build 3d game of life
@@ -55,6 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
       - name: test
         run: cargo test --tests --all-features
 
@@ -62,6 +66,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
       - name: Check Formatting
         run: cargo fmt --all -- --check
 
@@ -69,6 +74,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
       - name: Cargo clippy installation
         run: rustup component add clippy
       - name: Cargo clippy check
@@ -78,5 +84,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
       - name: rustdoc
         run: cargo rustdoc --all-features
