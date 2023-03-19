@@ -43,15 +43,14 @@ impl Deref for NeumannCell3d {
 impl Cell for NeumannCell3d {
     type Coordinates = IVec3;
 
+    #[inline]
     fn coords(&self) -> &Self::Coordinates {
         &self.coords
     }
 
+    #[inline]
     fn neighbor_coordinates(&self) -> Vec<Self::Coordinates> {
-        NEIGHBOR_COORDINATES
-            .iter()
-            .map(|c| *c + *self.coords())
-            .collect()
+        NEIGHBOR_COORDINATES.map(|c| c + *self.coords()).to_vec()
     }
 }
 

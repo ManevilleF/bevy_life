@@ -29,7 +29,7 @@ rand = "0.8"
 [dev-dependencies.bevy]
 version = "0.10"
 default-features = false
-features = ["bevy_render", "bevy_winit", "bevy_core_pipeline", "x11", "bevy_asset", "bevy_sprite"]
+features = ["bevy_render", "bevy_winit", "bevy_core_pipeline", "x11", "bevy_asset", "bevy_sprite", "bevy_pbr"]
 
 # Enable optimizations for dependencies (incl. Bevy), but not for our code:
 [profile.dev.package."*"]

@@ -16,8 +16,7 @@ where
     let neighbor_coords = cell.neighbor_coordinates();
     let neighbor_cells = map.get_cell_entities(&neighbor_coords);
     let neighbor_states: Vec<S> = neighbor_cells
-        .into_iter()
-        .filter_map(|e| match query.get(e) {
+        .filter_map(|e| match query.get(*e) {
             Ok((_e, _c, s)) => Some(s.clone()),
             Err(err) => {
                 log::error!(
