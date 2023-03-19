@@ -62,10 +62,7 @@ impl Cell for MooreCell2d {
     }
 
     fn neighbor_coordinates(&self) -> Vec<Self::Coordinates> {
-        NEIGHBOR_COORDINATES
-            .iter()
-            .map(|c| *c + *self.coords())
-            .collect()
+        NEIGHBOR_COORDINATES.map(|c| c + *self.coords()).to_vec()
     }
 }
 

@@ -5,16 +5,15 @@ use rand::Rng;
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(WindowPlugin {
-            window: WindowDescriptor {
+            primary_window: Some(Window {
                 title: "Game Of Life".to_string(),
-                width: 1300.,
-                height: 800.,
+                resolution: [1200.0, 800.0].into(),
                 ..Default::default()
-            },
+            }),
             ..default()
         }))
         .add_plugin(GameOfLife2dPlugin::default())
-        .insert_resource(SimulationBatch::default())
+        .insert_resource(SimulationBatch)
         .add_startup_system(setup_camera)
         .add_startup_system(setup_map)
         .run();

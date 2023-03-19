@@ -1,5 +1,4 @@
-pub use {map::*, simulation_batch::*, simulation_pause::*};
+pub use {map::*, simulation::*};
 
 mod map;
-mod simulation_batch;
-mod simulation_pause;
+mod simulation;

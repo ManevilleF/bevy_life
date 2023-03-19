@@ -37,16 +37,15 @@ impl CellState for RockPaperScissor {
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(WindowPlugin {
-            window: WindowDescriptor {
+            primary_window: Some(Window {
                 title: "Rock Paper Scissor".to_string(),
-                width: 1200.,
-                height: 800.,
+                resolution: [1200.0, 800.0].into(),
                 ..Default::default()
-            },
+            }),
             ..default()
         }))
         .add_plugin(CellularAutomatonPlugin::<MooreCell2d, RockPaperScissor>::default())
-        .insert_resource(SimulationBatch::default())
+        .insert_resource(SimulationBatch)
         .add_startup_system(setup_camera)
         .add_startup_system(setup_map)
         .add_system(color_sprites)
