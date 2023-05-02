@@ -16,8 +16,7 @@ where
     let neighbor_coords = cell.neighbor_coordinates();
     let neighbor_cells = map.get_cell_entities(&neighbor_coords);
     let neighbor_states: Vec<S> = neighbor_cells
-        .into_iter()
-        .filter_map(|e| match query.get(e) {
+        .filter_map(|e| match query.get(*e) {
             Ok((_e, _c, s)) => Some(s.clone()),
             Err(err) => {
                 log::error!(
@@ -53,24 +52,21 @@ pub fn handle_cells<C, S>(
     if pause.is_some() {
         return;
     }
-    batch.map_or_else(
-        || {
-            for (entity, cell, state) in query.iter() {
-                if let Some(new_state) = handle_cell((cell, state), &map, &query) {
-                    commands.entity(entity).insert(new_state);
-                }
+    if batch.is_some() {
+        query.par_iter().for_each(|(entity, cell, state)| {
+            if let Some(new_state) = handle_cell((cell, state), &map, &query) {
+                par_commands.command_scope(|mut cmd| {
+                    cmd.entity(entity).insert(new_state);
+                });
             }
-        },
-        |config| {
-            query.par_for_each(config.batch_size, |(entity, cell, state)| {
-                if let Some(new_state) = handle_cell((cell, state), &map, &query) {
-                    par_commands.command_scope(|mut cmd| {
-                        cmd.entity(entity).insert(new_state);
-                    });
-                }
-            });
-        },
-    );
+        });
+    } else {
+        for (entity, cell, state) in query.iter() {
+            if let Some(new_state) = handle_cell((cell, state), &map, &query) {
+                commands.entity(entity).insert(new_state);
+            }
+        }
+    }
 }
 
 #[allow(clippy::needless_pass_by_value)]

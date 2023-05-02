@@ -19,7 +19,7 @@ default = ["2D"]
 auto-coloring = ["bevy/bevy_sprite"]
 
 [dependencies.bevy]
-version = "0.9"
+version = "0.10"
 default-features = false
 features = ["bevy_render"]
 
@@ -27,9 +27,9 @@ features = ["bevy_render"]
 rand = "0.8"
 
 [dev-dependencies.bevy]
-version = "0.9"
+version = "0.10"
 default-features = false
-features = ["render", "bevy_winit", "x11", "bevy_asset"]
+features = ["bevy_render", "bevy_winit", "bevy_core_pipeline", "x11", "bevy_asset", "bevy_sprite", "bevy_pbr"]
 
 # Enable optimizations for dependencies (incl. Bevy), but not for our code:
 [profile.dev.package."*"]

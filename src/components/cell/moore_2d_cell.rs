@@ -57,15 +57,14 @@ impl Deref for MooreCell2d {
 impl Cell for MooreCell2d {
     type Coordinates = IVec2;
 
+    #[inline]
     fn coords(&self) -> &Self::Coordinates {
         &self.coords
     }
 
+    #[inline]
     fn neighbor_coordinates(&self) -> Vec<Self::Coordinates> {
-        NEIGHBOR_COORDINATES
-            .iter()
-            .map(|c| *c + *self.coords())
-            .collect()
+        NEIGHBOR_COORDINATES.map(|c| c + *self.coords()).to_vec()
     }
 }
 

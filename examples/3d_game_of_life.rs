@@ -4,17 +4,20 @@ use rand::Rng;
 
 fn main() {
     App::new()
+        .insert_resource(AmbientLight {
+            brightness: 1.0,
+            ..default()
+        })
         .add_plugins(DefaultPlugins.set(WindowPlugin {
-            window: WindowDescriptor {
+            primary_window: Some(Window {
                 title: "3D Game Of Life".to_string(),
-                width: 1200.,
-                height: 800.,
+                resolution: [1200.0, 800.0].into(),
                 ..Default::default()
-            },
+            }),
             ..default()
         }))
         .add_plugin(GameOfLife3dPlugin::default())
-        .insert_resource(SimulationBatch::default())
+        .insert_resource(SimulationBatch)
         .add_startup_system(setup_camera)
         .add_startup_system(setup_map)
         .add_system(color)
@@ -35,11 +38,7 @@ fn setup_map(
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
     let mesh = meshes.add(Mesh::from(shape::Cube::new(1.)));
-    let material = materials.add(StandardMaterial {
-        base_color: Color::WHITE,
-        unlit: true,
-        ..Default::default()
-    });
+    let material = materials.add(Color::WHITE.into());
     // map
     spawn_map(&mut commands, mesh, material);
 }
@@ -79,6 +78,10 @@ pub fn color(
     mut query: Query<(&ConwayCell4555State, &mut Visibility), Changed<ConwayCell4555State>>,
 ) {
     for (state, mut visible) in query.iter_mut() {
-        visible.is_visible = state.0
+        *visible = if state.0 {
+            Visibility::Inherited
+        } else {
+            Visibility::Hidden
+        }
     }
 }

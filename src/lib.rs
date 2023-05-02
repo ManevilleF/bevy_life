@@ -1,13 +1,3 @@
-//! # Bevy Cellular Automaton
-//!
-//! [![workflow](https://github.com/ManevilleF/bevy_life/actions/workflows/rust.yml/badge.svg)](https://github.com/ManevilleF/bevy_life/actions/workflows/rust.yml)
-//!
-//! [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
-//! [![unsafe forbidden](https://img.shields.io/badge/unsafe-forbidden-success.svg)](https://github.com/rust-secure-code/safety-dance/)
-//! [![Crates.io](https://img.shields.io/crates/v/bevy_life.svg)](https://crates.io/crates/bevy_life)
-//! [![Docs.rs](https://docs.rs/bevy_life/badge.svg)](https://docs.rs/bevy_life)
-//! [![dependency status](https://deps.rs/crate/bevy_life/0.6.0/status.svg)](https://deps.rs/crate/bevy_life)
-//!
 //! `bevy_life` is a generic plugin for [cellular automaton](https://en.wikipedia.org/wiki/Cellular_automaton).
 //! From the classic 2D [Conway's game of life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) to [`WireWorld`](https://en.wikipedia.org/wiki/Wireworld) and 3D rules, the plugin is completely generic and dynamic.
 //!
@@ -26,6 +16,7 @@
 //! | 0.4.x         | 0.7.x     |
 //! | 0.5.x         | 0.8.x     |
 //! | 0.6.x         | 0.9.x     |
+//! | 0.7.x         | 0.10.x     |
 //!
 //! ## How to use
 //!
@@ -102,13 +93,15 @@
 
 use bevy::log;
 use bevy::prelude::*;
-use bevy::time::FixedTimestep;
+use bevy::time::common_conditions::on_timer;
 use std::marker::PhantomData;
+use std::time::Duration;
 
 mod components;
 mod resources;
 mod systems;
 
+use systems::cells::{handle_cells, handle_new_cells};
 pub use {components::*, resources::*};
 
 #[cfg(feature = "2D")]
@@ -162,7 +155,7 @@ pub type CyclicColors3dPlugin =
 /// The `BATCH_SIZE` const argument determines the size of query batches to be queried in parallel.
 /// It has a big performance impact on worlds with a lot of cells.
 pub struct CellularAutomatonPlugin<C, S> {
-    /// Custom time step constraint value for the systems. If not set, the systems will run every frame.
+    /// Custom time step (in seconds) constraint value for the systems. If not set, the systems will run every frame.
     pub tick_time_step: Option<f64>,
     /// Phantom data for the `C` (`Cell`) type
     pub phantom_c: PhantomData<C>,
@@ -170,24 +163,29 @@ pub struct CellularAutomatonPlugin<C, S> {
     pub phantom_s: PhantomData<S>,
 }
 
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash, SystemSet)]
+enum Set {
+    Cells,
+}
+
 impl<C: Cell, S: CellState> Plugin for CellularAutomatonPlugin<C, S> {
     fn build(&self, app: &mut App) {
-        let system_set = SystemSet::new()
-            .with_system(systems::cells::handle_cells::<C, S>.label("cells"))
-            .with_system(systems::cells::handle_new_cells::<C>.before("cells"));
-        let system_set = if let Some(time_step) = self.tick_time_step {
-            system_set.with_run_criteria(FixedTimestep::step(time_step))
-        } else {
-            system_set
-        };
-        app.add_system_set(system_set);
+        app.add_systems(
+            (handle_new_cells::<C>, handle_cells::<C, S>)
+                .chain()
+                .in_set(Set::Cells),
+        );
+        if let Some(time_step) = self.tick_time_step {
+            let duration = Duration::from_secs_f64(time_step);
+            app.configure_set(Set::Cells.run_if(on_timer(duration)));
+        }
         app.insert_resource(CellMap::<C>::default());
 
         #[cfg(feature = "auto-coloring")]
         {
             #[cfg(feature = "2D")]
             {
-                app.add_system(systems::coloring::color_sprites::<S>);
+                app.add_system(systems::coloring::color_sprites::<S>.before(Set::Cells));
             }
             #[cfg(feature = "3D")]
             {
@@ -202,7 +200,7 @@ impl<C, S> CellularAutomatonPlugin<C, S> {
     /// Instantiates Self with custom `tick_time_step` value for systems execution
     #[must_use]
     #[inline]
-    pub fn new(tick_time_step: f64) -> Self {
+    pub fn with_time_step(tick_time_step: f64) -> Self {
         Self {
             tick_time_step: Some(tick_time_step),
             ..Default::default()
