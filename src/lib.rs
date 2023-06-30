@@ -170,6 +170,7 @@ enum Set {
 
 impl<C: Cell, S: CellState> Plugin for CellularAutomatonPlugin<C, S> {
     fn build(&self, app: &mut App) {
+        // app.register_type::<C>().register_type::<S>().register_type::<CellMap::<C>>();
         app.add_systems(
             (handle_new_cells::<C>, handle_cells::<C, S>)
                 .chain()

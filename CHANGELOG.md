@@ -1,11 +1,13 @@
 # Changelog
 
-## Unreleased 
+## Unreleased
+
+## 0.7.0
 
 * `bevy` 0.10
 * (**BREAKING**) `SimulationBatch` is now a unit struct
 * (**BREAKING**) Renamed `CellularAutomatonPlugin::new` to `with_time_step`
-* Temporarily disabled batching for the `auto-coloring` systems, until `bevy` 0.10.1 (See [bug](https://github.com/bevyengine/bevy/pull/8029))
+* Temporarily disabled batching for the `auto-coloring` systems, until this [bug](https://github.com/bevyengine/bevy/pull/8029) is adressed
 
 ## 0.6.0
 
