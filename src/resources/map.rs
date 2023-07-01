@@ -63,6 +63,16 @@ impl<C: Cell> CellMap<C> {
         self.cells.remove(coordinates)
     }
 
+    /// Removes a cell entity from the map, returning the coordinates if it was present.
+    pub fn remove_entity(&mut self, entity: Entity) -> Option<C::Coordinates> {
+        let key = self
+            .cells
+            .iter()
+            .find_map(|(k, v)| (*v == entity).then_some(k.clone()))?;
+        self.cells.remove(&key);
+        Some(key)
+    }
+
     /// Retrieves a cell entity using its `coordinates`
     pub fn get_cell(&self, coordinates: &C::Coordinates) -> Option<Entity> {
         self.cells.get(coordinates).copied()

@@ -88,3 +88,12 @@ where
         }
     }
 }
+
+pub fn handle_removed_cells<C>(mut removed_cells: RemovedComponents<C>, mut map: ResMut<CellMap<C>>)
+where
+    C: Cell,
+{
+    for entity in removed_cells.iter() {
+        map.remove_entity(entity);
+    }
+}

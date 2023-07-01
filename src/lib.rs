@@ -102,6 +102,8 @@ mod resources;
 mod systems;
 
 use systems::cells::{handle_cells, handle_new_cells};
+
+use crate::systems::cells::handle_removed_cells;
 pub use {components::*, resources::*};
 
 #[cfg(feature = "2D")]
@@ -175,7 +177,8 @@ impl<C: Cell, S: CellState> Plugin for CellularAutomatonPlugin<C, S> {
             (handle_new_cells::<C>, handle_cells::<C, S>)
                 .chain()
                 .in_set(Set::Cells),
-        );
+        )
+        .add_system(handle_removed_cells::<C>.in_set(Set::Cells));
         if let Some(time_step) = self.tick_time_step {
             let duration = Duration::from_secs_f64(time_step);
             app.configure_set(Set::Cells.run_if(on_timer(duration)));
