@@ -4,7 +4,7 @@ use crate::components::MooreCell2d;
 #[cfg(feature = "3D")]
 use crate::components::NeumannCell3d;
 use bevy::prelude::{Entity, Resource};
-use bevy::utils::HashMap;
+use bevy::utils::{HashMap, HashSet};
 
 #[cfg(feature = "2D")]
 /// A `CellMap` implementation for `Cell2d`
@@ -63,14 +63,13 @@ impl<C: Cell> CellMap<C> {
         self.cells.remove(coordinates)
     }
 
-    /// Removes a cell entity from the map, returning the coordinates if it was present.
-    pub fn remove_entity(&mut self, entity: Entity) -> Option<C::Coordinates> {
-        let key = self
-            .cells
-            .iter()
-            .find_map(|(k, v)| (*v == entity).then_some(k.clone()))?;
-        self.cells.remove(&key);
-        Some(key)
+    /// Removes a cell entities from the map
+    pub fn remove_entities(&mut self, entities: impl Iterator<Item = Entity>) {
+        let entities: HashSet<_> = entities.collect();
+        if entities.is_empty() {
+            return;
+        }
+        self.cells.retain(|_, entity| !entities.contains(entity));
     }
 
     /// Retrieves a cell entity using its `coordinates`

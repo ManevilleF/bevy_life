@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Added automatic `CellMap` update on `Cell` component removal
+
 ## 0.7.0
 
 * `bevy` 0.10

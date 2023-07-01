@@ -93,7 +93,8 @@ pub fn handle_removed_cells<C>(mut removed_cells: RemovedComponents<C>, mut map:
 where
     C: Cell,
 {
-    for entity in removed_cells.iter() {
-        map.remove_entity(entity);
+    if removed_cells.is_empty() {
+        return;
     }
+    map.remove_entities(removed_cells.iter());
 }
