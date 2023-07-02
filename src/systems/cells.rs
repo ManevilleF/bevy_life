@@ -3,19 +3,15 @@ use crate::resources::CellMap;
 use crate::{SimulationBatch, SimulationPause};
 use bevy::log;
 use bevy::prelude::*;
+use bevy::utils::HashMap;
 
-fn handle_cell<C, S>(
-    (cell, state): (&C, &S),
-    map: &CellMap<C>,
-    query: &Query<(Entity, &C, &S)>,
-) -> Option<S>
+fn handle_cell<C, S>((cell, state): (&C, &S), map: &HashMap<C::Coordinates, S>) -> Option<S>
 where
     C: Cell,
     S: CellState,
 {
     let neighbor_coords = cell.neighbor_coordinates();
-    let neighbor_cells = map.get_cell_entities(&neighbor_coords);
-    let neighbor_states = query.iter_many(neighbor_cells).map(|(_e, _c, s)| s);
+    let neighbor_states = neighbor_coords.iter().filter_map(|c| map.get(c));
     let new_state = state.new_cell_state(neighbor_states);
     if &new_state == state {
         None
@@ -29,7 +25,6 @@ pub fn handle_cells<C, S>(
     mut commands: Commands,
     par_commands: ParallelCommands,
     query: Query<(Entity, &C, &S)>,
-    map: Res<CellMap<C>>,
     pause: Option<Res<SimulationPause>>,
     batch: Option<Res<SimulationBatch>>,
 ) where
@@ -39,9 +34,13 @@ pub fn handle_cells<C, S>(
     if pause.is_some() {
         return;
     }
+    let map: HashMap<_, _> = query
+        .iter()
+        .map(|(_entity, cell, state)| (cell.coords().clone(), state.clone()))
+        .collect();
     if batch.is_some() {
         query.par_iter().for_each(|(entity, cell, state)| {
-            if let Some(new_state) = handle_cell((cell, state), &map, &query) {
+            if let Some(new_state) = handle_cell((cell, state), &map) {
                 par_commands.command_scope(|mut cmd| {
                     cmd.entity(entity).insert(new_state);
                 });
@@ -49,7 +48,7 @@ pub fn handle_cells<C, S>(
         });
     } else {
         for (entity, cell, state) in query.iter() {
-            if let Some(new_state) = handle_cell((cell, state), &map, &query) {
+            if let Some(new_state) = handle_cell((cell, state), &map) {
                 commands.entity(entity).insert(new_state);
             }
         }

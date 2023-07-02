@@ -159,6 +159,8 @@ pub type CyclicColors3dPlugin =
 pub struct CellularAutomatonPlugin<C, S> {
     /// Custom time step (in seconds) constraint value for the systems. If not set, the systems will run every frame.
     pub tick_time_step: Option<f64>,
+    /// Should a [`CellMap`] be resource be added and filled ?
+    pub use_cell_map: bool,
     /// Phantom data for the `C` (`Cell`) type
     pub phantom_c: PhantomData<C>,
     /// Phantom data for the `S` (`CellState`) type
@@ -168,17 +170,19 @@ pub struct CellularAutomatonPlugin<C, S> {
 impl<C: Cell, S: CellState> Plugin for CellularAutomatonPlugin<C, S> {
     fn build(&self, app: &mut App) {
         // app.register_type::<C>().register_type::<S>().register_type::<CellMap::<C>>();
-        app.add_systems((
-            handle_new_cells::<C>,
-            handle_removed_cells::<C>.in_base_set(CoreSet::PostUpdate),
-        ));
+        if self.use_cell_map {
+            app.insert_resource(CellMap::<C>::default());
+            app.add_systems((
+                handle_new_cells::<C>,
+                handle_removed_cells::<C>.in_base_set(CoreSet::PostUpdate),
+            ));
+        }
         if let Some(time_step) = self.tick_time_step {
             let duration = Duration::from_secs_f64(time_step);
             app.add_system(handle_cells::<C, S>.run_if(on_timer(duration)));
         } else {
             app.add_system(handle_cells::<C, S>);
         }
-        app.insert_resource(CellMap::<C>::default());
 
         #[cfg(feature = "auto-coloring")]
         {
@@ -196,23 +200,37 @@ impl<C: Cell, S: CellState> Plugin for CellularAutomatonPlugin<C, S> {
 }
 
 impl<C, S> CellularAutomatonPlugin<C, S> {
-    /// Instantiates Self with custom `tick_time_step` value for systems execution
+    /// Instantiates Self with default values
     #[must_use]
     #[inline]
-    pub fn with_time_step(tick_time_step: f64) -> Self {
+    pub const fn new() -> Self {
         Self {
-            tick_time_step: Some(tick_time_step),
-            ..Default::default()
+            tick_time_step: None,
+            use_cell_map: false,
+            phantom_c: PhantomData,
+            phantom_s: PhantomData,
         }
+    }
+
+    /// Sets a custom `tick_time_step` value for systems execution
+    #[must_use]
+    #[inline]
+    pub const fn with_time_step(mut self, tick_time_step: f64) -> Self {
+        self.tick_time_step = Some(tick_time_step);
+        self
+    }
+
+    /// The plugin will set a [`CellMap`] resource and dynamically update it
+    #[must_use]
+    #[inline]
+    pub const fn with_cell_map(mut self) -> Self {
+        self.use_cell_map = true;
+        self
     }
 }
 
 impl<C, S> Default for CellularAutomatonPlugin<C, S> {
     fn default() -> Self {
-        Self {
-            tick_time_step: None,
-            phantom_c: Default::default(),
-            phantom_s: Default::default(),
-        }
+        Self::new()
     }
 }

@@ -12,7 +12,7 @@ fn main() {
             }),
             ..default()
         }))
-        .add_plugin(CyclicColors2dPlugin::with_time_step(0.05))
+        .add_plugin(CyclicColors2dPlugin::new().with_time_step(0.05))
         .insert_resource(SimulationBatch)
         .add_startup_system(setup_camera)
         .add_startup_system(setup_map)
