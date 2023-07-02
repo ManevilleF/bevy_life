@@ -15,19 +15,9 @@ where
 {
     let neighbor_coords = cell.neighbor_coordinates();
     let neighbor_cells = map.get_cell_entities(&neighbor_coords);
-    let neighbor_states: Vec<S> = neighbor_cells
-        .filter_map(|e| match query.get(*e) {
-            Ok((_e, _c, s)) => Some(s.clone()),
-            Err(err) => {
-                log::error!(
-                    "Could not retrieve neighbor entity {:?} for cell at {:?}: {}",
-                    e,
-                    cell.coords(),
-                    err
-                );
-                None
-            }
-        })
+    let neighbor_states: Vec<S> = query
+        .iter_many(neighbor_cells)
+        .map(|(_e, _c, s)| s.clone())
         .collect();
     let new_state = state.new_cell_state(&neighbor_states);
     if &new_state == state {
@@ -96,5 +86,6 @@ where
     if removed_cells.is_empty() {
         return;
     }
+    log::trace!("Removing {} cells from cell map", removed_cells.len());
     map.remove_entities(removed_cells.iter());
 }

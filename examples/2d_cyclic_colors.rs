@@ -1,7 +1,5 @@
 use bevy::prelude::*;
-use bevy_life::{
-    CyclicColorCellState, CyclicColors2dPlugin, MooreCell2d, SimulationBatch,
-};
+use bevy_life::{CyclicColorCellState, CyclicColors2dPlugin, MooreCell2d, SimulationBatch};
 use rand::Rng;
 
 fn main() {

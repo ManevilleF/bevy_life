@@ -165,23 +165,18 @@ pub struct CellularAutomatonPlugin<C, S> {
     pub phantom_s: PhantomData<S>,
 }
 
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash, SystemSet)]
-enum Set {
-    Cells,
-}
-
 impl<C: Cell, S: CellState> Plugin for CellularAutomatonPlugin<C, S> {
     fn build(&self, app: &mut App) {
         // app.register_type::<C>().register_type::<S>().register_type::<CellMap::<C>>();
-        app.add_systems(
-            (handle_new_cells::<C>, handle_cells::<C, S>)
-                .chain()
-                .in_set(Set::Cells),
-        )
-        .add_system(handle_removed_cells::<C>.in_set(Set::Cells));
+        app.add_systems((
+            handle_new_cells::<C>,
+            handle_removed_cells::<C>.in_base_set(CoreSet::PostUpdate),
+        ));
         if let Some(time_step) = self.tick_time_step {
             let duration = Duration::from_secs_f64(time_step);
-            app.configure_set(Set::Cells.run_if(on_timer(duration)));
+            app.add_system(handle_cells::<C, S>.run_if(on_timer(duration)));
+        } else {
+            app.add_system(handle_cells::<C, S>);
         }
         app.insert_resource(CellMap::<C>::default());
 
@@ -189,7 +184,7 @@ impl<C: Cell, S: CellState> Plugin for CellularAutomatonPlugin<C, S> {
         {
             #[cfg(feature = "2D")]
             {
-                app.add_system(systems::coloring::color_sprites::<S>.before(Set::Cells));
+                app.add_system(systems::coloring::color_sprites::<S>);
             }
             #[cfg(feature = "3D")]
             {
