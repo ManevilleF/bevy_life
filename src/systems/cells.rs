@@ -15,9 +15,7 @@ where
 {
     let neighbor_coords = cell.neighbor_coordinates();
     let neighbor_cells = map.get_cell_entities(&neighbor_coords);
-    let neighbor_states = query
-        .iter_many(neighbor_cells)
-        .map(|(_e, _c, s)| s);
+    let neighbor_states = query.iter_many(neighbor_cells).map(|(_e, _c, s)| s);
     let new_state = state.new_cell_state(neighbor_states);
     if &new_state == state {
         None

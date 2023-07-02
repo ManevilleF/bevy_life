@@ -22,9 +22,7 @@ impl RockPaperScissor {
 impl CellState for RockPaperScissor {
     fn new_cell_state<'a>(&self, neighbor_cells: impl Iterator<Item = &'a Self>) -> Self {
         let beaten_by = self.beaten_by();
-        let count = neighbor_cells
-            .filter(|state| *state == &beaten_by)
-            .count();
+        let count = neighbor_cells.filter(|state| *state == &beaten_by).count();
         if count > 2 {
             beaten_by
         } else {
