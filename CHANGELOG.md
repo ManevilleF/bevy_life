@@ -3,6 +3,7 @@
 ## Unreleased
 
 * Added automatic `CellMap` update on `Cell` component removal
+* Native `CellState` code cleanup
 
 ## 0.7.0
 

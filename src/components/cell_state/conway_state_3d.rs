@@ -18,11 +18,8 @@ pub struct ConwayCell4555State(pub bool);
 impl CellState for ConwayCell4555State {
     fn new_cell_state(&self, neighbor_cells: &[Self]) -> Self {
         let alive_cells_count = neighbor_cells.iter().filter(|&c| c.0).count();
-        if self.0 {
-            Self((4..=5).contains(&alive_cells_count))
-        } else {
-            Self(alive_cells_count == 5)
-        }
+        let alive = matches!((self.0, alive_cells_count), (true, 4 | 5) | (false, 5));
+        Self(alive)
     }
 
     #[cfg(feature = "auto-coloring")]

@@ -21,49 +21,31 @@ const CYCLIC_COLORS: [Color; 9] = [
 /// > (Note that `0` is the successor of `n − 1`.
 ///
 /// For this type we use `9` for `n` and arbitrary colors.
-#[derive(Debug, Clone, PartialEq, Component, Reflect)]
-pub struct CyclicColorCellState(pub Color);
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Component, Reflect, Default)]
+pub struct CyclicColorCellState(pub usize);
 
 impl CellState for CyclicColorCellState {
     fn new_cell_state(&self, neighbor_cells: &[Self]) -> Self {
-        let pos = self.pos();
-        let target_color = if pos >= 8 {
-            CYCLIC_COLORS[0]
-        } else {
-            CYCLIC_COLORS[pos + 1]
-        };
+        let new_index = (self.0 + 1) % CYCLIC_COLORS.len();
         for neighbor_cell in neighbor_cells.iter() {
-            if neighbor_cell.0 == target_color {
-                return neighbor_cell.clone();
+            if neighbor_cell.0 == new_index {
+                return *neighbor_cell;
             }
         }
-        self.clone()
+        *self
     }
 
     #[cfg(feature = "auto-coloring")]
     fn color(&self) -> Option<Color> {
-        Some(self.0)
+        Some(CYCLIC_COLORS[self.0])
     }
 }
 
 impl CyclicColorCellState {
-    /// The index of `self` in the used `CYCLIC_COLORS` const color array
-    #[must_use]
-    #[inline]
-    pub fn pos(&self) -> usize {
-        CYCLIC_COLORS.iter().position(|&c| c == self.0).unwrap_or(0)
-    }
-
     /// Return the available colors
     #[must_use]
     #[inline]
-    pub const fn available_colors() -> &'static [Color; 9] {
-        &CYCLIC_COLORS
-    }
-}
-
-impl Default for CyclicColorCellState {
-    fn default() -> Self {
-        Self(CYCLIC_COLORS[0])
+    pub const fn max_index() -> usize {
+        CYCLIC_COLORS.len()
     }
 }
