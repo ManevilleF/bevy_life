@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 use bevy_life::{
-    CellState, CyclicColorCellState, CyclicColors2dPlugin, MooreCell2d, SimulationBatch,
+    CyclicColorCellState, CyclicColors2dPlugin, MooreCell2d, SimulationBatch,
 };
 use rand::Rng;
 

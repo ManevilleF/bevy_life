@@ -12,7 +12,7 @@ use std::ops::{Deref, DerefMut};
 /// - Any dead cell with exactly five live neighbours becomes a live cell, as if by reproduction.
 ///
 /// A dead cell is `false`, a live cell is `true`
-#[derive(Debug, Clone, Default, Eq, PartialEq, Component, Reflect)]
+#[derive(Debug, Copy, Clone, Default, Eq, PartialEq, Component, Reflect)]
 pub struct ConwayCell4555State(pub bool);
 
 impl CellState for ConwayCell4555State {
