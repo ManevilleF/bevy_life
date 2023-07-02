@@ -26,11 +26,10 @@ impl Default for WireWorldCellState {
 }
 
 impl CellState for WireWorldCellState {
-    fn new_cell_state(&self, neighbor_cells: &[Self]) -> Self {
+    fn new_cell_state<'a>(&self, neighbor_cells: impl Iterator<Item = &'a Self>) -> Self {
         match self {
             Self::Conductor => {
                 let electron_head_count = neighbor_cells
-                    .iter()
                     .filter(|&c| *c == Self::ElectronHead)
                     .count();
                 match electron_head_count {

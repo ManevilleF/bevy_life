@@ -16,8 +16,8 @@ use std::ops::{Deref, DerefMut};
 pub struct ConwayCell4555State(pub bool);
 
 impl CellState for ConwayCell4555State {
-    fn new_cell_state(&self, neighbor_cells: &[Self]) -> Self {
-        let alive_cells_count = neighbor_cells.iter().filter(|&c| c.0).count();
+    fn new_cell_state<'a>(&self, neighbor_cells: impl Iterator<Item = &'a Self>) -> Self {
+        let alive_cells_count = neighbor_cells.filter(|&c| c.0).count();
         let alive = matches!((self.0, alive_cells_count), (true, 4 | 5) | (false, 5));
         Self(alive)
     }

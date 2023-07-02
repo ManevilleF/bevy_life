@@ -21,9 +21,8 @@ pub enum RainbowCellState {
 }
 
 impl CellState for RainbowCellState {
-    fn new_cell_state(&self, neighbor_cells: &[Self]) -> Self {
+    fn new_cell_state<'a>(&self, neighbor_cells: impl Iterator<Item = &'a Self>) -> Self {
         let alive_cells: Vec<f32> = neighbor_cells
-            .iter()
             .filter_map(|c| match c {
                 Self::Dead => None,
                 Self::Alive(s) => Some(*s),

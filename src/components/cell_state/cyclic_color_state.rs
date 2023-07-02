@@ -25,9 +25,9 @@ const CYCLIC_COLORS: [Color; 9] = [
 pub struct CyclicColorCellState(pub usize);
 
 impl CellState for CyclicColorCellState {
-    fn new_cell_state(&self, neighbor_cells: &[Self]) -> Self {
+    fn new_cell_state<'a>(&self, neighbor_cells: impl Iterator<Item = &'a Self>) -> Self {
         let new_index = (self.0 + 1) % CYCLIC_COLORS.len();
-        for neighbor_cell in neighbor_cells.iter() {
+        for neighbor_cell in neighbor_cells {
             if neighbor_cell.0 == new_index {
                 return *neighbor_cell;
             }
