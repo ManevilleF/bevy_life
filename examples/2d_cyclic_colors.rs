@@ -12,7 +12,7 @@ fn main() {
             }),
             ..default()
         }))
-        .add_plugin(CyclicColors2dPlugin::with_time_step(0.05))
+        .add_plugin(CyclicColors2dPlugin::new().with_time_step(0.05))
         .insert_resource(SimulationBatch)
         .add_startup_system(setup_camera)
         .add_startup_system(setup_map)
@@ -33,8 +33,7 @@ fn spawn_map(commands: &mut Commands) {
     let (size_x, size_y) = (300, 200);
     let sprite_size = 4.;
 
-    let available_states = CyclicColorCellState::available_colors();
-    let state_size = available_states.len();
+    let max_index = CyclicColorCellState::max_index();
     commands
         .spawn(SpatialBundle::from_transform(Transform::from_xyz(
             -(size_x as f32 * sprite_size) / 2.,
@@ -44,13 +43,13 @@ fn spawn_map(commands: &mut Commands) {
         .with_children(|builder| {
             for y in 0..=size_y {
                 for x in 0..=size_x {
-                    let color = available_states[rng.gen_range(0..state_size)];
-                    let state = CyclicColorCellState(color);
+                    let color_index = rng.gen_range(0..max_index);
+                    let state = CyclicColorCellState(color_index);
                     builder.spawn((
                         SpriteBundle {
                             sprite: Sprite {
                                 custom_size: Some(Vec2::splat(sprite_size)),
-                                color,
+                                // color: state.color().unwrap(),
                                 ..Default::default()
                             },
                             transform: Transform::from_xyz(

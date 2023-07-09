@@ -2,7 +2,6 @@ use crate::components::CellState;
 use bevy::prelude::{Component, Reflect};
 #[cfg(feature = "auto-coloring")]
 use bevy::render::color::Color;
-use std::collections::HashMap;
 use std::fmt::Debug;
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Component, Reflect)]
@@ -22,34 +21,28 @@ pub enum ImmigrationCellState {
 }
 
 impl CellState for ImmigrationCellState {
-    fn new_cell_state(&self, neighbor_cells: &[Self]) -> Self {
+    fn new_cell_state<'a>(&self, neighbor_cells: impl Iterator<Item = &'a Self>) -> Self {
         let alive_cells: Vec<bool> = neighbor_cells
-            .iter()
             .filter_map(|c| match c {
                 Self::Dead => None,
                 Self::Alive(s) => Some(*s),
             })
             .collect();
         let alive_cells_count = alive_cells.len();
-        if self.is_alive() {
-            if (2..=3).contains(&alive_cells_count) {
-                *self
-            } else {
-                Self::Dead
+        match (self, alive_cells_count) {
+            (Self::Alive(_), 2 | 3) => *self,
+            (Self::Dead, 3) => {
+                let [mut a, mut b]: [u16; 2] = [0, 0];
+                for alive_cell in alive_cells {
+                    if alive_cell {
+                        a += 1;
+                    } else {
+                        b += 1;
+                    }
+                }
+                Self::Alive(a > b)
             }
-        } else if alive_cells_count == 3 {
-            let mut map = HashMap::new();
-            for alive_cell in alive_cells {
-                *map.entry(alive_cell).or_insert(0) += 1;
-            }
-            Self::Alive(
-                map.into_iter()
-                    .max_by_key(|(_k, v)| *v)
-                    .map(|(k, _v)| k)
-                    .unwrap(),
-            )
-        } else {
-            Self::Dead
+            _ => Self::Dead,
         }
     }
 

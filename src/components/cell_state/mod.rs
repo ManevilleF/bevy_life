@@ -20,12 +20,7 @@ pub trait CellState: Component + Sized + Clone + PartialEq {
     ///
     /// This method defines the cellular automaton rules
     #[must_use]
-    fn new_cell_state(&self, neighbor_cells: &[Self]) -> Self;
-
-    /// Mutably applies the new state defined in `new_cell_state` to `self`
-    fn apply_new_cell_state(&mut self, neighbor_cells: &[Self]) {
-        *self = self.new_cell_state(neighbor_cells);
-    }
+    fn new_cell_state<'a>(&self, neighbor_cells: impl Iterator<Item = &'a Self>) -> Self;
 
     #[cfg(feature = "auto-coloring")]
     /// Color of the state, to use with `auto-coloring` feature

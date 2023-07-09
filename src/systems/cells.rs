@@ -3,33 +3,16 @@ use crate::resources::CellMap;
 use crate::{SimulationBatch, SimulationPause};
 use bevy::log;
 use bevy::prelude::*;
+use bevy::utils::HashMap;
 
-fn handle_cell<C, S>(
-    (cell, state): (&C, &S),
-    map: &CellMap<C>,
-    query: &Query<(Entity, &C, &S)>,
-) -> Option<S>
+fn handle_cell<C, S>((cell, state): (&C, &S), map: &HashMap<C::Coordinates, S>) -> Option<S>
 where
     C: Cell,
     S: CellState,
 {
     let neighbor_coords = cell.neighbor_coordinates();
-    let neighbor_cells = map.get_cell_entities(&neighbor_coords);
-    let neighbor_states: Vec<S> = neighbor_cells
-        .filter_map(|e| match query.get(*e) {
-            Ok((_e, _c, s)) => Some(s.clone()),
-            Err(err) => {
-                log::error!(
-                    "Could not retrieve neighbor entity {:?} for cell at {:?}: {}",
-                    e,
-                    cell.coords(),
-                    err
-                );
-                None
-            }
-        })
-        .collect();
-    let new_state = state.new_cell_state(&neighbor_states);
+    let neighbor_states = neighbor_coords.iter().filter_map(|c| map.get(c));
+    let new_state = state.new_cell_state(neighbor_states);
     if &new_state == state {
         None
     } else {
@@ -42,7 +25,6 @@ pub fn handle_cells<C, S>(
     mut commands: Commands,
     par_commands: ParallelCommands,
     query: Query<(Entity, &C, &S)>,
-    map: Res<CellMap<C>>,
     pause: Option<Res<SimulationPause>>,
     batch: Option<Res<SimulationBatch>>,
 ) where
@@ -52,9 +34,13 @@ pub fn handle_cells<C, S>(
     if pause.is_some() {
         return;
     }
+    let map: HashMap<_, _> = query
+        .iter()
+        .map(|(_entity, cell, state)| (cell.coords().clone(), state.clone()))
+        .collect();
     if batch.is_some() {
         query.par_iter().for_each(|(entity, cell, state)| {
-            if let Some(new_state) = handle_cell((cell, state), &map, &query) {
+            if let Some(new_state) = handle_cell((cell, state), &map) {
                 par_commands.command_scope(|mut cmd| {
                     cmd.entity(entity).insert(new_state);
                 });
@@ -62,7 +48,7 @@ pub fn handle_cells<C, S>(
         });
     } else {
         for (entity, cell, state) in query.iter() {
-            if let Some(new_state) = handle_cell((cell, state), &map, &query) {
+            if let Some(new_state) = handle_cell((cell, state), &map) {
                 commands.entity(entity).insert(new_state);
             }
         }
@@ -87,4 +73,15 @@ where
             }
         }
     }
+}
+
+pub fn handle_removed_cells<C>(mut removed_cells: RemovedComponents<C>, mut map: ResMut<CellMap<C>>)
+where
+    C: Cell,
+{
+    if removed_cells.is_empty() {
+        return;
+    }
+    log::trace!("Removing {} cells from cell map", removed_cells.len());
+    map.remove_entities(removed_cells.iter());
 }

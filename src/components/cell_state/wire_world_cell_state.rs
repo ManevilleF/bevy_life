@@ -9,7 +9,7 @@ use bevy::render::color::Color;
 /// - Electron heads (`ElectronHead`) become electron tails in the succeeding generation.
 /// - Electron tails (`ElectronTail`) become conductors.
 /// - Conductors (`Conductor`) become electron heads if exactly one or two neighboring cells are electron heads. Otherwise, they remain as conductors.
-#[derive(Clone, Debug, Eq, PartialEq, Component, Reflect)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Component, Reflect)]
 pub enum WireWorldCellState {
     /// Conductor cell state
     Conductor,
@@ -26,17 +26,14 @@ impl Default for WireWorldCellState {
 }
 
 impl CellState for WireWorldCellState {
-    fn new_cell_state(&self, neighbor_cells: &[Self]) -> Self {
+    fn new_cell_state<'a>(&self, neighbor_cells: impl Iterator<Item = &'a Self>) -> Self {
         match self {
             Self::Conductor => {
-                let electron_head_count = neighbor_cells
-                    .iter()
-                    .filter(|&c| matches!(c, Self::ElectronHead))
-                    .count();
-                if (1..=2).contains(&electron_head_count) {
-                    Self::ElectronHead
-                } else {
-                    Self::Conductor
+                let electron_head_count =
+                    neighbor_cells.filter(|&c| *c == Self::ElectronHead).count();
+                match electron_head_count {
+                    1 | 2 => Self::ElectronHead,
+                    _ => Self::Conductor,
                 }
             }
             Self::ElectronHead => Self::ElectronTail,

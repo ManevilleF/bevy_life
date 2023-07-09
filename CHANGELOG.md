@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+* Added automatic `CellMap` update on `Cell` component removal
+* Native `CellState` code cleanup
+* (**BREAKING**) `CellMap` insertion and dynamic update is now optional and disabled
+by default
+* Performance improvements
+* (**BREAKING**) `CellState::new_cell_state` now takes an iterator instead of a slice
+
 ## 0.7.0
 
 * `bevy` 0.10

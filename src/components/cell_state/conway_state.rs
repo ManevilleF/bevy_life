@@ -12,17 +12,14 @@ use std::ops::{Deref, DerefMut};
 /// - Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 ///
 /// A dead cell is `false`, a live cell is `true`
-#[derive(Debug, Clone, Default, Eq, PartialEq, Component, Reflect)]
+#[derive(Debug, Copy, Clone, Default, Eq, PartialEq, Component, Reflect)]
 pub struct ConwayCellState(pub bool);
 
 impl CellState for ConwayCellState {
-    fn new_cell_state(&self, neighbor_cells: &[Self]) -> Self {
-        let alive_cells_count = neighbor_cells.iter().filter(|&c| c.0).count();
-        if self.0 {
-            Self((2..=3).contains(&alive_cells_count))
-        } else {
-            Self(alive_cells_count == 3)
-        }
+    fn new_cell_state<'a>(&self, neighbor_cells: impl Iterator<Item = &'a Self>) -> Self {
+        let alive_cells_count = neighbor_cells.filter(|&c| c.0).count();
+        let alive = matches!((self.0, alive_cells_count), (true, 2 | 3) | (false, 3));
+        Self(alive)
     }
 
     #[cfg(feature = "auto-coloring")]
@@ -75,7 +72,7 @@ mod tests {
             false.into(),
         ];
 
-        let new_state = cell_state.new_cell_state(&neighbors);
+        let new_state = cell_state.new_cell_state(neighbors.iter());
         assert!(!new_state.0);
         // 8 alive neighbors
         let neighbors = vec![
@@ -89,7 +86,7 @@ mod tests {
             true.into(),
         ];
 
-        let new_state = cell_state.new_cell_state(&neighbors);
+        let new_state = cell_state.new_cell_state(neighbors.iter());
         assert!(!new_state.0);
     }
 
@@ -109,7 +106,7 @@ mod tests {
             false.into(),
         ];
 
-        let new_state = cell_state.new_cell_state(&neighbors);
+        let new_state = cell_state.new_cell_state(neighbors.iter());
         assert!(new_state.0);
 
         // 2 alive neighbors
@@ -124,7 +121,7 @@ mod tests {
             false.into(),
         ];
 
-        let new_state = cell_state.new_cell_state(&neighbors);
+        let new_state = cell_state.new_cell_state(neighbors.iter());
         assert!(new_state.0);
 
         // 2 alive neighbors but "off"
@@ -140,7 +137,7 @@ mod tests {
             false.into(),
         ];
 
-        let new_state = cell_state.new_cell_state(&neighbors);
+        let new_state = cell_state.new_cell_state(neighbors.iter());
         assert!(!new_state.0);
     }
 
@@ -160,7 +157,7 @@ mod tests {
             false.into(),
         ];
 
-        let new_state = cell_state.new_cell_state(&neighbors);
+        let new_state = cell_state.new_cell_state(neighbors.iter());
         assert!(new_state.0);
     }
 
@@ -180,7 +177,7 @@ mod tests {
             false.into(),
         ];
 
-        let new_state = cell_state.new_cell_state(&neighbors);
+        let new_state = cell_state.new_cell_state(neighbors.iter());
         assert!(!new_state.0);
 
         // 0 alive neighbors
@@ -195,7 +192,7 @@ mod tests {
             false.into(),
         ];
 
-        let new_state = cell_state.new_cell_state(&neighbors);
+        let new_state = cell_state.new_cell_state(neighbors.iter());
         assert!(!new_state.0);
     }
 }
