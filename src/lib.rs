@@ -172,23 +172,21 @@ impl<C: Cell, S: CellState> Plugin for CellularAutomatonPlugin<C, S> {
         // app.register_type::<C>().register_type::<S>().register_type::<CellMap::<C>>();
         if self.use_cell_map {
             app.insert_resource(CellMap::<C>::default());
-            app.add_systems((
-                handle_new_cells::<C>,
-                handle_removed_cells::<C>.in_base_set(CoreSet::PostUpdate),
-            ));
+            app.add_systems(Update, handle_new_cells::<C>);
+            app.add_systems(PostUpdate, handle_removed_cells::<C>);
         }
         if let Some(time_step) = self.tick_time_step {
             let duration = Duration::from_secs_f64(time_step);
-            app.add_system(handle_cells::<C, S>.run_if(on_timer(duration)));
+            app.add_systems(FixedUpdate, handle_cells::<C, S>.run_if(on_timer(duration)));
         } else {
-            app.add_system(handle_cells::<C, S>);
+            app.add_systems(Update, handle_cells::<C, S>);
         }
 
         #[cfg(feature = "auto-coloring")]
         {
             #[cfg(feature = "2D")]
             {
-                app.add_system(systems::coloring::color_sprites::<S>);
+                app.add_systems(Update, systems::coloring::color_sprites::<S>);
             }
             #[cfg(feature = "3D")]
             {

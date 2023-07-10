@@ -37,15 +37,14 @@ fn main() {
             primary_window: Some(Window {
                 title: "Rock Paper Scissor".to_string(),
                 resolution: [1200.0, 800.0].into(),
-                ..Default::default()
+                ..default()
             }),
             ..default()
         }))
-        .add_plugin(CellularAutomatonPlugin::<MooreCell2d, RockPaperScissor>::default())
+        .add_plugins(CellularAutomatonPlugin::<MooreCell2d, RockPaperScissor>::default())
         .insert_resource(SimulationBatch)
-        .add_startup_system(setup_camera)
-        .add_startup_system(setup_map)
-        .add_system(color_sprites)
+        .add_systems(Startup, (setup_camera, setup_map))
+        .add_systems(Update, color_sprites)
         .run();
 }
 
@@ -83,14 +82,14 @@ fn spawn_map(commands: &mut Commands) {
                             sprite: Sprite {
                                 custom_size: Some(Vec2::splat(sprite_size)),
                                 color,
-                                ..Default::default()
+                                ..default()
                             },
                             transform: Transform::from_xyz(
                                 sprite_size * x as f32,
                                 sprite_size * y as f32,
                                 0.,
                             ),
-                            ..Default::default()
+                            ..default()
                         },
                         MooreCell2d::new(IVec2::new(x, y)),
                         state,
@@ -104,11 +103,11 @@ fn spawn_map(commands: &mut Commands) {
 pub fn color_sprites(
     mut query: Query<(&RockPaperScissor, &mut Sprite), Changed<RockPaperScissor>>,
 ) {
-    for (state, mut sprite) in query.iter_mut() {
-        match state {
+    query
+        .par_iter_mut()
+        .for_each_mut(|(state, mut sprite)| match state {
             RockPaperScissor::Rock => sprite.color = Color::BLUE,
             RockPaperScissor::Paper => sprite.color = Color::BEIGE,
             RockPaperScissor::Scissor => sprite.color = Color::RED,
-        }
-    }
+        });
 }

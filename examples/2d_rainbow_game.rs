@@ -8,14 +8,13 @@ fn main() {
             primary_window: Some(Window {
                 title: "Rainbow Game".to_string(),
                 resolution: [1200.0, 800.0].into(),
-                ..Default::default()
+                ..default()
             }),
             ..default()
         }))
-        .add_plugin(RainbowGame2dPlugin::default())
+        .add_plugins(RainbowGame2dPlugin::default())
         .insert_resource(SimulationBatch)
-        .add_startup_system(setup_camera)
-        .add_startup_system(setup_map)
+        .add_systems(Startup, (setup_camera, setup_map))
         .run();
 }
 
@@ -60,7 +59,7 @@ fn spawn_map(commands: &mut Commands) {
                                 sprite_size * y as f32,
                                 0.,
                             ),
-                            ..Default::default()
+                            ..default()
                         },
                         MooreCell2d::new(IVec2::new(x, y)),
                         state,

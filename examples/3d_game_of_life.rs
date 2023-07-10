@@ -12,15 +12,14 @@ fn main() {
             primary_window: Some(Window {
                 title: "3D Game Of Life".to_string(),
                 resolution: [1200.0, 800.0].into(),
-                ..Default::default()
+                ..default()
             }),
             ..default()
         }))
-        .add_plugin(GameOfLife3dPlugin::default())
+        .add_plugins(GameOfLife3dPlugin::default())
         .insert_resource(SimulationBatch)
-        .add_startup_system(setup_camera)
-        .add_startup_system(setup_map)
-        .add_system(color)
+        .add_systems(Startup, (setup_camera, setup_map))
+        .add_systems(Update, color)
         .run();
 }
 
@@ -62,7 +61,7 @@ fn spawn_map(commands: &mut Commands, mesh: Handle<Mesh>, material: Handle<Stand
                                 mesh: mesh.clone(),
                                 transform: Transform::from_xyz(x as f32, y as f32, z as f32),
                                 material: material.clone(),
-                                ..Default::default()
+                                ..default()
                             },
                             MooreCell3d::new(IVec3::new(x, y, z)),
                             state,
@@ -77,11 +76,11 @@ fn spawn_map(commands: &mut Commands, mesh: Handle<Mesh>, material: Handle<Stand
 pub fn color(
     mut query: Query<(&ConwayCell4555State, &mut Visibility), Changed<ConwayCell4555State>>,
 ) {
-    for (state, mut visible) in query.iter_mut() {
+    query.par_iter_mut().for_each_mut(|(state, mut visible)| {
         *visible = if state.0 {
             Visibility::Inherited
         } else {
             Visibility::Hidden
         }
-    }
+    });
 }

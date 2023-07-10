@@ -8,14 +8,13 @@ fn main() {
             primary_window: Some(Window {
                 title: "Cyclic Colors".to_string(),
                 resolution: [1200.0, 800.0].into(),
-                ..Default::default()
+                ..default()
             }),
             ..default()
         }))
-        .add_plugin(CyclicColors2dPlugin::new().with_time_step(0.05))
+        .add_plugins(CyclicColors2dPlugin::new().with_time_step(0.05))
         .insert_resource(SimulationBatch)
-        .add_startup_system(setup_camera)
-        .add_startup_system(setup_map)
+        .add_systems(Startup, (setup_camera, setup_map))
         .run();
 }
 
@@ -49,15 +48,14 @@ fn spawn_map(commands: &mut Commands) {
                         SpriteBundle {
                             sprite: Sprite {
                                 custom_size: Some(Vec2::splat(sprite_size)),
-                                // color: state.color().unwrap(),
-                                ..Default::default()
+                                ..default()
                             },
                             transform: Transform::from_xyz(
                                 sprite_size * x as f32,
                                 sprite_size * y as f32,
                                 0.,
                             ),
-                            ..Default::default()
+                            ..default()
                         },
                         MooreCell2d::new(IVec2::new(x, y)),
                         state,
