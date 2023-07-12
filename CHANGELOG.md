@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## [Unreleased]
+
+## 0.8.0
 
 * Added automatic `CellMap` update on `Cell` component removal
 * Native `CellState` code cleanup
@@ -8,6 +10,7 @@
 by default
 * Performance improvements
 * (**BREAKING**) `CellState::new_cell_state` now takes an iterator instead of a slice
+* Bump `bevy` to 0.11
 
 ## 0.7.0
 

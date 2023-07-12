@@ -16,7 +16,8 @@
 //! | 0.4.x         | 0.7.x     |
 //! | 0.5.x         | 0.8.x     |
 //! | 0.6.x         | 0.9.x     |
-//! | 0.7.x         | 0.10.x     |
+//! | 0.7.x         | 0.10.x    |
+//! | 0.8.x         | 0.11.x    |
 //!
 //! ## How to use
 //!
@@ -177,7 +178,7 @@ impl<C: Cell, S: CellState> Plugin for CellularAutomatonPlugin<C, S> {
         }
         if let Some(time_step) = self.tick_time_step {
             let duration = Duration::from_secs_f64(time_step);
-            app.add_systems(FixedUpdate, handle_cells::<C, S>.run_if(on_timer(duration)));
+            app.add_systems(Update, handle_cells::<C, S>.run_if(on_timer(duration)));
         } else {
             app.add_systems(Update, handle_cells::<C, S>);
         }

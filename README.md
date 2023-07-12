@@ -6,7 +6,7 @@
  [![unsafe forbidden](https://img.shields.io/badge/unsafe-forbidden-success.svg)](https://github.com/rust-secure-code/safety-dance/)
  [![Crates.io](https://img.shields.io/crates/v/bevy_life.svg)](https://crates.io/crates/bevy_life)
  [![Docs.rs](https://docs.rs/bevy_life/badge.svg)](https://docs.rs/bevy_life)
- [![dependency status](https://deps.rs/crate/bevy_life/0.7.0/status.svg)](https://deps.rs/crate/bevy_life)
+ [![dependency status](https://deps.rs/crate/bevy_life/0.8.0/status.svg)](https://deps.rs/crate/bevy_life)
 
 <!-- cargo-sync-readme start -->
 
@@ -28,7 +28,8 @@
  | 0.4.x         | 0.7.x     |
  | 0.5.x         | 0.8.x     |
  | 0.6.x         | 0.9.x     |
- | 0.7.x         | 0.10.x     |
+ | 0.7.x         | 0.10.x    |
+ | 0.8.x         | 0.11.x    |
 
  ## How to use
 
