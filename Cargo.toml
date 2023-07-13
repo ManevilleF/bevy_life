@@ -29,8 +29,21 @@ rand = "0.8"
 
 [dev-dependencies.bevy]
 version = "0.11"
+features = [
+  "bevy_asset",
+  "bevy_winit",
+  "bevy_core_pipeline",
+  "bevy_pbr",
+  "bevy_render",
+  "bevy_sprite",
+  "png",
+  "x11",
+  # The following features are required because of https://github.com/bevyengine/bevy/discussions/9100
+  "ktx2",
+  "zstd",
+  "tonemapping_luts",
+]
 default-features = false
-features = ["bevy_render", "bevy_winit", "bevy_core_pipeline", "x11", "bevy_asset", "bevy_sprite", "bevy_pbr"]
 
 # Enable optimizations for dependencies (incl. Bevy), but not for our code:
 [profile.dev.package."*"]
