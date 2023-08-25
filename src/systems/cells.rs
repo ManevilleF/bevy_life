@@ -1,9 +1,9 @@
-use crate::components::{Cell, CellState};
-use crate::resources::CellMap;
-use crate::{SimulationBatch, SimulationPause};
-use bevy::log;
-use bevy::prelude::*;
-use bevy::utils::HashMap;
+use crate::{
+    components::{Cell, CellState},
+    resources::CellMap,
+    SimulationBatch, SimulationPause,
+};
+use bevy::{log, prelude::*, utils::HashMap};
 
 fn handle_cell<C, S>((cell, state): (&C, &S), map: &HashMap<C::Coordinates, S>) -> Option<S>
 where

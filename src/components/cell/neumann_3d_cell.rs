@@ -23,7 +23,8 @@ const NEIGHBOR_COORDINATES: [IVec3; 6] = [
     IVec3::new(0, 0, 1),
 ];
 
-/// [Neumann] Classic cube 3D cell, it has 6 neighbors and uses `IVec3` coordinates
+/// [Neumann] Classic cube 3D cell, it has 6 neighbors and uses `IVec3`
+/// coordinates
 ///
 /// [Neumann]: https://en.wikipedia.org/wiki/Von_Neumann_neighborhood
 #[derive(Debug, Clone, Component, Reflect)]
