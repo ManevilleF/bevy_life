@@ -5,14 +5,18 @@ use bevy::render::color::Color;
 use std::fmt::Debug;
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Component, Reflect)]
-/// Classic cellular automation state and rules following Conway's game of life variation: The immigration game.
+/// Classic cellular automation state and rules following Conway's game of life
+/// variation: The immigration game.
 ///
-/// - Any live cell with fewer than two live neighbours dies, as if by underpopulation.
-/// - Any live cell with two or three live neighbours lives on to the next generation.
-/// - Any live cell with more than three live neighbours dies, as if by overpopulation.
+/// - Any live cell with fewer than two live neighbours dies, as if by
+///   underpopulation.
+/// - Any live cell with two or three live neighbours lives on to the next
+///   generation.
+/// - Any live cell with more than three live neighbours dies, as if by
+///   overpopulation.
 /// - Any dead cell with exactly three live neighbours becomes a live cell,
-/// as if by reproduction and takes the state of the majority of the live neighbors.
-///
+/// as if by reproduction and takes the state of the majority of the live
+/// neighbors.
 pub enum ImmigrationCellState {
     /// A dead cell
     Dead,

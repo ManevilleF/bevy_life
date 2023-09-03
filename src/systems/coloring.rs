@@ -2,7 +2,7 @@ use crate::{CellState, SimulationBatch};
 use bevy::prelude::*;
 
 #[inline]
-fn apply_color<S>(state: &S, visible: &mut Visibility, mut sprite: &mut Sprite)
+fn apply_color<S>(state: &S, visible: &mut Visibility, sprite: &mut Sprite)
 where
     S: CellState,
 {
@@ -31,7 +31,7 @@ pub fn color_sprites<S>(
                 apply_color(state, &mut visible, &mut sprite);
             });
     } else {
-        for (state, mut visible, mut sprite) in query.iter_mut() {
+        for (state, mut visible, mut sprite) in &mut query {
             apply_color(state, &mut visible, &mut sprite);
         }
     }

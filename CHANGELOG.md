@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+* Added rustfmt config (#19)
+
 ## 0.8.0
 
 * Added automatic `CellMap` update on `Cell` component removal
@@ -17,7 +19,8 @@ by default
 * `bevy` 0.10
 * (**BREAKING**) `SimulationBatch` is now a unit struct
 * (**BREAKING**) Renamed `CellularAutomatonPlugin::new` to `with_time_step`
-* Temporarily disabled batching for the `auto-coloring` systems, until this [bug](https://github.com/bevyengine/bevy/pull/8029) is adressed
+* Temporarily disabled batching for the `auto-coloring` systems, until this
+[bug](https://github.com/bevyengine/bevy/pull/8029) is adressed
 
 ## 0.6.0
 
@@ -67,7 +70,8 @@ by default
 ## 0.2.1
 
 * `CellMap`:
-  * Using a `bevy::utils::Hashmap` instead of the standard library one, which is slightly faster
+  * Using a `bevy::utils::Hashmap` instead of the standard library one, which
+  is slightly faster
 * Cells system:
   * Removed reference counting `Arc` from the `RwLock` for the batched query iterations
 * Using batched queries for the coloring systems (`auto-coloring` feature)
@@ -81,7 +85,8 @@ by default
 ### Changed (**BREAKING CHANGES**)
 
 * `3D` feature gate is no longer enabled by default
-* Complete rework of the `auto-coloring` features, these changes are not detailed as this feature is provided for example purposes.
+* Complete rework of the `auto-coloring` features, these changes are not detailed
+as this feature is provided for example purposes.
 
 Renamed:
 
@@ -100,7 +105,8 @@ Renamed:
   * `ImmigrationCellState` for the immigration game (bi color)
   * `RainbowCellState` for the rainbow game (gray scale)
 
-The `CellularAutomatonPlugin` now takes an additional `BATCH_SIZE: usize` const parameter defining the new query batch size for better parallel execution.
+The `CellularAutomatonPlugin` now takes an additional `BATCH_SIZE: usize` const
+parameter defining the new query batch size for better parallel execution.
 The system handling cells and states now uses parallel querying with this new parameter
 
 New examples are added.

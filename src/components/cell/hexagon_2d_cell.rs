@@ -11,7 +11,8 @@ const NEIGHBOR_COORDINATES: [IVec3; 6] = [
     IVec3::new(-1, 1, 0),
 ];
 
-/// Hexagonal 2D cell. It has 6 neighbors and uses `IVec3` coordinates (Cubic coordinates).
+/// Hexagonal 2D cell. It has 6 neighbors and uses `IVec3` coordinates (Cubic
+/// coordinates).
 ///
 /// ````ascii
 ///               X

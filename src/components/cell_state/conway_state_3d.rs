@@ -4,12 +4,17 @@ use bevy::prelude::{Component, Reflect};
 use bevy::render::color::Color;
 use std::ops::{Deref, DerefMut};
 
-/// Classic cellular automation state and rules following Conway's game of life **4555** rules:
+/// Classic cellular automation state and rules following Conway's game of life
+/// **4555** rules:
 ///
-/// - Any live cell with fewer than four live neighbours dies, as if by underpopulation.
-/// - Any live cell with two or five live neighbours lives on to the next generation.
-/// - Any live cell with more than five live neighbours dies, as if by overpopulation.
-/// - Any dead cell with exactly five live neighbours becomes a live cell, as if by reproduction.
+/// - Any live cell with fewer than four live neighbours dies, as if by
+///   underpopulation.
+/// - Any live cell with two or five live neighbours lives on to the next
+///   generation.
+/// - Any live cell with more than five live neighbours dies, as if by
+///   overpopulation.
+/// - Any dead cell with exactly five live neighbours becomes a live cell, as if
+///   by reproduction.
 ///
 /// A dead cell is `false`, a live cell is `true`
 #[derive(Debug, Copy, Clone, Default, Eq, PartialEq, Component, Reflect)]
