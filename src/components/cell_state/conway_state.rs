@@ -66,7 +66,7 @@ mod tests {
         let cell_state = ConwayCellState(true);
 
         // 4 alive neighbors
-        let neighbors = vec![
+        let neighbors = [
             false.into(),
             true.into(),
             false.into(),
@@ -80,7 +80,7 @@ mod tests {
         let new_state = cell_state.new_cell_state(neighbors.iter());
         assert!(!new_state.0);
         // 8 alive neighbors
-        let neighbors = vec![
+        let neighbors = [
             true.into(),
             true.into(),
             true.into(),
@@ -100,7 +100,7 @@ mod tests {
         let cell_state = ConwayCellState(true);
 
         // 3 alive neighbors
-        let neighbors = vec![
+        let neighbors = [
             false.into(),
             true.into(),
             false.into(),
@@ -115,7 +115,7 @@ mod tests {
         assert!(new_state.0);
 
         // 2 alive neighbors
-        let neighbors = vec![
+        let neighbors = [
             false.into(),
             true.into(),
             false.into(),
@@ -131,7 +131,7 @@ mod tests {
 
         // 2 alive neighbors but "off"
         let cell_state = ConwayCellState(false);
-        let neighbors = vec![
+        let neighbors = [
             false.into(),
             true.into(),
             false.into(),
@@ -151,7 +151,7 @@ mod tests {
         let cell_state = ConwayCellState(false);
 
         // 3 alive neighbors
-        let neighbors = vec![
+        let neighbors = [
             false.into(),
             true.into(),
             false.into(),
@@ -171,7 +171,7 @@ mod tests {
         let cell_state = ConwayCellState(true);
 
         // 1 alive neighbors
-        let neighbors = vec![
+        let neighbors = [
             false.into(),
             false.into(),
             false.into(),
@@ -186,7 +186,7 @@ mod tests {
         assert!(!new_state.0);
 
         // 0 alive neighbors
-        let neighbors = vec![
+        let neighbors = [
             false.into(),
             false.into(),
             false.into(),
