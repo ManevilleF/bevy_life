@@ -20,15 +20,16 @@ default = ["2D"]
 auto-coloring = ["bevy/bevy_sprite"]
 
 [dependencies.bevy]
-version = "0.11"
+# version = "0.11"
 default-features = false
 features = ["bevy_render"]
+git = "https://github.com/bevyengine/bevy"
 
 [dev-dependencies]
 rand = "0.8"
 
 [dev-dependencies.bevy]
-version = "0.11"
+# version = "0.11"
 features = [
   "bevy_asset",
   "bevy_winit",
@@ -44,6 +45,7 @@ features = [
   "tonemapping_luts",
 ]
 default-features = false
+git = "https://github.com/bevyengine/bevy"
 
 # Enable optimizations for dependencies (incl. Bevy), but not for our code:
 [profile.dev.package."*"]

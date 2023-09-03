@@ -27,7 +27,7 @@ pub fn color_sprites<S>(
     if batch.is_some() {
         query
             .par_iter_mut()
-            .for_each_mut(|(state, mut visible, mut sprite)| {
+            .for_each(|(state, mut visible, mut sprite)| {
                 apply_color(state, &mut visible, &mut sprite);
             });
     } else {

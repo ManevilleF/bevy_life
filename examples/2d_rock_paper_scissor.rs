@@ -105,7 +105,7 @@ pub fn color_sprites(
 ) {
     query
         .par_iter_mut()
-        .for_each_mut(|(state, mut sprite)| match state {
+        .for_each(|(state, mut sprite)| match state {
             RockPaperScissor::Rock => sprite.color = Color::BLUE,
             RockPaperScissor::Paper => sprite.color = Color::BEIGE,
             RockPaperScissor::Scissor => sprite.color = Color::RED,
