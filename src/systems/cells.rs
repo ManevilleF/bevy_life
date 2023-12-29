@@ -83,5 +83,5 @@ where
         return;
     }
     log::trace!("Removing {} cells from cell map", removed_cells.len());
-    map.remove_entities(removed_cells.iter());
+    map.remove_entities(removed_cells.read());
 }
