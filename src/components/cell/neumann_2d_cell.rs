@@ -54,8 +54,8 @@ impl Cell for NeumannCell2d {
     }
 
     #[inline]
-    fn neighbor_coordinates(&self) -> Vec<Self::Coordinates> {
-        NEIGHBOR_COORDINATES.map(|c| c + *self.coords()).to_vec()
+    fn neighbor_coordinates(&self) -> impl IntoIterator<Item = Self::Coordinates> {
+        NEIGHBOR_COORDINATES.map(|c| c + *self.coords())
     }
 }
 
@@ -77,7 +77,7 @@ mod tests {
         let cell = NeumannCell2d {
             coords: IVec2::new(10, 10),
         };
-        let neighbors = cell.neighbor_coordinates();
+        let neighbors = cell.neighbor_coordinates().into_iter().collect::<Vec<_>>();
         assert_eq!(
             neighbors,
             vec![
@@ -98,7 +98,7 @@ mod tests {
         let cell = NeumannCell2d {
             coords: IVec2::new(-10, 10),
         };
-        let neighbors = cell.neighbor_coordinates();
+        let neighbors = cell.neighbor_coordinates().into_iter().collect::<Vec<_>>();
         assert_eq!(
             neighbors,
             vec![
@@ -119,7 +119,7 @@ mod tests {
         let cell = NeumannCell2d {
             coords: IVec2::new(0, 0),
         };
-        let neighbors = cell.neighbor_coordinates();
+        let neighbors = cell.neighbor_coordinates().into_iter().collect::<Vec<_>>();
         assert_eq!(
             neighbors,
             vec![

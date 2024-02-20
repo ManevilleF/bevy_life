@@ -89,8 +89,8 @@ impl Cell for MooreCell3d {
     }
 
     #[inline]
-    fn neighbor_coordinates(&self) -> Vec<Self::Coordinates> {
-        NEIGHBOR_COORDINATES.map(|c| c + *self.coords()).to_vec()
+    fn neighbor_coordinates(&self) -> impl IntoIterator<Item = Self::Coordinates> {
+        NEIGHBOR_COORDINATES.map(|c| c + *self.coords())
     }
 }
 
