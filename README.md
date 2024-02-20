@@ -6,7 +6,7 @@
  [![unsafe forbidden](https://img.shields.io/badge/unsafe-forbidden-success.svg)](https://github.com/rust-secure-code/safety-dance/)
  [![Crates.io](https://img.shields.io/crates/v/bevy_life.svg)](https://crates.io/crates/bevy_life)
  [![Docs.rs](https://docs.rs/bevy_life/badge.svg)](https://docs.rs/bevy_life)
- [![dependency status](https://deps.rs/crate/bevy_life/0.8.0/status.svg)](https://deps.rs/crate/bevy_life)
+ [![dependency status](https://deps.rs/crate/bevy_life/0.9.0/status.svg)](https://deps.rs/crate/bevy_life)
 
 <!-- cargo-sync-readme start -->
 
@@ -14,8 +14,9 @@
 From the classic 2D [Conway’s game of life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) to [`WireWorld`](https://en.wikipedia.org/wiki/Wireworld) and 3D rules, the plugin is completely generic and dynamic.
 
 See:
- - [Game of life variations](https://cs.stanford.edu/people/eroberts/courses/soco/projects/2008-09/modeling-natural-systems/gameOfLife2.html)
- - [`Wireworld` implementation](https://www.quinapalus.com/wi-index.html) (see
+
+ * [Game of life variations](https://cs.stanford.edu/people/eroberts/courses/soco/projects/2008-09/modeling-natural-systems/gameOfLife2.html)
+ * [`Wireworld` implementation](https://www.quinapalus.com/wi-index.html) (see
    this lib's [implementation](https://github.com/ManevilleF/wireworld-rs))
  
 ## Bevy versions
@@ -31,27 +32,30 @@ to follow the `main` branch of `bevy`
 | 0.6.x         | 0.9.x     |
 | 0.7.x         | 0.10.x    |
 | 0.8.x         | 0.11.x    |
+| 0.9.x         | 0.13.x    |
 
 ## How to use
 
 Add a `CellularAutomatonPlugin` to your bevy app:
 
 A `CellularAutomatonPlugin<C, S>` has two generic types:
-- `C` -> Any type implementing `Cell`, defining the coordinate system
-- `S` -> Any type implementing `CellState`, defining the simulation rules.
+
+* `C` -> Any type implementing `Cell`, defining the coordinate system
+* `S` -> Any type implementing `CellState`, defining the simulation rules.
 
 You may add as many generic `CellularAutomatonPlugin` as wished, the lib
 provides some implementations like:
-- `GameOfLife2dPlugin`
-- `GameOfLife3dPlugin`
-- `ImmigrationGame2dPlugin`
-- `ImmigrationGame3dPlugin`
-- `RainbowGame2dPlugin`
-- `RainbowGame3dPlugin`
-- `WireWorld2dPlugin`
-- `WireWorld3dPlugin`
-- `CyclicColors2dPlugin`
-- `CyclicColors3dPlugin`
+
+* `GameOfLife2dPlugin`
+* `GameOfLife3dPlugin`
+* `ImmigrationGame2dPlugin`
+* `ImmigrationGame3dPlugin`
+* `RainbowGame2dPlugin`
+* `RainbowGame3dPlugin`
+* `WireWorld2dPlugin`
+* `WireWorld3dPlugin`
+* `CyclicColors2dPlugin`
+* `CyclicColors3dPlugin`
 
 Then you may use bevy as usual and add `impl Cell` and `impl CellState`
 components to the entities. The lib provides some implementations like
@@ -63,10 +67,11 @@ as you want, the cellular automaton system is completely dynamic and
 generic.
 
 For more information you may look at some examples:
-- The [Classic examples](./examples) showcase the provided implementations
-- the [Rock Paper Scissor](./examples/2d_rock_paper_scissor.rs) defines
+
+* The [Classic examples](./examples) showcase the provided implementations
+* the [Rock Paper Scissor](./examples/2d_rock_paper_scissor.rs) defines
   custom rules.
-- the [wireworld](https://github.com/ManevilleF/wireworld-rs) repository
+* the [wireworld](https://github.com/ManevilleF/wireworld-rs) repository
 
 ### Pausing
 
@@ -83,21 +88,21 @@ cells with custom batch sizes.
 No feature is required for the plugin to work and the main traits `Cell` and
 `CellState` are always available. But you may enable the following features
 
-- `2D` (enabled by default): Enables 2D types like:
-  - `MooreCell2d` (square cell with 8 neighbors)
-  - `NeumannCell2d` (square cell with 4 neighbors)
-  - `HexagonCell2d` (hexagon cell with 6 neighbors)
-  - plugin presets: `GameOfLife2dPlugin`, `ImmigrationGame2dPlugin`,
+* `2D` (enabled by default): Enables 2D types like:
+  * `MooreCell2d` (square cell with 8 neighbors)
+  * `NeumannCell2d` (square cell with 4 neighbors)
+  * `HexagonCell2d` (hexagon cell with 6 neighbors)
+  * plugin presets: `GameOfLife2dPlugin`, `ImmigrationGame2dPlugin`,
     `RainbowGame2dPlugin`, `WireWorld2dPlugin`, `CyclicAutomaton2dPlugin`
-- `3D`: Enables 3D types like:
-  - `MooreCell3d` (cube cell with 26 neighbors)
-  - `NeumannCell3d` (cube cell with 6 neighbors)
-  - plugin presets: `GameOfLife3dPlugin`, `ImmigrationGame3dPlugin`,
+* `3D`: Enables 3D types like:
+  * `MooreCell3d` (cube cell with 26 neighbors)
+  * `NeumannCell3d` (cube cell with 6 neighbors)
+  * plugin presets: `GameOfLife3dPlugin`, `ImmigrationGame3dPlugin`,
     `RainbowGame3dPlugin`, `WireWorld3dPlugin`, `CyclicAutomaton3dPlugin`
-- `auto-coloring` (Example or debug purpose):
-  - Enables `CellStateMaterials` resource to contain material handles
-  - The `CellState` type now requires to build a `CellStateMaterials`
-  - All `CellState` components with materials will be colored according to
+* `auto-coloring` (Example or debug purpose):
+  * Enables `CellStateMaterials` resource to contain material handles
+  * The `CellState` type now requires to build a `CellStateMaterials`
+  * All `CellState` components with materials will be colored according to
     their type.
 
 ## Disclaimer

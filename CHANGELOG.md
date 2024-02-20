@@ -2,7 +2,11 @@
 
 ## [Unreleased]
 
+## 0.9.0
+
 * Added rustfmt config (#19)
+* Bevy 0.13 (#22)
+* Less allocations (#23)
 
 ## 0.8.0
 
