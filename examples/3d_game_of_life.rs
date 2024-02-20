@@ -36,8 +36,8 @@ fn setup_map(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
-    let mesh = meshes.add(Mesh::from(shape::Cube::new(1.)));
-    let material = materials.add(Color::WHITE.into());
+    let mesh = meshes.add(Cuboid::new(1., 1., 1.));
+    let material = materials.add(Color::WHITE);
     // map
     spawn_map(&mut commands, mesh, material);
 }
@@ -76,7 +76,7 @@ fn spawn_map(commands: &mut Commands, mesh: Handle<Mesh>, material: Handle<Stand
 pub fn color(
     mut query: Query<(&ConwayCell4555State, &mut Visibility), Changed<ConwayCell4555State>>,
 ) {
-    query.par_iter_mut().for_each_mut(|(state, mut visible)| {
+    query.par_iter_mut().for_each(|(state, mut visible)| {
         *visible = if state.0 {
             Visibility::Inherited
         } else {
