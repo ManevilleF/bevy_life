@@ -20,7 +20,7 @@ default = ["2D"]
 auto-coloring = ["bevy/bevy_sprite"]
 
 [dependencies.bevy]
-version = "0.12"
+version = "0.13"
 default-features = false
 features = ["bevy_render"]
 
@@ -28,7 +28,7 @@ features = ["bevy_render"]
 rand = "0.8"
 
 [dev-dependencies.bevy]
-version = "0.12"
+version = "0.13"
 features = [
   "bevy_asset",
   "bevy_winit",
@@ -38,10 +38,10 @@ features = [
   "bevy_sprite",
   "png",
   "x11",
-  # The following features are required because of https://github.com/bevyengine/bevy/discussions/9100
-  "ktx2",
-  "zstd",
   "tonemapping_luts",
+  "multi-threaded",
+  # Faster compilation
+  "dynamic_linking"
 ]
 default-features = false
 
