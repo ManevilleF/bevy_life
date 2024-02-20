@@ -36,8 +36,8 @@ fn setup_map(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
-    let mesh = meshes.add(Mesh::from(shape::Cube::new(1.)));
-    let material = materials.add(Color::WHITE.into());
+    let mesh = meshes.add(Cuboid::new(1., 1., 1.));
+    let material = materials.add(Color::WHITE);
     // map
     spawn_map(&mut commands, mesh, material);
 }
