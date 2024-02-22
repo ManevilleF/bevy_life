@@ -196,8 +196,7 @@ impl<C: Cell, S: CellState> Plugin for CellularAutomatonPlugin<C, S> {
         // register_type::<CellMap::<C>>();
         if self.use_cell_map {
             app.insert_resource(CellMap::<C>::default());
-            app.add_systems(Update, handle_new_cells::<C>);
-            app.add_systems(PostUpdate, handle_removed_cells::<C>);
+            app.add_systems(PreUpdate, (handle_new_cells::<C>, handle_removed_cells::<C>));
         }
         if let Some(time_step) = self.tick_time_step {
             let duration = Duration::from_secs_f64(time_step);

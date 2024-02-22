@@ -29,11 +29,7 @@ impl CellState for ConwayCellState {
 
     #[cfg(feature = "auto-coloring")]
     fn color(&self) -> Option<Color> {
-        if self.0 {
-            Some(Color::WHITE)
-        } else {
-            None
-        }
+        self.0.then_some(Color::WHITE)
     }
 }
 
