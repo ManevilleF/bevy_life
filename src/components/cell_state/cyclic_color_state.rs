@@ -32,7 +32,7 @@ impl<const N: usize> CellState for CyclicColorCellState<N> {
     #[cfg(feature = "auto-coloring")]
     #[allow(clippy::cast_precision_loss)]
     fn color(&self) -> Option<Color> {
-        let r = N as f32 / self.0 as f32;
+        let r = self.0 as f32 / N as f32;
         Some(Color::srgb(r, r, r))
     }
 }
