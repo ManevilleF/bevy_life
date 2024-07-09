@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+* Bevy 0.14
+* (**BREAKING**) `CyclicColorState` now takes a `const N: usize` generic instead
+of hard coded `9`
+* `2d_cyclic_colors` example is now in grayscale
+
 ## 0.9.0
 
 * Added rustfmt config (#19)
