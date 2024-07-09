@@ -164,13 +164,13 @@ pub type WireWorld3dPlugin =
 
 #[cfg(feature = "2D")]
 /// Cellular automaton plugin type for Colored Cyclic cellular automaton in 2D
-pub type CyclicColors2dPlugin =
-    CellularAutomatonPlugin<components::MooreCell2d, CyclicColorCellState>;
+pub type CyclicColors2dPlugin<const N: usize> =
+    CellularAutomatonPlugin<components::MooreCell2d, CyclicColorCellState<N>>;
 
 #[cfg(feature = "3D")]
 /// Cellular automaton plugin type for Colored Cyclic cellular automaton in 3D
-pub type CyclicColors3dPlugin =
-    CellularAutomatonPlugin<components::MooreCell3d, CyclicColorCellState>;
+pub type CyclicColors3dPlugin<const N: usize> =
+    CellularAutomatonPlugin<components::MooreCell3d, CyclicColorCellState<N>>;
 
 /// Generic Cellular Automaton plugin. It will register systems for the matching
 /// `Cell` and `CellState` types.
