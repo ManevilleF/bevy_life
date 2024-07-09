@@ -1,5 +1,5 @@
 use crate::components::Cell;
-use bevy::prelude::{Component, IVec2, Reflect};
+use bevy::prelude::{Component, IVec2};
 use std::ops::Deref;
 
 const NEIGHBOR_COORDINATES: [IVec2; 4] = [
@@ -31,7 +31,8 @@ const NEIGHBOR_COORDINATES: [IVec2; 4] = [
 ///         +-------+
 /// ```
 /// [Neumann]: https://en.wikipedia.org/wiki/Von_Neumann_neighborhood
-#[derive(Debug, Clone, Component, Reflect)]
+#[derive(Debug, Clone, Component)]
+#[cfg_attr(feature = "bevy_reflect", derive(bevy_reflect::Reflect))]
 pub struct NeumannCell2d {
     /// The 2D cell coordinates
     pub coords: IVec2,

@@ -1,4 +1,4 @@
-use bevy::prelude::*;
+use bevy::{color::palettes::css::*, prelude::*};
 use bevy_life::{CellState, CellularAutomatonPlugin, MooreCell2d, SimulationBatch};
 use rand::Rng;
 
@@ -61,7 +61,7 @@ fn spawn_map(commands: &mut Commands) {
     let mut rng = rand::thread_rng();
     let (size_x, size_y) = (300, 200);
     let sprite_size = 4.;
-    let color = Color::rgba(0., 0., 0., 0.);
+    let color = Color::srgba(0., 0., 0., 0.);
 
     commands
         .spawn(SpatialBundle::from_transform(Transform::from_xyz(
@@ -106,8 +106,8 @@ pub fn color_sprites(
     query
         .par_iter_mut()
         .for_each(|(state, mut sprite)| match state {
-            RockPaperScissor::Rock => sprite.color = Color::BLUE,
-            RockPaperScissor::Paper => sprite.color = Color::BEIGE,
-            RockPaperScissor::Scissor => sprite.color = Color::RED,
+            RockPaperScissor::Rock => sprite.color = Color::Srgba(BLUE),
+            RockPaperScissor::Paper => sprite.color = Color::Srgba(BEIGE),
+            RockPaperScissor::Scissor => sprite.color = Color::Srgba(RED),
         });
 }

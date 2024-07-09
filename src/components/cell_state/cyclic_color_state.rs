@@ -1,16 +1,22 @@
 use crate::CellState;
-use bevy::prelude::{Color, Component, Reflect};
+#[cfg(feature = "auto-coloring")]
+use bevy::color::{
+    palettes::css::{AQUA, BLUE, GREEN, LIMEGREEN, ORANGE, ORANGE_RED, PURPLE, RED, YELLOW},
+    Color,
+};
+use bevy::prelude::Component;
 
+#[cfg(feature = "auto-coloring")]
 const CYCLIC_COLORS: [Color; 9] = [
-    Color::BLUE,
-    Color::CYAN,
-    Color::GREEN,
-    Color::LIME_GREEN,
-    Color::YELLOW,
-    Color::ORANGE,
-    Color::ORANGE_RED,
-    Color::RED,
-    Color::PURPLE,
+    Color::Srgba(BLUE),
+    Color::Srgba(AQUA),
+    Color::Srgba(GREEN),
+    Color::Srgba(LIMEGREEN),
+    Color::Srgba(YELLOW),
+    Color::Srgba(ORANGE),
+    Color::Srgba(ORANGE_RED),
+    Color::Srgba(RED),
+    Color::Srgba(PURPLE),
 ];
 
 /// Basic cyclic cellular automaton state and rules. The rules are the
@@ -26,7 +32,8 @@ const CYCLIC_COLORS: [Color; 9] = [
 /// > (Note that `0` is the successor of `n − 1`.
 ///
 /// For this type we use `9` for `n` and arbitrary colors.
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Component, Reflect, Default)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Component, Default)]
+#[cfg_attr(feature = "bevy_reflect", derive(bevy_reflect::Reflect))]
 pub struct CyclicColorCellState(pub usize);
 
 impl CellState for CyclicColorCellState {

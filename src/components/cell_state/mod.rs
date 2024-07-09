@@ -29,5 +29,5 @@ pub trait CellState: Component + Sized + Clone + PartialEq {
     #[cfg(feature = "auto-coloring")]
     /// Color of the state, to use with `auto-coloring` feature
     #[must_use]
-    fn color(&self) -> Option<bevy::render::color::Color>;
+    fn color(&self) -> Option<bevy::prelude::Color>;
 }

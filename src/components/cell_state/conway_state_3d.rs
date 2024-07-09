@@ -1,7 +1,7 @@
 use crate::components::CellState;
-use bevy::prelude::{Component, Reflect};
 #[cfg(feature = "auto-coloring")]
-use bevy::render::color::Color;
+use bevy::prelude::Color;
+use bevy::prelude::Component;
 use std::ops::{Deref, DerefMut};
 
 /// Classic cellular automation state and rules following Conway's game of life
@@ -17,7 +17,8 @@ use std::ops::{Deref, DerefMut};
 ///   by reproduction.
 ///
 /// A dead cell is `false`, a live cell is `true`
-#[derive(Debug, Copy, Clone, Default, Eq, PartialEq, Component, Reflect)]
+#[derive(Debug, Copy, Clone, Default, Eq, PartialEq, Component)]
+#[cfg_attr(feature = "bevy_reflect", derive(bevy_reflect::Reflect))]
 pub struct ConwayCell4555State(pub bool);
 
 impl CellState for ConwayCell4555State {

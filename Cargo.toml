@@ -14,32 +14,38 @@ categories = ["game-engines", "game-development"]
 resolver = "2"
 
 [features]
-default = ["2D"]
+default = ["2D", "bevy_reflect"]
 2D = []
 3D = []
-auto-coloring = ["bevy/bevy_sprite"]
+auto-coloring = ["bevy/bevy_sprite", "bevy/bevy_color"]
+bevy_reflect = ["dep:bevy_reflect"]
 
 [dependencies.bevy]
-version = "0.13"
+version = "0.14"
 default-features = false
 features = ["bevy_render"]
+
+[dependencies.bevy_reflect]
+version = "0.14"
+optional = true
 
 [dev-dependencies]
 rand = "0.8"
 
 [dev-dependencies.bevy]
-version = "0.13"
+version = "0.14"
 features = [
   "bevy_asset",
   "bevy_winit",
   "bevy_core_pipeline",
   "bevy_pbr",
+  "bevy_color",
   "bevy_render",
   "bevy_sprite",
   "png",
   "x11",
   "tonemapping_luts",
-  "multi-threaded",
+  "multi_threaded",
   # Faster compilation
   "dynamic_linking"
 ]
