@@ -101,7 +101,8 @@ No feature is required for the plugin to work and the main traits `Cell` and
     `RainbowGame3dPlugin`, `WireWorld3dPlugin`, `CyclicAutomaton3dPlugin`
 * `auto-coloring` (Example or debug purpose):
   * The `CellState` trait now requires a `color` method
-* `bevy_reflect` (enabled by default): Enable support for reflection for common types
+* `bevy_reflect` (enabled by default): Enable support for reflection for
+  common types
 
 ## Disclaimer
 
