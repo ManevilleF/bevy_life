@@ -6,6 +6,7 @@
 * (**BREAKING**) `CyclicColorState` now takes a `const N: usize` generic instead
 of hard coded `9`
 * `2d_cyclic_colors` example is now in grayscale
+* Reflection is now optional through `bevy_reflect` feature gate
 
 ## 0.9.0
 
