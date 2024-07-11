@@ -100,10 +100,9 @@ No feature is required for the plugin to work and the main traits `Cell` and
   * plugin presets: `GameOfLife3dPlugin`, `ImmigrationGame3dPlugin`,
     `RainbowGame3dPlugin`, `WireWorld3dPlugin`, `CyclicAutomaton3dPlugin`
 * `auto-coloring` (Example or debug purpose):
-  * Enables `CellStateMaterials` resource to contain material handles
-  * The `CellState` type now requires to build a `CellStateMaterials`
-  * All `CellState` components with materials will be colored according to
-    their type.
+  * The `CellState` trait now requires a `color` method
+* `bevy_reflect` (enabled by default): Enable support for reflection for
+  common types
 
 ## Disclaimer
 

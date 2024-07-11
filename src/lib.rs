@@ -88,10 +88,9 @@
 //!   * plugin presets: `GameOfLife3dPlugin`, `ImmigrationGame3dPlugin`,
 //!     `RainbowGame3dPlugin`, `WireWorld3dPlugin`, `CyclicAutomaton3dPlugin`
 //! * `auto-coloring` (Example or debug purpose):
-//!   * Enables `CellStateMaterials` resource to contain material handles
-//!   * The `CellState` type now requires to build a `CellStateMaterials`
-//!   * All `CellState` components with materials will be colored according to
-//!     their type.
+//!   * The `CellState` trait now requires a `color` method
+//! * `bevy_reflect` (enabled by default): Enable support for reflection for
+//!   common types
 //!
 //! ## Disclaimer
 //!
@@ -164,13 +163,13 @@ pub type WireWorld3dPlugin =
 
 #[cfg(feature = "2D")]
 /// Cellular automaton plugin type for Colored Cyclic cellular automaton in 2D
-pub type CyclicColors2dPlugin =
-    CellularAutomatonPlugin<components::MooreCell2d, CyclicColorCellState>;
+pub type CyclicColors2dPlugin<const N: usize> =
+    CellularAutomatonPlugin<components::MooreCell2d, CyclicColorCellState<N>>;
 
 #[cfg(feature = "3D")]
 /// Cellular automaton plugin type for Colored Cyclic cellular automaton in 3D
-pub type CyclicColors3dPlugin =
-    CellularAutomatonPlugin<components::MooreCell3d, CyclicColorCellState>;
+pub type CyclicColors3dPlugin<const N: usize> =
+    CellularAutomatonPlugin<components::MooreCell3d, CyclicColorCellState<N>>;
 
 /// Generic Cellular Automaton plugin. It will register systems for the matching
 /// `Cell` and `CellState` types.

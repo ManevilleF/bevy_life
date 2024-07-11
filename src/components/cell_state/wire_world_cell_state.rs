@@ -1,7 +1,10 @@
 use crate::components::CellState;
-use bevy::prelude::{Component, Reflect};
 #[cfg(feature = "auto-coloring")]
-use bevy::render::color::Color;
+use bevy::color::{
+    palettes::css::{AQUA, GOLD, WHITE},
+    Color,
+};
+use bevy::prelude::Component;
 
 /// Wireworld is a cellular automaton that simulates electronic devices and
 /// logic gates by having cells represent electrons traveling across conductors.
@@ -13,7 +16,8 @@ use bevy::render::color::Color;
 /// - Conductors (`Conductor`) become electron heads if exactly one or two
 ///   neighboring cells are electron heads. Otherwise, they remain as
 ///   conductors.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, Component, Reflect)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Component)]
+#[cfg_attr(feature = "bevy_reflect", derive(bevy_reflect::Reflect))]
 pub enum WireWorldCellState {
     /// Conductor cell state
     Conductor,
@@ -48,9 +52,9 @@ impl CellState for WireWorldCellState {
     #[cfg(feature = "auto-coloring")]
     fn color(&self) -> Option<Color> {
         Some(match self {
-            Self::Conductor => Color::GOLD,
-            Self::ElectronHead => Color::CYAN,
-            Self::ElectronTail => Color::WHITE,
+            Self::Conductor => Color::Srgba(GOLD),
+            Self::ElectronHead => Color::Srgba(AQUA),
+            Self::ElectronTail => Color::Srgba(WHITE),
         })
     }
 }

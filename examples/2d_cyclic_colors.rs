@@ -2,6 +2,8 @@ use bevy::prelude::*;
 use bevy_life::{CyclicColorCellState, CyclicColors2dPlugin, MooreCell2d, SimulationBatch};
 use rand::Rng;
 
+const N: usize = 9;
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(WindowPlugin {
@@ -12,7 +14,7 @@ fn main() {
             }),
             ..default()
         }))
-        .add_plugins(CyclicColors2dPlugin::new().with_time_step(0.05))
+        .add_plugins(CyclicColors2dPlugin::<N>::new().with_time_step(0.05))
         .insert_resource(SimulationBatch)
         .add_systems(Startup, (setup_camera, setup_map))
         .run();
@@ -32,7 +34,6 @@ fn spawn_map(commands: &mut Commands) {
     let (size_x, size_y) = (300, 200);
     let sprite_size = 4.;
 
-    let max_index = CyclicColorCellState::max_index();
     commands
         .spawn(SpatialBundle::from_transform(Transform::from_xyz(
             -(size_x as f32 * sprite_size) / 2.,
@@ -42,8 +43,8 @@ fn spawn_map(commands: &mut Commands) {
         .with_children(|builder| {
             for y in 0..=size_y {
                 for x in 0..=size_x {
-                    let color_index = rng.gen_range(0..max_index);
-                    let state = CyclicColorCellState(color_index);
+                    let color_index = rng.gen_range(0..N);
+                    let state = CyclicColorCellState::<N>(color_index);
                     builder.spawn((
                         SpriteBundle {
                             sprite: Sprite {

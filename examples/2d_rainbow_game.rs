@@ -31,7 +31,7 @@ fn spawn_map(commands: &mut Commands) {
     let mut rng = rand::thread_rng();
     let (size_x, size_y) = (600, 400);
     let sprite_size = 2.;
-    let color = Color::rgba(1., 0., 0., 1.);
+    let color = Color::srgba(1., 0., 0., 1.);
 
     commands
         .spawn(SpatialBundle::from_transform(Transform::from_xyz(

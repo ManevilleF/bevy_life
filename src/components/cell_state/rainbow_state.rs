@@ -1,10 +1,11 @@
 use crate::components::CellState;
-use bevy::prelude::{Component, Reflect};
 #[cfg(feature = "auto-coloring")]
-use bevy::render::color::Color;
+use bevy::prelude::Color;
+use bevy::prelude::Component;
 use std::fmt::Debug;
 
-#[derive(Debug, Copy, Clone, PartialEq, Component, Reflect)]
+#[derive(Debug, Copy, Clone, PartialEq, Component)]
+#[cfg_attr(feature = "bevy_reflect", derive(bevy_reflect::Reflect))]
 /// Classic cellular automation state and rules following Conway's game of life
 /// variation: The immigration game.
 ///
@@ -47,7 +48,7 @@ impl CellState for RainbowCellState {
     fn color(&self) -> Option<Color> {
         match self {
             Self::Dead => None,
-            Self::Alive(v) => Some(Color::rgb(*v, *v, *v)),
+            Self::Alive(v) => Some(Color::srgb(*v, *v, *v)),
         }
     }
 }
