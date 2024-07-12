@@ -6,7 +6,7 @@
  [![unsafe forbidden](https://img.shields.io/badge/unsafe-forbidden-success.svg)](https://github.com/rust-secure-code/safety-dance/)
  [![Crates.io](https://img.shields.io/crates/v/bevy_life.svg)](https://crates.io/crates/bevy_life)
  [![Docs.rs](https://docs.rs/bevy_life/badge.svg)](https://docs.rs/bevy_life)
- [![dependency status](https://deps.rs/crate/bevy_life/0.9.0/status.svg)](https://deps.rs/crate/bevy_life)
+ [![dependency status](https://deps.rs/crate/bevy_life/0.10.0/status.svg)](https://deps.rs/crate/bevy_life)
 
 <!-- cargo-sync-readme start -->
 
@@ -15,8 +15,8 @@ From the classic 2D [Conway’s game of life](https://en.wikipedia.org/wiki/Conw
 
 See:
 
- * [Game of life variations](https://cs.stanford.edu/people/eroberts/courses/soco/projects/2008-09/modeling-natural-systems/gameOfLife2.html)
- * [`Wireworld` implementation](https://www.quinapalus.com/wi-index.html) (see
+* [Game of life variations](https://cs.stanford.edu/people/eroberts/courses/soco/projects/2008-09/modeling-natural-systems/gameOfLife2.html)
+* [`Wireworld` implementation](https://www.quinapalus.com/wi-index.html) (see
    this lib's [implementation](https://github.com/ManevilleF/wireworld-rs))
  
 ## Bevy versions
@@ -33,6 +33,7 @@ to follow the `main` branch of `bevy`
 | 0.7.x         | 0.10.x    |
 | 0.8.x         | 0.11.x    |
 | 0.9.x         | 0.13.x    |
+| 0.10.x        | 0.14.x    |
 
 ## How to use
 

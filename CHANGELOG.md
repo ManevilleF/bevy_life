@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## 0.10.0
+
 * Bevy 0.14
 * (**BREAKING**) `CyclicColorState` now takes a `const N: usize` generic instead
 of hard coded `9`

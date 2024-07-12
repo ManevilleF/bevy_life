@@ -3,8 +3,8 @@
 //!
 //! See:
 //!
-//!  * [Game of life variations](https://cs.stanford.edu/people/eroberts/courses/soco/projects/2008-09/modeling-natural-systems/gameOfLife2.html)
-//!  * [`Wireworld` implementation](https://www.quinapalus.com/wi-index.html) (see
+//! * [Game of life variations](https://cs.stanford.edu/people/eroberts/courses/soco/projects/2008-09/modeling-natural-systems/gameOfLife2.html)
+//! * [`Wireworld` implementation](https://www.quinapalus.com/wi-index.html) (see
 //!    this lib's [implementation](https://github.com/ManevilleF/wireworld-rs))
 //!  
 //! ## Bevy versions
@@ -21,6 +21,7 @@
 //! | 0.7.x         | 0.10.x    |
 //! | 0.8.x         | 0.11.x    |
 //! | 0.9.x         | 0.13.x    |
+//! | 0.10.x        | 0.14.x    |
 //!
 //! ## How to use
 //!
