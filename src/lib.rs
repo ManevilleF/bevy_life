@@ -5,7 +5,7 @@
 //!
 //! * [Game of life variations](https://cs.stanford.edu/people/eroberts/courses/soco/projects/2008-09/modeling-natural-systems/gameOfLife2.html)
 //! * [`Wireworld` implementation](https://www.quinapalus.com/wi-index.html) (see
-//!    this lib's [implementation](https://github.com/ManevilleF/wireworld-rs))
+//!   this lib's [implementation](https://github.com/ManevilleF/wireworld-rs))
 //!  
 //! ## Bevy versions
 //!
