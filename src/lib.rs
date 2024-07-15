@@ -172,6 +172,17 @@ pub type CyclicColors2dPlugin<const N: usize> =
 pub type CyclicColors3dPlugin<const N: usize> =
     CellularAutomatonPlugin<components::MooreCell3d, CyclicColorCellState<N>>;
 
+/// System set variant for each cellular automaton step
+#[derive(Debug, PartialEq, Eq, Clone, Hash, SystemSet)]
+pub enum LifeSystemSet {
+    /// Spawned Cell insertion in [`CellMap`] (Requires [`CellularAutomatonPlugin::use_cell_map`])
+    NewCells,
+    /// Despawned Cell removal from [`CellMap`] (Requires [`CellularAutomatonPlugin::use_cell_map`])
+    RemovedCells,
+    /// Cell life tick update system set
+    CellUpdate,
+}
+
 /// Generic Cellular Automaton plugin. It will register systems for the matching
 /// `Cell` and `CellState` types.
 ///
@@ -196,14 +207,27 @@ impl<C: Cell, S: CellState> Plugin for CellularAutomatonPlugin<C, S> {
         // register_type::<CellMap::<C>>();
         if self.use_cell_map {
             app.insert_resource(CellMap::<C>::default());
-            app.add_systems(Update, handle_new_cells::<C>);
-            app.add_systems(PostUpdate, handle_removed_cells::<C>);
+            app.add_systems(
+                PostUpdate,
+                (
+                    handle_new_cells::<C>.in_set(LifeSystemSet::NewCells),
+                    handle_removed_cells::<C>.in_set(LifeSystemSet::RemovedCells),
+                ),
+            );
         }
         if let Some(time_step) = self.tick_time_step {
             let duration = Duration::from_secs_f64(time_step);
-            app.add_systems(Update, handle_cells::<C, S>.run_if(on_timer(duration)));
+            app.add_systems(
+                Update,
+                handle_cells::<C, S>
+                    .run_if(on_timer(duration))
+                    .in_set(LifeSystemSet::CellUpdate),
+            );
         } else {
-            app.add_systems(Update, handle_cells::<C, S>);
+            app.add_systems(
+                Update,
+                handle_cells::<C, S>.in_set(LifeSystemSet::CellUpdate),
+            );
         }
 
         #[cfg(feature = "auto-coloring")]

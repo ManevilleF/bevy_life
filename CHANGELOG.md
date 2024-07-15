@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## 0.10.1
+
+* Fixed system ordering
+* Fixed potential crash in cell tick for despawned cells
+* Added system set labels
+
 ## 0.10.0
 
 * Bevy 0.14

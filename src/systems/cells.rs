@@ -42,14 +42,14 @@ pub fn handle_cells<C, S>(
         query.par_iter().for_each(|(entity, cell, state)| {
             if let Some(new_state) = handle_cell((cell, state), &map) {
                 par_commands.command_scope(|mut cmd| {
-                    cmd.entity(entity).insert(new_state);
+                    cmd.entity(entity).try_insert(new_state);
                 });
             }
         });
     } else {
         for (entity, cell, state) in query.iter() {
             if let Some(new_state) = handle_cell((cell, state), &map) {
-                commands.entity(entity).insert(new_state);
+                commands.entity(entity).try_insert(new_state);
             }
         }
     }
