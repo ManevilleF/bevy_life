@@ -175,9 +175,11 @@ pub type CyclicColors3dPlugin<const N: usize> =
 /// System set variant for each cellular automaton step
 #[derive(Debug, PartialEq, Eq, Clone, Hash, SystemSet)]
 pub enum LifeSystemSet {
-    /// Spawned Cell insertion in [`CellMap`] (Requires [`CellularAutomatonPlugin::use_cell_map`])
+    /// Spawned Cell insertion in [`CellMap`] (Requires
+    /// [`CellularAutomatonPlugin::use_cell_map`])
     NewCells,
-    /// Despawned Cell removal from [`CellMap`] (Requires [`CellularAutomatonPlugin::use_cell_map`])
+    /// Despawned Cell removal from [`CellMap`] (Requires
+    /// [`CellularAutomatonPlugin::use_cell_map`])
     RemovedCells,
     /// Cell life tick update system set
     CellUpdate,
