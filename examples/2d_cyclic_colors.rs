@@ -21,8 +21,8 @@ fn main() {
 }
 
 fn setup_camera(mut commands: Commands) {
-    // Camera
-    commands.spawn(Camera2dBundle::default());
+    // Cameraa
+    commands.spawn(Camera2d::default());
 }
 
 fn setup_map(mut commands: Commands) {
@@ -35,29 +35,25 @@ fn spawn_map(commands: &mut Commands) {
     let sprite_size = 4.;
 
     commands
-        .spawn(SpatialBundle::from_transform(Transform::from_xyz(
-            -(size_x as f32 * sprite_size) / 2.,
-            -(size_y as f32 * sprite_size) / 2.,
-            0.,
-        )))
+        .spawn((
+            Transform::from_xyz(
+                -(size_x as f32 * sprite_size) / 2.,
+                -(size_y as f32 * sprite_size) / 2.,
+                0.,
+            ),
+            Visibility::default(),
+        ))
         .with_children(|builder| {
             for y in 0..=size_y {
                 for x in 0..=size_x {
                     let color_index = rng.gen_range(0..N);
                     let state = CyclicColorCellState::<N>(color_index);
                     builder.spawn((
-                        SpriteBundle {
-                            sprite: Sprite {
-                                custom_size: Some(Vec2::splat(sprite_size)),
-                                ..default()
-                            },
-                            transform: Transform::from_xyz(
-                                sprite_size * x as f32,
-                                sprite_size * y as f32,
-                                0.,
-                            ),
+                        Sprite {
+                            custom_size: Some(Vec2::splat(sprite_size)),
                             ..default()
                         },
+                        Transform::from_xyz(sprite_size * x as f32, sprite_size * y as f32, 0.),
                         MooreCell2d::new(IVec2::new(x, y)),
                         state,
                     ));
