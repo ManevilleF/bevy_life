@@ -21,7 +21,7 @@ fn main() {
 }
 
 fn setup_camera(mut commands: Commands) {
-    // Cameraa
+    // Camera
     commands.spawn(Camera2d::default());
 }
 
