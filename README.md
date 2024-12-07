@@ -6,7 +6,7 @@
  [![unsafe forbidden](https://img.shields.io/badge/unsafe-forbidden-success.svg)](https://github.com/rust-secure-code/safety-dance/)
  [![Crates.io](https://img.shields.io/crates/v/bevy_life.svg)](https://crates.io/crates/bevy_life)
  [![Docs.rs](https://docs.rs/bevy_life/badge.svg)](https://docs.rs/bevy_life)
- [![dependency status](https://deps.rs/crate/bevy_life/0.10.1/status.svg)](https://deps.rs/crate/bevy_life)
+ [![dependency status](https://deps.rs/crate/bevy_life/0.11.0/status.svg)](https://deps.rs/crate/bevy_life)
 
 <!-- cargo-sync-readme start -->
 
@@ -18,11 +18,8 @@ See:
 * [Game of life variations](https://cs.stanford.edu/people/eroberts/courses/soco/projects/2008-09/modeling-natural-systems/gameOfLife2.html)
 * [`Wireworld` implementation](https://www.quinapalus.com/wi-index.html) (see
   this lib's [implementation](https://github.com/ManevilleF/wireworld-rs))
- 
-## Bevy versions
 
-The `main` branch follows the released version of `bevy` but I provide the [`bevy-main`](https://github.com/ManevilleF/bevy_life/tree/feat/bevy-main) branch
-to follow the `main` branch of `bevy`
+## Bevy versions
 
 | `bevy_life`   | `bevy`    |
 |---------------|-----------|
@@ -34,6 +31,7 @@ to follow the `main` branch of `bevy`
 | 0.8.x         | 0.11.x    |
 | 0.9.x         | 0.13.x    |
 | 0.10.x        | 0.14.x    |
+| 0.11.x        | 0.15.x    |
 
 ## How to use
 
