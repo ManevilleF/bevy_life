@@ -78,7 +78,7 @@ mod tests {
         let cell = NeumannCell2d {
             coords: IVec2::new(10, 10),
         };
-        let neighbors = cell.neighbor_coordinates().into_iter().collect::<Vec<_>>();
+        let neighbors = cell.neighbor_coordinates().collect::<Vec<_>>();
         assert_eq!(
             neighbors,
             vec![
@@ -99,7 +99,7 @@ mod tests {
         let cell = NeumannCell2d {
             coords: IVec2::new(-10, 10),
         };
-        let neighbors = cell.neighbor_coordinates().into_iter().collect::<Vec<_>>();
+        let neighbors = cell.neighbor_coordinates().collect::<Vec<_>>();
         assert_eq!(
             neighbors,
             vec![
@@ -120,7 +120,7 @@ mod tests {
         let cell = NeumannCell2d {
             coords: IVec2::new(0, 0),
         };
-        let neighbors = cell.neighbor_coordinates().into_iter().collect::<Vec<_>>();
+        let neighbors = cell.neighbor_coordinates().collect::<Vec<_>>();
         assert_eq!(
             neighbors,
             vec![

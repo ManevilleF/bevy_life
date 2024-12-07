@@ -8,6 +8,7 @@ use bevy::prelude::Component;
 
 /// Wireworld is a cellular automaton that simulates electronic devices and
 /// logic gates by having cells represent electrons traveling across conductors.
+///
 /// Wireworld uses three possible cell states and has the following rules:
 ///
 /// - Electron heads (`ElectronHead`) become electron tails in the succeeding

@@ -81,7 +81,7 @@ mod tests {
         let cell = HexagonCell2d {
             coords: IVec3::new(10, 10, 10),
         };
-        let neighbors = cell.neighbor_coordinates().into_iter().collect::<Vec<_>>();
+        let neighbors = cell.neighbor_coordinates().collect::<Vec<_>>();
         assert_eq!(
             neighbors,
             vec![
@@ -100,7 +100,7 @@ mod tests {
         let cell = HexagonCell2d {
             coords: IVec3::new(-10, 8, 5),
         };
-        let neighbors = cell.neighbor_coordinates().into_iter().collect::<Vec<_>>();
+        let neighbors = cell.neighbor_coordinates().collect::<Vec<_>>();
         assert_eq!(
             neighbors,
             vec![
@@ -119,7 +119,7 @@ mod tests {
         let cell = HexagonCell2d {
             coords: IVec3::new(0, 0, 0),
         };
-        let neighbors = cell.neighbor_coordinates().into_iter().collect::<Vec<_>>();
+        let neighbors = cell.neighbor_coordinates().collect::<Vec<_>>();
         assert_eq!(
             neighbors,
             vec![
