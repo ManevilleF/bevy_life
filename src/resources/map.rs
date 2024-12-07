@@ -39,7 +39,7 @@ impl<C: Cell> CellMap<C> {
     pub fn get_cell_entities<'a>(
         &'a self,
         coords: &'a [C::Coordinates],
-    ) -> impl Iterator<Item = &Entity> + 'a {
+    ) -> impl Iterator<Item = &'a Entity> + 'a {
         coords.iter().filter_map(|c| self.cells.get(c))
     }
 

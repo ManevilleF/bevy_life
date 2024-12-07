@@ -10,8 +10,7 @@ where
     C: Cell,
     S: CellState,
 {
-    let neighbor_coords = cell.neighbor_coordinates();
-    let neighbor_states = neighbor_coords.into_iter().filter_map(|c| map.get(&c));
+    let neighbor_states = cell.neighbor_coordinates().filter_map(|c| map.get(&c));
     let new_state = state.new_cell_state(neighbor_states);
     if &new_state == state {
         None

@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+* Bevy 0.15
+
 ## 0.10.1
 
 * Fixed system ordering

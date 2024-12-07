@@ -28,5 +28,5 @@ pub trait Cell: Clone + Component {
 
     /// Retrieves the coordinates of the neighbor cells
     #[must_use]
-    fn neighbor_coordinates(&self) -> impl IntoIterator<Item = Self::Coordinates>;
+    fn neighbor_coordinates(&self) -> impl ExactSizeIterator<Item = Self::Coordinates> + '_;
 }

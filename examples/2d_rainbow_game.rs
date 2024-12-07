@@ -20,7 +20,7 @@ fn main() {
 
 fn setup_camera(mut commands: Commands) {
     // Camera
-    commands.spawn(Camera2dBundle::default());
+    commands.spawn(Camera2d::default());
 }
 
 fn setup_map(mut commands: Commands) {
@@ -34,11 +34,14 @@ fn spawn_map(commands: &mut Commands) {
     let color = Color::srgba(1., 0., 0., 1.);
 
     commands
-        .spawn(SpatialBundle::from_transform(Transform::from_xyz(
-            -(size_x as f32 * sprite_size) / 2.,
-            -(size_y as f32 * sprite_size) / 2.,
-            0.,
-        )))
+        .spawn((
+            Transform::from_xyz(
+                -(size_x as f32 * sprite_size) / 2.,
+                -(size_y as f32 * sprite_size) / 2.,
+                0.,
+            ),
+            Visibility::default(),
+        ))
         .with_children(|builder| {
             for y in 0..=size_y {
                 for x in 0..=size_x {
@@ -48,19 +51,12 @@ fn spawn_map(commands: &mut Commands) {
                         RainbowCellState::Dead
                     };
                     builder.spawn((
-                        SpriteBundle {
-                            sprite: Sprite {
-                                custom_size: Some(Vec2::splat(sprite_size)),
-                                color,
-                                ..Default::default()
-                            },
-                            transform: Transform::from_xyz(
-                                sprite_size * x as f32,
-                                sprite_size * y as f32,
-                                0.,
-                            ),
-                            ..default()
+                        Sprite {
+                            custom_size: Some(Vec2::splat(sprite_size)),
+                            color,
+                            ..Default::default()
                         },
+                        Transform::from_xyz(sprite_size * x as f32, sprite_size * y as f32, 0.),
                         MooreCell2d::new(IVec2::new(x, y)),
                         state,
                     ));

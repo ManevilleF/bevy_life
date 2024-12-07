@@ -25,10 +25,10 @@ fn main() {
 
 fn setup_camera(mut commands: Commands) {
     // Camera
-    commands.spawn(Camera3dBundle {
-        transform: Transform::from_xyz(100., 100., -150.).looking_at(Vec3::ZERO, Vec3::Y),
-        ..Default::default()
-    });
+    commands.spawn((
+        Camera3d::default(),
+        Transform::from_xyz(100., 100., -150.).looking_at(Vec3::ZERO, Vec3::Y),
+    ));
 }
 
 fn setup_map(
@@ -46,23 +46,23 @@ fn spawn_map(commands: &mut Commands, mesh: Handle<Mesh>, material: Handle<Stand
     let mut rng = rand::thread_rng();
     let map_size = 80;
     commands
-        .spawn(SpatialBundle::from_transform(Transform::from_xyz(
-            -(map_size as f32) / 2.,
-            -(map_size as f32) / 2.,
-            -(map_size as f32) / 2.,
-        )))
+        .spawn((
+            Transform::from_xyz(
+                -(map_size as f32) / 2.,
+                -(map_size as f32) / 2.,
+                -(map_size as f32) / 2.,
+            ),
+            Visibility::default(),
+        ))
         .with_children(|builder| {
             for z in 0..=map_size {
                 for y in 0..=map_size {
                     for x in 0..=map_size {
                         let state = ConwayCell4555State(rng.gen_bool(1. / 3.));
                         builder.spawn((
-                            PbrBundle {
-                                mesh: mesh.clone(),
-                                transform: Transform::from_xyz(x as f32, y as f32, z as f32),
-                                material: material.clone(),
-                                ..default()
-                            },
+                            Mesh3d(mesh.clone()),
+                            Transform::from_xyz(x as f32, y as f32, z as f32),
+                            MeshMaterial3d(material.clone()),
                             MooreCell3d::new(IVec3::new(x, y, z)),
                             state,
                         ));

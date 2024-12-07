@@ -64,8 +64,8 @@ impl Cell for MooreCell2d {
     }
 
     #[inline]
-    fn neighbor_coordinates(&self) -> impl IntoIterator<Item = Self::Coordinates> {
-        NEIGHBOR_COORDINATES.map(|c| c + *self.coords())
+    fn neighbor_coordinates(&self) -> impl ExactSizeIterator<Item = Self::Coordinates> + '_ {
+        NEIGHBOR_COORDINATES.map(|c| c + *self.coords()).into_iter()
     }
 }
 
@@ -87,7 +87,7 @@ mod tests {
         let cell = MooreCell2d {
             coords: IVec2::new(10, 10),
         };
-        let neighbors = cell.neighbor_coordinates().into_iter().collect::<Vec<_>>();
+        let neighbors = cell.neighbor_coordinates().collect::<Vec<_>>();
         assert_eq!(
             neighbors,
             vec![
@@ -116,7 +116,7 @@ mod tests {
         let cell = MooreCell2d {
             coords: IVec2::new(-10, 10),
         };
-        let neighbors = cell.neighbor_coordinates().into_iter().collect::<Vec<_>>();
+        let neighbors = cell.neighbor_coordinates().collect::<Vec<_>>();
         assert_eq!(
             neighbors,
             vec![
@@ -145,7 +145,7 @@ mod tests {
         let cell = MooreCell2d {
             coords: IVec2::new(0, 0),
         };
-        let neighbors = cell.neighbor_coordinates().into_iter().collect::<Vec<_>>();
+        let neighbors = cell.neighbor_coordinates().collect::<Vec<_>>();
         assert_eq!(
             neighbors,
             vec![

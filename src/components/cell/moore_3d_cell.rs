@@ -90,8 +90,8 @@ impl Cell for MooreCell3d {
     }
 
     #[inline]
-    fn neighbor_coordinates(&self) -> impl IntoIterator<Item = Self::Coordinates> {
-        NEIGHBOR_COORDINATES.map(|c| c + *self.coords())
+    fn neighbor_coordinates(&self) -> impl ExactSizeIterator<Item = Self::Coordinates> + '_ {
+        NEIGHBOR_COORDINATES.map(|c| c + *self.coords()).into_iter()
     }
 }
 
