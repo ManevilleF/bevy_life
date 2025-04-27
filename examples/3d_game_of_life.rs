@@ -43,7 +43,7 @@ fn setup_map(
 }
 
 fn spawn_map(commands: &mut Commands, mesh: Handle<Mesh>, material: Handle<StandardMaterial>) {
-    let mut rng = rand::thread_rng();
+    let mut rng = rand::rng();
     let map_size = 80;
     commands
         .spawn((
@@ -58,7 +58,7 @@ fn spawn_map(commands: &mut Commands, mesh: Handle<Mesh>, material: Handle<Stand
             for z in 0..=map_size {
                 for y in 0..=map_size {
                     for x in 0..=map_size {
-                        let state = ConwayCell4555State(rng.gen_bool(1. / 3.));
+                        let state = ConwayCell4555State(rng.random_bool(1. / 3.));
                         builder.spawn((
                             Mesh3d(mesh.clone()),
                             Transform::from_xyz(x as f32, y as f32, z as f32),

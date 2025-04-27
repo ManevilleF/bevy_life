@@ -3,7 +3,7 @@ use crate::{
     resources::CellMap,
     SimulationBatch, SimulationPause,
 };
-use bevy::{log, prelude::*, utils::HashMap};
+use bevy::{log, platform::collections::HashMap, prelude::*};
 
 fn handle_cell<C, S>((cell, state): (&C, &S), map: &HashMap<C::Coordinates, S>) -> Option<S>
 where

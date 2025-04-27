@@ -50,7 +50,7 @@ fn main() {
 
 fn setup_camera(mut commands: Commands) {
     // Camera
-    commands.spawn(Camera2d::default());
+    commands.spawn(Camera2d);
 }
 
 fn setup_map(mut commands: Commands) {
@@ -58,7 +58,7 @@ fn setup_map(mut commands: Commands) {
 }
 
 fn spawn_map(commands: &mut Commands) {
-    let mut rng = rand::thread_rng();
+    let mut rng = rand::rng();
     let (size_x, size_y) = (300, 200);
     let sprite_size = 4.;
     let color = Color::srgba(0., 0., 0., 0.);
@@ -75,7 +75,7 @@ fn spawn_map(commands: &mut Commands) {
         .with_children(|builder| {
             for y in 0..=size_y {
                 for x in 0..=size_x {
-                    let state = match rng.gen_range(0.0..=1.0) {
+                    let state = match rng.random_range(0.0..=1.0) {
                         x if x < 0.33 => RockPaperScissor::Rock,
                         x if x < 0.66 => RockPaperScissor::Paper,
                         _ => RockPaperScissor::Scissor,

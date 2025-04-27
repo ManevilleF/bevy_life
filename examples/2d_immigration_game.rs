@@ -28,7 +28,7 @@ fn setup_map(mut commands: Commands) {
 }
 
 fn spawn_map(commands: &mut Commands) {
-    let mut rng = rand::thread_rng();
+    let mut rng = rand::rng();
     let (size_x, size_y) = (600, 400);
     let sprite_size = 2.;
     let color = Color::srgba(0., 0., 0., 0.);
@@ -45,8 +45,8 @@ fn spawn_map(commands: &mut Commands) {
         .with_children(|builder| {
             for y in 0..=size_y {
                 for x in 0..=size_x {
-                    let state = if rng.gen_bool(1. / 4.) {
-                        ImmigrationCellState::Alive(rng.gen_bool(1. / 2.))
+                    let state = if rng.random_bool(1. / 4.) {
+                        ImmigrationCellState::Alive(rng.random_bool(1. / 2.))
                     } else {
                         ImmigrationCellState::Dead
                     };
