@@ -22,7 +22,7 @@ fn main() {
 
 fn setup_camera(mut commands: Commands) {
     // Camera
-    commands.spawn(Camera2d::default());
+    commands.spawn(Camera2d);
 }
 
 fn setup_map(mut commands: Commands) {
@@ -30,7 +30,7 @@ fn setup_map(mut commands: Commands) {
 }
 
 fn spawn_map(commands: &mut Commands) {
-    let mut rng = rand::thread_rng();
+    let mut rng = rand::rng();
     let (size_x, size_y) = (300, 200);
     let sprite_size = 4.;
 
@@ -46,7 +46,7 @@ fn spawn_map(commands: &mut Commands) {
         .with_children(|builder| {
             for y in 0..=size_y {
                 for x in 0..=size_x {
-                    let color_index = rng.gen_range(0..N);
+                    let color_index = rng.random_range(0..N);
                     let state = CyclicColorCellState::<N>(color_index);
                     builder.spawn((
                         Sprite {
