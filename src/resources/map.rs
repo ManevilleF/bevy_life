@@ -4,8 +4,8 @@ use crate::components::MooreCell2d;
 #[cfg(feature = "3D")]
 use crate::components::NeumannCell3d;
 use bevy::{
+    platform::collections::{HashMap, HashSet},
     prelude::{Entity, Resource},
-    utils::{HashMap, HashSet},
 };
 
 #[cfg(feature = "2D")]
@@ -20,7 +20,8 @@ pub type Map3d = CellMap<NeumannCell3d>;
 ///
 /// The resource is automatically added and refreshed, it may be used for
 /// clearing (see examples).
-#[derive(Clone, Resource)]
+#[derive(Debug, Clone, Resource)]
+#[cfg_attr(feature = "bevy_reflect", derive(bevy_reflect::Reflect))]
 pub struct CellMap<C: Cell> {
     cells: HashMap<C::Coordinates, Entity>,
 }

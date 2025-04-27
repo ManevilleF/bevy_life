@@ -21,19 +21,19 @@ auto-coloring = ["bevy/bevy_sprite", "bevy/bevy_color"]
 bevy_reflect = ["dep:bevy_reflect"]
 
 [dependencies.bevy]
-version = "0.15"
+version = "0.16"
 default-features = false
-features = ["bevy_render"]
+features = ["bevy_render", "bevy_log"]
 
 [dependencies.bevy_reflect]
-version = "0.15"
+version = "0.16"
 optional = true
 
 [dev-dependencies]
 rand = "0.8"
 
 [dev-dependencies.bevy]
-version = "0.15"
+version = "0.16"
 features = [
     "bevy_asset",
     "bevy_winit",

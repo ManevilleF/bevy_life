@@ -100,6 +100,7 @@
 //! cellular automata to any project in bevy, with any rules, in 2D or 3D.
 #![forbid(missing_docs, unsafe_code)]
 #![warn(
+    clippy::all,
     clippy::nursery,
     clippy::pedantic,
     nonstandard_style,
