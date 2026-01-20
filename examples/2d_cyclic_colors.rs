@@ -9,7 +9,7 @@ fn main() {
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
                 title: "Cyclic Colors".to_string(),
-                resolution: [1200.0, 800.0].into(),
+                resolution: [1200, 800].into(),
                 ..default()
             }),
             ..default()

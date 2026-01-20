@@ -19,21 +19,6 @@ See:
 * [`Wireworld` implementation](https://www.quinapalus.com/wi-index.html) (see
   this lib's [implementation](https://github.com/ManevilleF/wireworld-rs))
 
-## Bevy versions
-
-| `bevy_life`   | `bevy`    |
-|---------------|-----------|
-| 0.3.x         | 0.6.x     |
-| 0.4.x         | 0.7.x     |
-| 0.5.x         | 0.8.x     |
-| 0.6.x         | 0.9.x     |
-| 0.7.x         | 0.10.x    |
-| 0.8.x         | 0.11.x    |
-| 0.9.x         | 0.13.x    |
-| 0.10.x        | 0.14.x    |
-| 0.11.x        | 0.15.x    |
-| 0.12.x        | 0.16.x    |
-
 ## How to use
 
 Add a `CellularAutomatonPlugin` to your bevy app:

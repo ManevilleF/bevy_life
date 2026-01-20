@@ -17,21 +17,16 @@ use bevy::prelude::Component;
 /// - Conductors (`Conductor`) become electron heads if exactly one or two
 ///   neighboring cells are electron heads. Otherwise, they remain as
 ///   conductors.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, Component)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Component, Default)]
 #[cfg_attr(feature = "bevy_reflect", derive(bevy_reflect::Reflect))]
 pub enum WireWorldCellState {
+    #[default]
     /// Conductor cell state
     Conductor,
     /// Electron head cell state
     ElectronHead,
     /// Electron tail cell state
     ElectronTail,
-}
-
-impl Default for WireWorldCellState {
-    fn default() -> Self {
-        Self::Conductor
-    }
 }
 
 impl CellState for WireWorldCellState {

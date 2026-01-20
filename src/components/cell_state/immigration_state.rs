@@ -7,7 +7,7 @@ use bevy::color::{
 use bevy::prelude::Component;
 use std::fmt::Debug;
 
-#[derive(Debug, Copy, Clone, Eq, PartialEq, Component)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Component, Default)]
 #[cfg_attr(feature = "bevy_reflect", derive(bevy_reflect::Reflect))]
 /// Classic cellular automation state and rules following Conway's game of life
 /// variation: The immigration game.
@@ -23,6 +23,7 @@ use std::fmt::Debug;
 ///   neighbors.
 pub enum ImmigrationCellState {
     /// A dead cell
+    #[default]
     Dead,
     /// Alive cell with a boolean sub-state
     Alive(bool),
@@ -73,11 +74,5 @@ impl ImmigrationCellState {
     #[inline]
     pub const fn is_alive(&self) -> bool {
         matches!(self, Self::Alive(_))
-    }
-}
-
-impl Default for ImmigrationCellState {
-    fn default() -> Self {
-        Self::Dead
     }
 }
