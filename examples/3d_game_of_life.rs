@@ -4,7 +4,7 @@ use rand::Rng;
 
 fn main() {
     App::new()
-        .insert_resource(AmbientLight {
+        .insert_resource(GlobalAmbientLight {
             brightness: 1.0,
             ..default()
         })
