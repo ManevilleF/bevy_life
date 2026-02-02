@@ -1,6 +1,6 @@
 [package]
 name = "bevy_life"
-version = "0.12.0"
+version = "0.13.0"
 edition = "2021"
 authors = ["Felix de Maneville <felix.maneville@gmail.com>"]
 license-file = "./LICENSE"
@@ -27,6 +27,7 @@ features = ["bevy_render", "bevy_log"]
 
 [dependencies.bevy_reflect]
 version = "0.18"
+default-features = false
 optional = true
 
 [dev-dependencies]
