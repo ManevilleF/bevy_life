@@ -4,14 +4,14 @@ use rand::Rng;
 
 fn main() {
     App::new()
-        .insert_resource(AmbientLight {
+        .insert_resource(GlobalAmbientLight {
             brightness: 1.0,
             ..default()
         })
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
                 title: "3D Game Of Life".to_string(),
-                resolution: [1200.0, 800.0].into(),
+                resolution: [1200, 800].into(),
                 ..default()
             }),
             ..default()
