@@ -6,7 +6,7 @@
  [![unsafe forbidden](https://img.shields.io/badge/unsafe-forbidden-success.svg)](https://github.com/rust-secure-code/safety-dance/)
  [![Crates.io](https://img.shields.io/crates/v/bevy_life.svg)](https://crates.io/crates/bevy_life)
  [![Docs.rs](https://docs.rs/bevy_life/badge.svg)](https://docs.rs/bevy_life)
- [![dependency status](https://deps.rs/crate/bevy_life/0.12.0/status.svg)](https://deps.rs/crate/bevy_life)
+ [![dependency status](https://deps.rs/crate/bevy_life/0.13.0/status.svg)](https://deps.rs/crate/bevy_life)
 
 <!-- cargo-sync-readme start -->
 
