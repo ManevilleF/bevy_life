@@ -93,3 +93,8 @@ required-features = ["3D"]
 name = "2d_rock_paper_scissor"
 path = "examples/2d_rock_paper_scissor.rs"
 required-features = ["2D"]
+
+[[example]]
+name = "wireworld"
+path = "examples/wireworld.rs"
+required-features = ["auto-coloring", "2D"]
